@@ -1,0 +1,14 @@
+{
+  "name": "Human-Led Product Claude Plugins",
+  "owner": {
+    "name": "Konstantin Valiotti"
+  },
+  "plugins": [
+    {
+      "name": "prd-workflow",
+      "source": "./prd-workflow",
+      "description": "End-to-end PRD pipeline: draft, evaluate gaps, brainstorm real-world situations/behaviours",
+      "version": "0.1.0"
+    }
+  ]
+}

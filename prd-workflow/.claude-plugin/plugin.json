@@ -1,0 +1,9 @@
+{
+  "name": "prd-workflow",
+  "version": "0.1.0",
+  "description": "End-to-end PRD creation pipeline: draft from messy input, evaluate for missing use cases and UX gaps, then run sit-beh behavioural analysis. Turns rough product thinking into engineering-ready specs.",
+  "author": {
+    "name": "Konstantin Valiotti"
+  },
+  "keywords": ["prd", "product-management", "sit-beh", "requirements", "spec"]
+}
