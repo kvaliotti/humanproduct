@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategic Synthesis — {{ANCHOR_NAME}}</title>
+  <!-- Chart.js for radar, bar, range charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    /* ============ DESIGN TOKENS ============ */
+    :root {
+      --bg:            #0b1220;
+      --bg-2:          #111a2e;
+      --panel:         #1a2440;
+      --panel-2:       #223056;
+      --panel-3:       #2d3d6e;
+      --ink:           #e6ecff;
+      --ink-dim:       #9eabc8;
+      --ink-faint:     #6a7795;
+      --accent:        #7aa2ff;
+      --accent-2:      #a78bfa;
+      --good:          #4ade80;
+      --warn:          #fbbf24;
+      --bad:           #f87171;
+      --muted:         #64748b;
+      --heat-0:        #1e293b;
+      --heat-1:        #264060;
+      --heat-2:        #2f5d85;
+      --heat-3:        #3d83ae;
+      --heat-4:        #4fa8c9;
+      --heat-5:        #7fd1dd;
+      --aff-strong:    #15803d;
+      --aff-fit:       #65a30d;
+      --aff-weak:      #ca8a04;
+      --aff-anti:      #b91c1c;
+      --border:        #2a3758;
+      --radius:        12px;
+      --radius-sm:     6px;
+      --shadow:        0 6px 20px -8px rgba(0,0,0,0.5);
+      --mono:          ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      --sans:          -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+    }
+
+    /* ============ RESET & BASE ============ */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    code { font-family: var(--mono); font-size: 0.88em; color: var(--accent-2); background: rgba(167,139,250,0.08); padding: 2px 5px; border-radius: 4px; }
+
+    /* ============ LAYOUT ============ */
+    .page {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 48px 40px 96px;
+    }
+    header.hero {
+      padding: 36px 40px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+    }
+    header.hero .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 12px;
+    }
+    header.hero h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    header.hero .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 32px;
+      margin-top: 18px;
+      color: var(--ink-dim);
+      font-size: 13px;
+    }
+    header.hero .meta span b { color: var(--ink); margin-right: 4px; }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+    section h2 {
+      margin: 0 0 4px;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+    section h2 .num {
+      font-family: var(--mono);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    section h2 .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      background: rgba(122,162,255,0.12);
+      color: var(--accent);
+      border-radius: 4px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    section h3 {
+      margin: 28px 0 12px;
+      font-size: 17px;
+      color: var(--ink);
+      letter-spacing: -0.005em;
+    }
+    section h4 {
+      margin: 22px 0 10px;
+      font-size: 14px;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+    section .subhead {
+      color: var(--ink-dim);
+      font-size: 13px;
+      margin-bottom: 24px;
+    }
+
+    /* ============ UTILITIES ============ */
+    .grid { display: grid; gap: 16px; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+    .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+    .row > * { flex: 1; min-width: 280px; }
+    .spacer { height: 20px; }
+    .hr { height: 1px; background: var(--border); border: 0; margin: 28px 0; }
+    .mono { font-family: var(--mono); }
+    .dim { color: var(--ink-dim); }
+    .faint { color: var(--ink-faint); font-size: 12px; }
+
+    /* ============ KPI CARDS ============ */
+    .kpi {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+    }
+    .kpi .label {
+      font-size: 11px;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: 6px;
+    }
+    .kpi .value {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.1;
+    }
+    .kpi .sub { font-size: 12px; color: var(--ink-dim); margin-top: 6px; }
+
+    /* ============ PILLS & BADGES ============ */
+    .pill {
+      display: inline-block;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: 999px;
+      background: var(--panel-3);
+      color: var(--ink);
+      letter-spacing: 0.04em;
+    }
+    .pill-good { background: rgba(74,222,128,0.14); color: var(--good); }
+    .pill-warn { background: rgba(251,191,36,0.14); color: var(--warn); }
+    .pill-bad  { background: rgba(248,113,113,0.14); color: var(--bad); }
+    .pill-accent { background: rgba(122,162,255,0.14); color: var(--accent); }
+
+    .conf {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--ink-dim);
+    }
+    .conf .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-faint); display: inline-block; }
+    .conf.high .dot { background: var(--good); }
+    .conf.med .dot { background: var(--warn); }
+    .conf.low .dot { background: var(--bad); }
+
+    /* ============ TABLES ============ */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      background: var(--panel-2);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    thead th {
+      background: var(--panel-3);
+      color: var(--ink);
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border);
+    }
+    tbody td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      color: var(--ink);
+    }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:hover td { background: rgba(255,255,255,0.02); }
+    table.compact td, table.compact th { padding: 7px 10px; font-size: 12.5px; }
+
+    /* ============ HEATMAPS ============ */
+    .heat { border-radius: 3px; text-align: center; padding: 8px 6px; font-size: 12px; font-weight: 600; color: #fff; }
+    .heat-0 { background: var(--heat-0); color: var(--ink-faint); }
+    .heat-1 { background: var(--heat-1); }
+    .heat-2 { background: var(--heat-2); }
+    .heat-3 { background: var(--heat-3); }
+    .heat-4 { background: var(--heat-4); color: #0b1220; }
+    .heat-5 { background: var(--heat-5); color: #0b1220; }
+
+    .aff-strong { background: var(--aff-strong); color: #fff; border-radius: 3px; text-align: center; padding: 7px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+    .aff-fit    { background: var(--aff-fit);    color: #fff; border-radius: 3px; text-align: center; padding: 7px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+    .aff-weak   { background: var(--aff-weak);   color: #0b1220; border-radius: 3px; text-align: center; padding: 7px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+    .aff-anti   { background: var(--aff-anti);   color: #fff; border-radius: 3px; text-align: center; padding: 7px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+    .aff-absent { background: var(--panel-3); color: var(--ink-faint); border-radius: 3px; text-align: center; padding: 7px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.05em; }
+
+    .verdict-confirmed     { background: #14532d; color: #bbf7d0; border-radius: 3px; text-align: center; padding: 6px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+    .verdict-partial       { background: #3f6212; color: #d9f99d; border-radius: 3px; text-align: center; padding: 6px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+    .verdict-operational   { background: #713f12; color: #fef08a; border-radius: 3px; text-align: center; padding: 6px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+    .verdict-asserted      { background: #7f1d1d; color: #fecaca; border-radius: 3px; text-align: center; padding: 6px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+    .verdict-na            { background: var(--panel-3); color: var(--ink-faint); border-radius: 3px; text-align: center; padding: 6px 4px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.04em; }
+
+    /* ============ PROCESS TREE ============ */
+    .tree { list-style: none; padding-left: 0; margin: 0; }
+    .tree ul { list-style: none; padding-left: 18px; margin: 4px 0 0; border-left: 2px solid var(--border); }
+    .tree li { padding: 6px 0 6px 12px; position: relative; }
+    .tree li::before {
+      content: "";
+      position: absolute;
+      left: -2px;
+      top: 16px;
+      width: 12px;
+      height: 2px;
+      background: var(--border);
+    }
+    .tree .step-label { color: var(--ink); font-weight: 600; }
+    .tree .step-label.top { color: var(--accent); font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.06em; }
+    .tree .step-label.leaf { color: var(--ink-dim); font-weight: 400; }
+
+    /* ============ SEGMENT CARDS ============ */
+    .seg-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+    }
+    .seg-card .id { font-family: var(--mono); font-size: 11px; color: var(--accent); margin-bottom: 6px; }
+    .seg-card .name { font-size: 16px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .seg-card .one-line { font-size: 13px; color: var(--ink-dim); margin-bottom: 12px; }
+    .seg-card dl { margin: 0; font-size: 12.5px; }
+    .seg-card dt { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 10.5px; margin-top: 10px; font-weight: 600; }
+    .seg-card dd { margin: 2px 0 0; color: var(--ink); }
+
+    /* ============ CHART CONTAINERS ============ */
+    .chart-wrap {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 18px;
+      margin-top: 10px;
+    }
+    .chart-wrap h4 { margin-top: 0; }
+    .chart-canvas { position: relative; width: 100%; height: 360px; }
+
+    /* ============ EXEC SUMMARY ============ */
+    .exec-lead {
+      font-size: 19px;
+      line-height: 1.5;
+      color: var(--ink);
+      padding: 20px 22px;
+      border-left: 4px solid var(--accent);
+      background: rgba(122,162,255,0.06);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 22px;
+    }
+    .bet-card, .risk-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .bet-card { border-left: 4px solid var(--good); }
+    .risk-card { border-left: 4px solid var(--bad); }
+    .bet-card .head, .risk-card .head {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .bet-card .head { color: var(--good); }
+    .risk-card .head { color: var(--bad); }
+    .bet-card .text, .risk-card .text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.45;
+    }
+    .bet-card .ids, .risk-card .ids {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      color: var(--ink-faint);
+      margin-top: 8px;
+      word-break: break-all;
+    }
+
+    /* ============ CROSS-SKILL SYNTHESIS ============ */
+    .ws-card {
+      background: linear-gradient(135deg, var(--panel-2), var(--panel-3));
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
+      position: relative;
+    }
+    .ws-card .rank { font-family: var(--mono); font-size: 11px; color: var(--accent); font-weight: 700; letter-spacing: 0.1em; }
+    .ws-card .hypothesis { font-size: 16px; font-weight: 600; margin: 6px 0 12px; color: var(--ink); }
+    .ws-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .ws-input {
+      background: rgba(0,0,0,0.25);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 11px;
+    }
+    .ws-input .key { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 9.5px; margin-bottom: 3px; font-weight: 700; }
+    .ws-input .val { font-family: var(--mono); color: var(--accent-2); word-break: break-word; }
+
+    /* ============ WARNING BANNER (fallback stub) ============ */
+    .banner-missing {
+      background: rgba(248,113,113,0.12);
+      border: 1px solid var(--bad);
+      color: var(--bad);
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 24px;
+      font-size: 13.5px;
+    }
+    .banner-missing b { color: #fff; }
+
+    /* ============ PRINT ============ */
+    @media print {
+      body { background: #fff; color: #000; font-size: 10pt; }
+      section, header.hero { background: #fff; border: 1px solid #ccc; box-shadow: none; color: #000; page-break-inside: avoid; }
+      section h2, section h3, section h4, .exec-lead, .kpi .value, .seg-card .name { color: #000; }
+      .heat-0, .heat-1, .heat-2, .heat-3, .heat-4, .heat-5,
+      .aff-strong, .aff-fit, .aff-weak, .aff-anti, .aff-absent,
+      .verdict-confirmed, .verdict-partial, .verdict-operational, .verdict-asserted, .verdict-na {
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+      }
+    }
+
+    /* ============ RESPONSIVE ============ */
+    @media (max-width: 760px) {
+      .page { padding: 20px 16px 60px; }
+      section { padding: 20px 18px; }
+      header.hero { padding: 24px 20px; }
+      header.hero h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ============ HERO ============ -->
+    <header class="hero">
+      <div class="eyebrow">Strategic-Research Plugin · Synthesis Report</div>
+      <h1>{{ANCHOR_NAME}} — Strategic Synthesis</h1>
+      <div class="subhead">{{ANCHOR_TAGLINE}}</div>
+      <div class="meta">
+        <span><b>Industry</b>{{INDUSTRY}}</span>
+        <span><b>Generated</b>{{GENERATED_AT}}</span>
+        <span><b>Lifecycle</b>{{LIFECYCLE_STAGE}}</span>
+        <span><b>B2B / B2C</b>{{B2B_OR_B2C}}</span>
+        <span><b>Overall confidence</b>{{OVERALL_CONFIDENCE}}%</span>
+      </div>
+    </header>
+
+    <!-- ============ (IF INPUTS MISSING) WARNING BANNER ============
+    <div class="banner-missing">
+      <b>Partial synthesis.</b> Upstream skill <code>{{MISSING_SKILL}}</code> has not been run. Sections that depend on its handoff are marked as UNAVAILABLE.
+    </div>
+    -->
+
+    <!-- ============ 1 · EXECUTIVE SUMMARY ============ -->
+    <section id="exec-summary">
+      <h2><span class="num">1</span> Executive Summary <span class="tag">Minto</span></h2>
+
+      <div class="exec-lead">
+        {{EXEC_LEAD_RECOMMENDATION}}
+      </div>
+
+      <div class="grid grid-4">
+        <div class="kpi"><div class="label">Segments analyzed</div><div class="value">{{N_SEGMENTS}}</div><div class="sub">Behavioral / stated ratio {{EVIDENCE_RATIO}}</div></div>
+        <div class="kpi"><div class="label">Competitors profiled</div><div class="value">{{N_COMPETITORS}}</div><div class="sub">{{N_STRATEGIC_GROUPS}} strategic groups</div></div>
+        <div class="kpi"><div class="label">WTP variance</div><div class="value">{{WTP_VARIANCE_X}}×</div><div class="sub">High ÷ low across segments</div></div>
+        <div class="kpi"><div class="label">White-space hypotheses</div><div class="value">{{N_WHITESPACE}}</div><div class="sub">Ranked in §6.1</div></div>
+      </div>
+
+      <h4>Top 3 strategic bets</h4>
+      <div class="grid grid-3">
+        <div class="bet-card">
+          <div class="head">Bet 1 · {{BET_1_CONFIDENCE}}%</div>
+          <div class="text">{{BET_1_TEXT}}</div>
+          <div class="ids">{{BET_1_IDS}}</div>
+        </div>
+        <div class="bet-card">
+          <div class="head">Bet 2 · {{BET_2_CONFIDENCE}}%</div>
+          <div class="text">{{BET_2_TEXT}}</div>
+          <div class="ids">{{BET_2_IDS}}</div>
+        </div>
+        <div class="bet-card">
+          <div class="head">Bet 3 · {{BET_3_CONFIDENCE}}%</div>
+          <div class="text">{{BET_3_TEXT}}</div>
+          <div class="ids">{{BET_3_IDS}}</div>
+        </div>
+      </div>
+
+      <h4>Top 3 risks</h4>
+      <div class="grid grid-3">
+        <div class="risk-card">
+          <div class="head">Risk 1</div>
+          <div class="text">{{RISK_1_TEXT}}</div>
+          <div class="ids">{{RISK_1_IDS}}</div>
+        </div>
+        <div class="risk-card">
+          <div class="head">Risk 2</div>
+          <div class="text">{{RISK_2_TEXT}}</div>
+          <div class="ids">{{RISK_2_IDS}}</div>
+        </div>
+        <div class="risk-card">
+          <div class="head">Risk 3</div>
+          <div class="text">{{RISK_3_TEXT}}</div>
+          <div class="ids">{{RISK_3_IDS}}</div>
+        </div>
+      </div>
+
+      <h4>What we know vs. what we're missing</h4>
+      <p class="dim">{{EVIDENCE_HONESTY_PARAGRAPH}}</p>
+    </section>
+
+    <!-- ============ 2 · INDUSTRY PROCESS MAP ============ -->
+    <section id="industry-process-map">
+      <h2><span class="num">2</span> Industry Process Map <span class="tag">Skill #1</span></h2>
+      <div class="subhead">{{IPM_SUBHEAD}}</div>
+
+      <h3>What we learned</h3>
+      <p>{{IPM_FINDINGS}}</p>
+
+      <h3>Process tree</h3>
+      <div class="chart-wrap">
+        <ul class="tree">
+          {{IPM_PROCESS_TREE_HTML}}
+        </ul>
+      </div>
+
+      <h3>Matrix — {{IPM_MATRIX_FRAMING}}</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead>
+            <tr>
+              <th>Step \ Channel</th>
+              {{IPM_MATRIX_HEADERS}}
+            </tr>
+          </thead>
+          <tbody>
+            {{IPM_MATRIX_ROWS}}
+          </tbody>
+        </table>
+        <p class="faint">Cell color = maturity (darker = emerging/underserved). Border highlight = anchor plays in this cell.</p>
+      </div>
+
+      <h3>Substitutes & non-consumption</h3>
+      <ul>{{IPM_SUBSTITUTES_HTML}}</ul>
+    </section>
+
+    <!-- ============ 3 · AUDIENCE & SEGMENTS ============ -->
+    <section id="audience-segments">
+      <h2><span class="num">3</span> Audience &amp; Segments <span class="tag">Skill #2</span></h2>
+      <div class="subhead">{{AUDIENCE_SUBHEAD}}</div>
+
+      <h3>What we learned</h3>
+      <p>{{AUDIENCE_FINDINGS}}</p>
+
+      <h3>Segment profiles</h3>
+      <div class="grid grid-2">
+        {{AUDIENCE_SEGMENT_CARDS_HTML}}
+      </div>
+
+      <h3>Stakeholder map (per segment)</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead>
+            <tr>
+              <th>Segment</th>
+              <th>User</th>
+              <th>Champion</th>
+              <th>Economic buyer</th>
+              <th>Blocker</th>
+              <th>Renewer</th>
+            </tr>
+          </thead>
+          <tbody>{{STAKEHOLDER_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>Cross-segment synthesis</h3>
+      <div class="row">
+        <div>
+          <h4>Shared jobs</h4>
+          <ul>{{SHARED_JOBS_HTML}}</ul>
+        </div>
+        <div>
+          <h4>Divergent jobs</h4>
+          <ul>{{DIVERGENT_JOBS_HTML}}</ul>
+        </div>
+        <div>
+          <h4>Adjacency &amp; cannibalization</h4>
+          <ul>{{ADJACENCY_HTML}}</ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4 · WILLINGNESS-TO-PAY ============ -->
+    <section id="wtp">
+      <h2><span class="num">4</span> Willingness-to-Pay <span class="tag">Skill #3</span></h2>
+      <div class="subhead">{{WTP_SUBHEAD}}</div>
+
+      <h3>What we learned</h3>
+      <p>{{WTP_FINDINGS}}</p>
+
+      <h3>WTP bands per segment</h3>
+      <div class="chart-wrap">
+        <div class="chart-canvas"><canvas id="wtpRangeChart"></canvas></div>
+        <p class="faint">Horizontal bars = per-segment WTP range. Diamond = midpoint. Band unit: {{WTP_UNIT}}.</p>
+      </div>
+
+      <h3>Leaders, Fillers, Killers (per segment)</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead>
+            <tr>
+              <th>Segment</th>
+              <th>Leaders (drive ~80% WTP)</th>
+              <th>Fillers</th>
+              <th>Killers</th>
+            </tr>
+          </thead>
+          <tbody>{{LFK_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>Kano classification &amp; migration watchlist</h3>
+      <div class="row">
+        <div class="chart-wrap">
+          <h4>Kano distribution</h4>
+          <div class="chart-canvas"><canvas id="kanoChart"></canvas></div>
+        </div>
+        <div class="chart-wrap">
+          <h4>Migration watchlist — delighters becoming must-haves</h4>
+          <table class="compact">
+            <thead><tr><th>Feature</th><th>Currently</th><th>Expected</th><th>Horizon (mo)</th></tr></thead>
+            <tbody>{{KANO_MIGRATION_ROWS}}</tbody>
+          </table>
+        </div>
+      </div>
+
+      <h3>Proof-of-value signals (per Leader outcome)</h3>
+      <div class="chart-wrap">
+        <div class="chart-canvas"><canvas id="proofSignalsRadar"></canvas></div>
+        <p class="faint">Radar dimensions: vividness · speed · travelability · defensibility. Higher total = stronger proof signal.</p>
+      </div>
+
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Leader outcome</th><th>Segment</th><th>Mode</th><th>Specific signal</th><th>UX placement</th><th>Strength</th></tr></thead>
+          <tbody>{{PROOF_SIGNALS_ROWS}}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 5 · COMPETITOR EVALUATION ============ -->
+    <section id="competitors">
+      <h2><span class="num">5</span> Competitor Evaluation <span class="tag">Skill #4</span></h2>
+      <div class="subhead">{{COMP_SUBHEAD}}</div>
+
+      <h3>What we learned</h3>
+      <p>{{COMP_FINDINGS}}</p>
+
+      <h3>Classified competitive set</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Competitor</th><th>Class</th><th>One-line</th><th>Overlap with anchor</th><th>Confidence</th></tr></thead>
+          <tbody>{{COMP_CLASSIFIED_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>Coverage grid on the industry matrix</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Matrix cell</th>{{COMP_COVERAGE_HEADERS}}<th>Anchor</th><th>White space?</th></tr></thead>
+          <tbody>{{COMP_COVERAGE_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>Segment affinity matrix</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Segment \ Competitor</th>{{COMP_AFFINITY_HEADERS}}<th>Anchor</th></tr></thead>
+          <tbody>{{COMP_AFFINITY_ROWS}}</tbody>
+        </table>
+        <p class="faint">Green = strong fit, lime = fit, amber = weak, red = antagonistic, grey = absent.</p>
+      </div>
+
+      <h3>7 Powers consolidated grid</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead>
+            <tr>
+              <th>Competitor \ Power</th>
+              <th>Scale</th><th>Network</th><th>Counter-Pos.</th><th>Switching</th><th>Branding</th><th>Cornered</th><th>Process</th>
+            </tr>
+          </thead>
+          <tbody>{{COMP_POWERS_ROWS}}</tbody>
+        </table>
+        <p class="faint">Green = confirmed Power. Lime = partial. Amber = operational lead (copyable). Red = asserted-only (no evidence). Grey = N/A.</p>
+      </div>
+
+      <h3>Strategy canvas{{CANVAS_PLURAL}}</h3>
+      {{STRATEGY_CANVAS_BLOCKS}}
+
+      <h3>Threat ranking (top 3) &amp; non-consumption posture</h3>
+      <div class="row">
+        <div class="chart-wrap">
+          <table class="compact">
+            <thead><tr><th>Rank</th><th>Competitor</th><th>Mechanism</th><th>Detail</th></tr></thead>
+            <tbody>{{THREAT_ROWS}}</tbody>
+          </table>
+        </div>
+        <div class="chart-wrap">
+          <h4>Non-consumption posture</h4>
+          <p><span class="pill pill-accent">{{NON_CONSUMPTION_POSTURE}}</span></p>
+          <p class="dim">{{NON_CONSUMPTION_EVIDENCE}}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 6 · CROSS-SKILL SYNTHESIS (new value) ============ -->
+    <section id="cross-skill">
+      <h2><span class="num">6</span> Cross-Skill Synthesis <span class="tag">New value</span></h2>
+      <div class="subhead">Insights that surface only when the four skills are joined.</div>
+
+      <h3>6.1 Strategic white space — ranked hypotheses</h3>
+      <div class="grid grid-2">
+        {{WHITESPACE_CARDS_HTML}}
+      </div>
+
+      <h3>6.2 Segment × Leader × Competitor winning-factor join</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Segment</th><th>Top Leader outcome</th><th>WTP band</th><th>Who covers it</th><th>Power held</th><th>Anchor's position</th></tr></thead>
+          <tbody>{{SYNTHESIS_JOIN_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>6.3 Kano-migration × competitor-roadmap risk</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Feature</th><th>Current Kano</th><th>Expected</th><th>Horizon (mo)</th><th>Competitors already holding</th><th>Commoditization risk</th></tr></thead>
+          <tbody>{{KANO_COMP_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>6.4 Non-consumption trajectory × trigger-event frequency</h3>
+      <div class="chart-wrap">
+        <p>{{NON_CONSUMPTION_ANALYSIS}}</p>
+        <table class="compact">
+          <thead><tr><th>Segment</th><th>Buying triggers</th><th>Trigger frequency</th><th>Non-consumption share</th><th>Posture</th><th>Implication</th></tr></thead>
+          <tbody>{{TRIGGER_ROWS}}</tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 7 · CONFIDENCE & TENSIONS ============ -->
+    <section id="confidence">
+      <h2><span class="num">7</span> Confidence &amp; Tensions</h2>
+      <div class="subhead">What we believe, how strongly, and where the map still breaks.</div>
+
+      <h3>7.1 Confidence pyramid</h3>
+      <div class="grid grid-4">
+        <div class="kpi"><div class="label">Behavioral ≥3 sources</div><div class="value">{{CONF_TIER_A}}</div><div class="sub">High-confidence claims</div></div>
+        <div class="kpi"><div class="label">Behavioral 1–2 sources</div><div class="value">{{CONF_TIER_B}}</div><div class="sub">Directional claims</div></div>
+        <div class="kpi"><div class="label">Pattern only</div><div class="value">{{CONF_TIER_C}}</div><div class="sub">Review-mined</div></div>
+        <div class="kpi"><div class="label">Stated only</div><div class="value">{{CONF_TIER_D}}</div><div class="sub">Treat with suspicion</div></div>
+      </div>
+
+      <h3>7.2 Evidence-quality traffic light (per upstream skill)</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Skill</th><th>Behavioral ratio</th><th>Primary sources</th><th>Disconfirming searches</th><th>Grade</th></tr></thead>
+          <tbody>{{TRAFFIC_LIGHT_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>7.3 Consolidated tension log</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>ID</th><th>From skill</th><th>Kind</th><th>Claim A</th><th>Claim B</th><th>Resolution (holding)</th></tr></thead>
+          <tbody>{{TENSIONS_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>7.4 Outliers &amp; singletons preserved</h3>
+      <ul>{{SINGLETONS_HTML}}</ul>
+    </section>
+
+    <!-- ============ 8 · APPENDIX ============ -->
+    <section id="appendix">
+      <h2><span class="num">8</span> Appendix</h2>
+
+      <h3>8.1 Open questions for downstream skills</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>#</th><th>Question</th><th>From skill</th><th>Blocks / unlocks</th><th>Suggested method</th></tr></thead>
+          <tbody>{{OPEN_QUESTIONS_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>8.2 Rejected framings</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Skill</th><th>Framing considered</th><th>Why rejected</th></tr></thead>
+          <tbody>{{REJECTED_FRAMINGS_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <h3>8.3 Glossary (union)</h3>
+      <div class="chart-wrap">
+        <table class="compact">
+          <thead><tr><th>Term</th><th>Definition (buyer words)</th><th>Source skill</th></tr></thead>
+          <tbody>{{GLOSSARY_ROWS}}</tbody>
+        </table>
+      </div>
+
+      <hr class="hr" />
+      <p class="faint">Generated by the <b>strategic-research</b> plugin · strategic-synthesis-report skill. Source artifacts: industry-process-map, audience-segment-research, willingness-to-pay-research, competitor-evaluation.</p>
+    </section>
+
+  </div>
+
+  <!-- ============ CHART INITIALIZERS ============ -->
+  <script>
+    // Shared chart defaults (dark theme)
+    Chart.defaults.color = '#9eabc8';
+    Chart.defaults.borderColor = 'rgba(255,255,255,0.08)';
+    Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif';
+    Chart.defaults.font.size = 12;
+
+    // ============ WTP RANGE CHART ============
+    // Data placeholder: segments with low/high WTP
+    // Injected array: {labels: ['S1', 'S2'], low: [80, 150], high: [200, 600], unit: '$/mo'}
+    const wtpData = {{WTP_CHART_DATA_JSON}};
+
+    (function() {
+      const el = document.getElementById('wtpRangeChart');
+      if (!el || !wtpData || !wtpData.labels) return;
+      // Build floating bars by using [low, high] pairs
+      const bars = wtpData.labels.map((_, i) => [wtpData.low[i], wtpData.high[i]]);
+      const mids = wtpData.labels.map((_, i) => (wtpData.low[i] + wtpData.high[i]) / 2);
+      new Chart(el, {
+        type: 'bar',
+        data: {
+          labels: wtpData.labels,
+          datasets: [
+            {
+              label: 'WTP range (' + (wtpData.unit || '$/mo') + ')',
+              data: bars,
+              backgroundColor: 'rgba(122,162,255,0.45)',
+              borderColor: '#7aa2ff',
+              borderWidth: 1,
+              borderRadius: 4,
+              borderSkipped: false
+            },
+            {
+              label: 'Midpoint',
+              type: 'scatter',
+              data: wtpData.labels.map((l, i) => ({ x: mids[i], y: l })),
+              backgroundColor: '#a78bfa',
+              pointStyle: 'rectRot',
+              pointRadius: 7,
+              pointHoverRadius: 9
+            }
+          ]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'top' },
+            tooltip: {
+              callbacks: {
+                label: (ctx) => {
+                  if (ctx.dataset.type === 'scatter') return 'Mid: ' + Math.round(ctx.raw.x);
+                  return 'Range: ' + ctx.raw[0] + ' – ' + ctx.raw[1];
+                }
+              }
+            }
+          },
+          scales: {
+            x: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+    })();
+
+    // ============ KANO CHART ============
+    const kanoData = {{KANO_CHART_DATA_JSON}};
+    (function() {
+      const el = document.getElementById('kanoChart');
+      if (!el || !kanoData || !kanoData.labels) return;
+      new Chart(el, {
+        type: 'bar',
+        data: {
+          labels: kanoData.labels,
+          datasets: [
+            { label: 'Must-have', data: kanoData.must, backgroundColor: '#f87171' },
+            { label: 'Performance', data: kanoData.performance, backgroundColor: '#fbbf24' },
+            { label: 'Delighter', data: kanoData.delighter, backgroundColor: '#4ade80' },
+            { label: 'Indifferent', data: kanoData.indifferent, backgroundColor: '#64748b' },
+            { label: 'Reverse', data: kanoData.reverse, backgroundColor: '#7f1d1d' }
+          ]
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          plugins: { legend: { position: 'top' } },
+          scales: {
+            x: { stacked: true, grid: { display: false } },
+            y: { stacked: true, grid: { color: 'rgba(255,255,255,0.05)' } }
+          }
+        }
+      });
+    })();
+
+    // ============ PROOF SIGNALS RADAR ============
+    // Expected shape: {labels: ['Vividness','Speed','Travelability','Defensibility'], series: [{name:'Outcome 1', data:[4,3,2,5]}, ...]}
+    const proofData = {{PROOF_CHART_DATA_JSON}};
+    (function() {
+      const el = document.getElementById('proofSignalsRadar');
+      if (!el || !proofData || !proofData.labels) return;
+      const palette = ['#7aa2ff','#a78bfa','#4ade80','#fbbf24','#f87171','#22d3ee','#f472b6'];
+      new Chart(el, {
+        type: 'radar',
+        data: {
+          labels: proofData.labels,
+          datasets: (proofData.series || []).map((s, i) => ({
+            label: s.name,
+            data: s.data,
+            fill: true,
+            backgroundColor: palette[i % palette.length] + '33',
+            borderColor: palette[i % palette.length],
+            borderWidth: 2,
+            pointBackgroundColor: palette[i % palette.length]
+          }))
+        },
+        options: {
+          responsive: true, maintainAspectRatio: false,
+          scales: {
+            r: {
+              min: 0, max: 5,
+              ticks: { stepSize: 1, color: '#6a7795', backdropColor: 'transparent' },
+              grid: { color: 'rgba(255,255,255,0.08)' },
+              pointLabels: { color: '#e6ecff', font: { size: 12, weight: '600' } },
+              angleLines: { color: 'rgba(255,255,255,0.08)' }
+            }
+          },
+          plugins: { legend: { position: 'top' } }
+        }
+      });
+    })();
+
+    // ============ STRATEGY CANVAS RADARS ============
+    // Array of canvases, each: {canvasId, factors: [...], series: [{name, data, isAnchor}]}
+    const strategyCanvases = {{STRATEGY_CANVAS_DATA_JSON}};
+    (function() {
+      if (!strategyCanvases || !strategyCanvases.length) return;
+      const palette = ['#7aa2ff','#a78bfa','#4ade80','#fbbf24','#f87171','#22d3ee','#f472b6'];
+      strategyCanvases.forEach(function(c) {
+        const el = document.getElementById(c.canvasId);
+        if (!el) return;
+        new Chart(el, {
+          type: 'radar',
+          data: {
+            labels: c.factors,
+            datasets: c.series.map(function(s, i) {
+              const color = s.isAnchor ? '#ffffff' : palette[i % palette.length];
+              return {
+                label: s.name + (s.isAnchor ? ' (anchor)' : ''),
+                data: s.data,
+                fill: !s.isAnchor,
+                backgroundColor: s.isAnchor ? 'rgba(255,255,255,0.08)' : color + '30',
+                borderColor: color,
+                borderWidth: s.isAnchor ? 3 : 2,
+                borderDash: s.isAnchor ? [6, 4] : [],
+                pointBackgroundColor: color,
+                pointRadius: s.isAnchor ? 5 : 3
+              };
+            })
+          },
+          options: {
+            responsive: true, maintainAspectRatio: false,
+            scales: {
+              r: {
+                min: 0, max: 5,
+                ticks: { stepSize: 1, color: '#6a7795', backdropColor: 'transparent' },
+                grid: { color: 'rgba(255,255,255,0.08)' },
+                pointLabels: { color: '#e6ecff', font: { size: 11, weight: '600' } },
+                angleLines: { color: 'rgba(255,255,255,0.08)' }
+              }
+            },
+            plugins: {
+              legend: { position: 'top' },
+              title: { display: !!c.title, text: c.title, color: '#e6ecff', font: { size: 14, weight: '700' } }
+            }
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "name": "strategic-research",
+  "version": "1.0.0",
+  "description": "End-to-end strategic research pipeline. Five skills that chain: industry-process-map → audience-segment-research → willingness-to-pay-research → competitor-evaluation → strategic-synthesis-report. Each skill consumes the upstream YAML handoff and produces a structured artifact; the final skill renders a self-contained HTML report with executive summary, per-section analysis, cross-skill synthesis, tables, heatmaps, and interactive charts.",
+  "author": {
+    "name": "Konstantin Valiotti",
+    "email": "valiotti.konst@gmail.com"
+  },
+  "homepage": "https://kvaliotti.substack.com",
+  "license": "MIT",
+  "keywords": [
+    "strategy",
+    "product-management",
+    "research",
+    "competitive-analysis",
+    "segmentation",
+    "willingness-to-pay",
+    "positioning",
+    "blue-ocean",
+    "7-powers",
+    "jtbd",
+    "kano",
+    "synthesis"
+  ],
+  "commands": [
+    {
+      "name": "strategic-research",
+      "description": "Run the full 5-skill strategic-research pipeline end-to-end, or resume from a specific step."
+    }
+  ]
+}

@@ -9,6 +9,12 @@
       "source": "./prd-workflow",
       "description": "End-to-end PRD pipeline: draft, evaluate gaps, brainstorm real-world situations/behaviours",
       "version": "0.1.0"
+    },
+    {
+      "name": "strategic-research",
+      "source": "./strategic-research",
+      "description": "Five-skill strategic research pipeline: industry process map → audience segments → willingness-to-pay → competitor evaluation → self-contained HTML synthesis report. Run end-to-end with /strategic-research or invoke any skill standalone.",
+      "version": "1.0.0"
     }
   ]
 }
