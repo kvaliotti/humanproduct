@@ -1,0 +1,9 @@
+{
+  "name": "pmm-define-and-review-positioning",
+  "version": "0.1.0",
+  "description": "Product positioning toolkit. Define positioning through a guided 10-step workshop, review existing positioning, map competitive alternatives, select market frames, and build sales stories.",
+  "author": {
+    "name": "Konstantin Valiotti"
+  },
+  "keywords": ["positioning", "product-marketing", "competitive-analysis", "go-to-market"]
+}

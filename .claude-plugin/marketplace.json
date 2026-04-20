@@ -15,6 +15,12 @@
       "source": "./strategic-research",
       "description": "Five-skill strategic research pipeline: industry process map → audience segments → willingness-to-pay → competitor evaluation → self-contained HTML synthesis report. Run end-to-end with /strategic-research or invoke any skill standalone.",
       "version": "1.0.0"
+    },
+    {
+      "name": "pmm-define-and-review-positioning",
+      "source": "./pmm-define-and-review-positioning",
+      "description": "Product positioning toolkit: guided 10-step workshop, positioning review/audit, competitive alternatives deep dive, market frame selection, and sales story builder. Run end-to-end with positioning-orchestrator or invoke any skill standalone.",
+      "version": "0.1.0"
     }
   ]
 }
