@@ -20,6 +20,10 @@ strategic-research/               # plugin — also ships a slash command
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/assets/     # optional: templates the skill writes out (HTML, md scaffolds)
   skills/<skill-name>/references/
+pmm-define-and-review-positioning/ # plugin — six skills, no slash commands
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md
+  skills/<skill-name>/references/
 ```
 
 Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
@@ -67,6 +71,19 @@ Five skills chained by YAML handoffs, orchestrated by the `/strategic-research` 
 The YAML handoff schemas are the contract between skills — they live under each skill's `references/handoff-schema.md`. Breaking a schema breaks the pipeline, so treat those files as load-bearing and bump `version` in `plugin.json` + `marketplace.json` when changing one.
 
 Skills are also callable individually. The orchestrator command supports `--from=step-N` to resume mid-pipeline when upstream artifacts already exist.
+
+## pmm-define-and-review-positioning architecture
+
+Six skills forming a positioning toolkit based on the 5+1 framework (Competitive Alternatives → Unique Attributes → Value Themes → Target Market → Market Category → optional Trends):
+
+1. `positioning-workshop` — full guided 10-step process producing a filled 5+1 canvas, narrative, and pressure test results
+2. `positioning-review` — audits existing positioning against the 9-question pressure test; scores each component and prescribes fixes
+3. `competitive-alternatives` — deep dive into Steps 4-6 (alternatives → attributes → value themes); produces YAML handoff for downstream skills
+4. `market-frame-selector` — Step 8 decision tool: Head to Head vs Big Fish Small Pond vs Create a New Game
+5. `sales-story-builder` — translates a completed canvas into a 7-stage sales narrative plus story-on-a-page
+6. `positioning-orchestrator` — runs all skills in sequence (workshop → market frame → capture → sales story) with phase-boundary confirmations
+
+Skills pass structured YAML between phases. Each skill is also callable standalone. Reference files under each skill's `references/` directory provide methodology detail, case studies, and scoring rubrics.
 
 ## Distribution
 

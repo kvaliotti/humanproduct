@@ -15,6 +15,7 @@ Then browse and install plugins:
 ```
 /plugin install prd-workflow@human-led-product-claude-plugins
 /plugin install strategic-research@human-led-product-claude-plugins
+/plugin install pmm-define-and-review-positioning@human-led-product-claude-plugins
 ```
 
 ## Plugins
@@ -46,6 +47,20 @@ Skills chain via YAML handoffs, so they compose cleanly and you can resume the p
 
 See [strategic-research/README.md](./strategic-research/README.md) for details.
 
+### pmm-define-and-review-positioning
+
+Product positioning toolkit grounded in the 5+1 positioning framework. Define positioning through a guided workshop, audit existing positioning, or go deep on specific steps.
+
+Six skills:
+- **positioning-workshop** — full guided 10-step positioning process
+- **positioning-review** — audit and stress-test existing positioning
+- **competitive-alternatives** — deep dive into alternatives, attributes, and value themes
+- **market-frame-selector** — choose between Head to Head / Big Fish Small Pond / Create a New Game
+- **sales-story-builder** — 7-stage sales narrative from completed positioning
+- **positioning-orchestrator** — end-to-end pipeline running all skills in sequence
+
+See [pmm-define-and-review-positioning/README.md](./pmm-define-and-review-positioning/README.md) for details.
+
 ## Repository layout
 
 ```
@@ -56,6 +71,9 @@ prd-workflow/                     # plugin
 strategic-research/               # plugin
   .claude-plugin/plugin.json
   commands/strategic-research.md  # /strategic-research orchestrator
+  skills/
+pmm-define-and-review-positioning/ # plugin
+  .claude-plugin/plugin.json
   skills/
 ```
 
