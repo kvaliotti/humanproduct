@@ -16,6 +16,7 @@ Then browse and install plugins:
 /plugin install prd-workflow@human-led-product-claude-plugins
 /plugin install strategic-research@human-led-product-claude-plugins
 /plugin install pmm-define-and-review-positioning@human-led-product-claude-plugins
+/plugin install user-research@human-led-product-claude-plugins
 ```
 
 ## Plugins
@@ -61,6 +62,20 @@ Six skills:
 
 See [pmm-define-and-review-positioning/README.md](./pmm-define-and-review-positioning/README.md) for details.
 
+### user-research
+
+End-to-end user research workflow — from scoping what to learn, through fieldwork prep, to analysis and review. Supports both general research (discovery, validation, exploratory) and behavioral research (COM-B, B=MAP) methodologies.
+
+Six skills in three paired build/evaluate phases:
+- **build-research-brief** — structured research brief from a business problem
+- **evaluate-research-brief** — stress-test the brief before fieldwork
+- **build-research-guide** — convert brief into interview guide with probes and timing
+- **evaluate-research-guide** — validate guide quality and Mom Test compliance
+- **analyze-research** — process transcripts into coded findings and recommendations
+- **review-research-analysis** — evaluate analysis rigor and evidence before decisions
+
+See [user-research/README.md](./user-research/README.md) for details.
+
 ## Repository layout
 
 ```
@@ -73,6 +88,9 @@ strategic-research/               # plugin
   commands/strategic-research.md  # /strategic-research orchestrator
   skills/
 pmm-define-and-review-positioning/ # plugin
+  .claude-plugin/plugin.json
+  skills/
+user-research/                    # plugin
   .claude-plugin/plugin.json
   skills/
 ```

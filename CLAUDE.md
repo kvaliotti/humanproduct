@@ -24,6 +24,10 @@ pmm-define-and-review-positioning/ # plugin — six skills, no slash commands
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/references/
+user-research/                    # plugin — six skills, no slash commands
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md
+  skills/<skill-name>/references/
 ```
 
 Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
@@ -84,6 +88,19 @@ Six skills forming a positioning toolkit based on the 5+1 framework (Competitive
 6. `positioning-orchestrator` — runs all skills in sequence (workshop → market frame → capture → sales story) with phase-boundary confirmations
 
 Skills pass structured YAML between phases. Each skill is also callable standalone. Reference files under each skill's `references/` directory provide methodology detail, case studies, and scoring rubrics.
+
+## user-research architecture
+
+Six skills forming a paired build/evaluate pipeline for qualitative user research. Each phase produces a markdown artifact; the evaluate skill stress-tests it before the next phase begins:
+
+1. `build-research-brief` — defines what to learn, from whom, and why; auto-detects research type (general, behavioral, or mixed)
+2. `evaluate-research-brief` — scored evaluation with fatal-flaw gate, anti-pattern detection, and Mom Test check; verdict gates fieldwork
+3. `build-research-guide` — translates brief into tactical interview guide with probes, timing, and dig triggers
+4. `evaluate-research-guide` — validates guide quality, question phrasing, and structural coverage; verdict gates fieldwork
+5. `analyze-research` — processes transcripts/notes into coded findings; behavioral mode adds COM-B coding and B=MAP analysis
+6. `review-research-analysis` — evaluates analysis rigor, evidence backing, and failure patterns before the team acts on findings
+
+Each skill loads methodology-specific references from its `references/` directory (`behavioral-*.md` and `general-*.md`). Skills are callable standalone or in sequence. No YAML handoff schema between skills — artifacts are markdown files the next skill reads directly.
 
 ## Distribution
 

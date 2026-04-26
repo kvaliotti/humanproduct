@@ -1,0 +1,9 @@
+{
+  "name": "user-research",
+  "version": "0.1.0",
+  "description": "End-to-end user research workflow: build and evaluate research briefs, create and evaluate interview guides, analyze research data, and review research analysis. Supports both general (discovery, validation, exploratory) and behavioral (COM-B, B=MAP) research methodologies.",
+  "author": {
+    "name": "Konstantin Valiotti"
+  },
+  "keywords": ["user-research", "interviews", "qualitative-research", "com-b", "behavioral-research", "mom-test"]
+}
