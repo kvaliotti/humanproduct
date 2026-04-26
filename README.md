@@ -17,6 +17,7 @@ Then browse and install plugins:
 /plugin install strategic-research@human-led-product-claude-plugins
 /plugin install pmm-define-and-review-positioning@human-led-product-claude-plugins
 /plugin install user-research@human-led-product-claude-plugins
+/plugin install plg-growth@human-led-product-claude-plugins
 ```
 
 ## Plugins
@@ -76,6 +77,34 @@ Six skills in three paired build/evaluate phases:
 
 See [user-research/README.md](./user-research/README.md) for details.
 
+### plg-growth
+
+Product-Led Growth toolkit — assess readiness, decompose revenue, choose acquisition models, run domain-specific analysis across the full AARMS funnel, design growth loops, operationalize product-led sales, and plan org transformation. All grounded in structured problem solving and proven PLG frameworks.
+
+Fourteen skills organized as a hub-and-spoke model:
+
+**Orchestration & Assessment:**
+- **plg-orchestrator** — entry point: diagnoses PLG maturity and routes to the right skill(s)
+- **plg-readiness** — deep PLG fit assessment with suitability criteria, pillar maturity, and PMF signals
+- **plg-revenue-analysis** — revenue driver tree decomposition with sensitivity analysis
+
+**Acquisition & Model Selection:**
+- **acquisition-domain** — product-led acquisition analysis (viral, SEO, sidecar products, signup optimization)
+- **acquisition-model-selector** — choose between freemium, free trial, ungated, reverse trial, or self-service demo
+
+**Core AARMS Domains:**
+- **activation-domain** — activation metric definition, aha moment identification, time-to-value optimization
+- **retention-domain** — 4-component retention model with behavioral science (B=MAT, COM-B)
+- **monetisation-domain** — pricing strategy, packaging, freemium conversion, ARPA growth
+- **satisfaction-domain** — NPS/CSAT/CES analysis, PMF survey, satisfaction-to-retention correlation
+
+**Cross-cutting:**
+- **growth-loops** — viral, content, paid, and sales loops with k-factor math
+- **product-led-sales** — PQA/PQL scoring, pipeline from product signals, land-and-expand
+- **plg-experimentation** — experiment design with B=MAT behavioral science
+- **plg-data-setup** — TASE framework for PLG data infrastructure design
+- **plg-transformation** — org transformation: strategic alignment, team design, process design
+
 ## Repository layout
 
 ```
@@ -91,6 +120,9 @@ pmm-define-and-review-positioning/ # plugin
   .claude-plugin/plugin.json
   skills/
 user-research/                    # plugin
+  .claude-plugin/plugin.json
+  skills/
+plg-growth/                       # plugin
   .claude-plugin/plugin.json
   skills/
 ```

@@ -27,6 +27,12 @@
       "source": "./user-research",
       "description": "End-to-end user research workflow: build and evaluate research briefs, create and evaluate interview guides, analyze research data, and review research analysis. Supports both general (discovery, validation, exploratory) and behavioral (COM-B, B=MAP) research methodologies.",
       "version": "0.1.0"
+    },
+    {
+      "name": "plg-growth",
+      "source": "./plg-growth",
+      "description": "Product-Led Growth toolkit: assess PLG readiness, decompose revenue drivers, choose acquisition models, run AARMS domain analysis (acquisition, activation, retention, monetisation, satisfaction), design growth loops, operationalize product-led sales, plan experiments, set up PLG data infrastructure, and plan org transformation. Grounded in structured problem solving (issue trees, hypothesis trees, MECE, 80/20, Minto Pyramid) and proven PLG frameworks.",
+      "version": "1.0.0"
     }
   ]
 }

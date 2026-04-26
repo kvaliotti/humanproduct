@@ -28,6 +28,10 @@ user-research/                    # plugin — six skills, no slash commands
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/references/
+plg-growth/                       # plugin — fourteen skills, no slash commands
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md
+  skills/<skill-name>/references/
 ```
 
 Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
@@ -101,6 +105,34 @@ Six skills forming a paired build/evaluate pipeline for qualitative user researc
 6. `review-research-analysis` — evaluates analysis rigor, evidence backing, and failure patterns before the team acts on findings
 
 Each skill loads methodology-specific references from its `references/` directory (`behavioral-*.md` and `general-*.md`). Skills are callable standalone or in sequence. No YAML handoff schema between skills — artifacts are markdown files the next skill reads directly.
+
+## plg-growth architecture
+
+Fourteen skills forming a comprehensive Product-Led Growth toolkit. A hub-and-spoke model with `plg-orchestrator` as the entry point that diagnoses current state and routes to specialized skills:
+
+**Orchestration & Assessment:**
+1. `plg-orchestrator` — entry point: diagnoses PLG maturity, builds issue tree, routes to the right skill(s)
+2. `plg-readiness` — deep PLG fit assessment: suitability criteria, pillar maturity, PMF signals, competitive moats, decision-driver research
+3. `plg-revenue-analysis` — revenue driver tree decomposition, sensitivity analysis, opportunity sizing
+
+**Acquisition & Model Selection:**
+4. `acquisition-domain` — product-led acquisition analysis: viral growth, product-driven SEO, sidecar products, signup optimization
+5. `acquisition-model-selector` — choose between freemium, free trial, ungated, reverse trial, or self-service demo
+
+**Core AARMS Domains (Analysis / Data Analysis / Work Plan modes):**
+6. `activation-domain` — activation metric definition, aha moment identification, time-to-value optimization
+7. `retention-domain` — 4-component retention model (activation, adoption, engagement, resurrection) with B=MAT and COM-B
+8. `monetisation-domain` — pricing strategy, packaging, freemium conversion, ARPA growth, expansion revenue
+9. `satisfaction-domain` — NPS/CSAT/CES analysis, PMF survey, satisfaction-to-retention correlation
+
+**Cross-cutting Skills:**
+10. `growth-loops` — design viral, content, paid, and sales loops with k-factor math and network effects analysis
+11. `product-led-sales` — PQA/PQL scoring, sales pipeline from product signals, land-and-expand playbooks
+12. `plg-experimentation` — experiment design with B=MAT behavioral science, sample size calculation, backlog prioritization
+13. `plg-data-setup` — TASE framework (Track, Analyse, Sync, Experiment) for PLG data infrastructure design
+14. `plg-transformation` — org transformation planning: strategic alignment, team design (OST), process design (Freedom Within Frame)
+
+All skills share a unified structured problem-solving backbone: issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto Pyramid synthesis, and hypothesis-driven work plans. Skills are callable standalone or via the orchestrator. No YAML handoff schemas between skills — the orchestrator routes by reading diagnostic context.
 
 ## Distribution
 
