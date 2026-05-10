@@ -80,7 +80,15 @@ If the user mentioned constraints, list them. If not, infer reasonable scope bou
 ### FAQ
 Populate with questions that came up during your analysis of the input. These are questions a reasonable engineer or designer would ask. Provide your best answers.
 
-## Step 4: Present and iterate
+## Step 4: Verify against the initial request & update PRD
+Launch a sub-agent that will verify the PRD against the initial request: a document that user shared, their prompt, or anything else that led to PRD being written. 
+If the PRD missed parts of the initial request, address them before presenting to the user. If the omission happened because of user's answers during the session, that's OK, but highlight it.
+
+Verification should produce a table of all pieces of the initial request mapped to PRD. It should highlight what was omitted.
+
+Next, update the PRD based on these omissions (unless they happened because of user's actions or discussions within the session, so they are acceptable).
+
+## Step 5: Present and iterate
 
 Present the full PRD. Then explicitly say:
 

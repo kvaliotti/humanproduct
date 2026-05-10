@@ -28,6 +28,10 @@ Product documents fail in predictable ways. The most dangerous gaps aren't the b
 
 This skill exists to surface these gaps before they become bugs, delays, or design debt.
 
+## Step 0: Launch a separate agent to avoid context pollution
+
+A separate agent that doesn't have the session context, and, thus, is unpolluted, should be launched for evaluation. 
+
 ## Step 1: Ingest the PRD
 
 Read the full document. Build a mental model of:
