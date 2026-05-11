@@ -33,6 +33,12 @@
       "source": "./plg-growth",
       "description": "Product-Led Growth toolkit: assess PLG readiness, decompose revenue drivers, choose acquisition models, run AARMS domain analysis (acquisition, activation, retention, monetisation, satisfaction), design growth loops, operationalize product-led sales, plan experiments, set up PLG data infrastructure, and plan org transformation. Grounded in structured problem solving (issue trees, hypothesis trees, MECE, 80/20, Minto Pyramid) and proven PLG frameworks.",
       "version": "1.0.0"
+    },
+    {
+      "name": "event-tracking",
+      "source": "./event-tracking",
+      "description": "Define, structure, and review analytics event tracking plans for any product. Four-stage pipeline: analytical use cases → event definition → tracking plan review → platform-specific formatting. Covers naming conventions, property design, user properties, firing conditions, and platform compliance for Amplitude, Mixpanel, PostHog, Segment, and GA4.",
+      "version": "0.1.0"
     }
   ]
 }

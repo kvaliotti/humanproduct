@@ -32,6 +32,10 @@ plg-growth/                       # plugin — fourteen skills, no slash command
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/references/
+event-tracking/                   # plugin — five skills, no slash commands
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md
+  skills/<skill-name>/references/
 ```
 
 Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
@@ -133,6 +137,18 @@ Fourteen skills forming a comprehensive Product-Led Growth toolkit. A hub-and-sp
 14. `plg-transformation` — org transformation planning: strategic alignment, team design (OST), process design (Freedom Within Frame)
 
 All skills share a unified structured problem-solving backbone: issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto Pyramid synthesis, and hypothesis-driven work plans. Skills are callable standalone or via the orchestrator. No YAML handoff schemas between skills — the orchestrator routes by reading diagnostic context.
+
+## event-tracking architecture
+
+Five skills forming a four-stage pipeline for analytics event tracking. The orchestrator assesses current state and routes to the appropriate stage — users can enter at any point:
+
+1. `tracking-orchestrator` — entry point: gathers product context, detects existing naming conventions (from analytics tools or codebase), and routes to the right stage
+2. `analytics-use-cases` — defines stakeholder questions, analysis types (funnel, retention, segmentation, etc.), dashboard specs, and conceptual event requirements before any events are named
+3. `event-definition` — converts use cases into concrete event specs: names, properties, firing conditions, user/group properties, PII classification, and sample payloads. Uses `references/naming-conventions.md`, `references/property-patterns.md`, `references/decision-framework.md`, and `references/platform-constraints.md`
+4. `tracking-plan-review` — audits existing tracking across 7 dimensions (naming consistency, coverage, redundancy, property quality, platform compliance, user properties, firing clarity) with a scored report. Uses `references/platform-constraints.md`
+5. `platform-formatter` — generates platform-specific event names, property formats, sample payloads, and SDK code snippets for Amplitude, Mixpanel, PostHog, Segment, and GA4. Uses `references/platform-formats.md`
+
+Key design decisions: events must trace to analytical use cases; parameterization test (one event with properties vs. multiple events) is the primary design tool; platform constraints are validated during event definition, not just at formatting time; naming conventions are detected from existing tracking and matched, not imposed. No YAML handoff schemas between skills — artifacts are markdown files the next skill reads directly.
 
 ## Distribution
 

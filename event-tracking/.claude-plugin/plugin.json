@@ -1,0 +1,9 @@
+{
+  "name": "event-tracking",
+  "version": "0.1.0",
+  "description": "Define, structure, and review analytics event tracking plans for any product. Covers naming conventions, property design, user properties, firing conditions, and platform-specific formatting for Amplitude, Mixpanel, PostHog, Segment, and GA4.",
+  "author": {
+    "name": "Kostya Valiotti"
+  },
+  "keywords": ["analytics", "events", "tracking", "taxonomy", "amplitude", "mixpanel", "posthog", "segment"]
+}

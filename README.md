@@ -18,6 +18,7 @@ Then browse and install plugins:
 /plugin install pmm-define-and-review-positioning@human-led-product-claude-plugins
 /plugin install user-research@human-led-product-claude-plugins
 /plugin install plg-growth@human-led-product-claude-plugins
+/plugin install event-tracking@human-led-product-claude-plugins
 ```
 
 ## Plugins
@@ -105,6 +106,19 @@ Fourteen skills organized as a hub-and-spoke model:
 - **plg-data-setup** — TASE framework for PLG data infrastructure design
 - **plg-transformation** — org transformation: strategic alignment, team design, process design
 
+### event-tracking
+
+Analytics event tracking toolkit — define what to track, how to name it, and how to ship it to your analytics platform. Four-stage pipeline from analytical questions to platform-ready implementation specs.
+
+Five skills:
+- **tracking-orchestrator** — entry point: assesses current state and routes to the right stage
+- **analytics-use-cases** — define stakeholder questions, dashboards, and analysis types before naming any events
+- **event-definition** — concrete event specs with names, properties, firing conditions, and user properties
+- **tracking-plan-review** — audit existing tracking for naming consistency, coverage gaps, redundancy, and platform compliance
+- **platform-formatter** — generate platform-specific names, payloads, and SDK code for Amplitude, Mixpanel, PostHog, Segment, or GA4
+
+See [event-tracking/README.md](./event-tracking/README.md) for details.
+
 ## Repository layout
 
 ```
@@ -123,6 +137,9 @@ user-research/                    # plugin
   .claude-plugin/plugin.json
   skills/
 plg-growth/                       # plugin
+  .claude-plugin/plugin.json
+  skills/
+event-tracking/                   # plugin
   .claude-plugin/plugin.json
   skills/
 ```
