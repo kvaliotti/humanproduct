@@ -146,4 +146,4 @@ event-tracking/                   # plugin
 
 ## Author
 
-Konstantin Valiotti
+Konstantin Valiotti — [PM blog on Substack](https://kvaliotti.substack.com)
