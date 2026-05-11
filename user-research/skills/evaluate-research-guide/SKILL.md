@@ -123,6 +123,37 @@ From `references/general-evaluation.md`:
 - **Contextual inquiry readiness** (if applicable): Observation protocol, travel logistics, environment documentation, summary/verification step
 - **Guide usability:** Scannable, fits on a few pages, printable
 
+### Relevance Audit (Apply to ALL Guides)
+
+The checks above assess whether the guide is well-constructed. This audit checks whether everything in the guide **earns its place** given the available interview time and the research questions it needs to answer.
+
+For each probe in the guide, ask:
+
+1. **Which research question does this probe serve?** If you can't name one, the probe is dead weight. Cut it.
+2. **If you got a perfect answer to this probe, would it change what you recommend?** If not, it's interesting but not necessary.
+3. **Is this probe doing work that another probe already does?** Redundant probes waste minutes you don't have.
+
+For each section in the guide, ask:
+
+4. **If you cut this entire section, would you still answer the core research questions?** If yes, the section is optional at best.
+5. **Is the time allocated to this section proportional to the importance of the research questions it serves?** Don't spend 15 minutes on a secondary question and 5 minutes on the primary one.
+
+**What to flag:**
+
+| Signal | Verdict | Action |
+|--------|---------|--------|
+| Probe directly serves a core research question | Keep | — |
+| Probe is methodologically sound but doesn't serve any research question | Cut | Recommend removing — it steals time from probes that matter |
+| Section covers a COM-B component with no hypothesized barrier | Demote to optional | Only spend time on components where there's reason to suspect an issue |
+| Guide has more probes than the interview can realistically cover (< 2 min/probe) | Trim | Recommend cutting lowest-relevance probes until time budget works |
+| Extensive scaffolding (coding systems, templates) for a simple study | Recommend focused format | The guide's weight should match the research's weight |
+
+**Output for each flagged item:**
+- **Probe/section:** [quote the probe or name the section]
+- **Research question served:** [which one — or "none"]
+- **Recommendation:** Keep / Cut / Make optional / Merge
+- **Time recovered:** [estimated minutes freed up]
+
 ---
 
 ## Step 4: Score
@@ -212,6 +243,17 @@ Brief evaluated against: [filename or "No brief provided"]
 
 [What the guide does well — specific, not generic praise]
 
+## Relevance Audit
+
+[For each probe/section that doesn't earn its place:]
+
+| Probe/Section | Research Question Served | Recommendation | Time Recovered |
+|---|---|---|---|
+
+**Time budget:** [Total must-ask probes] probes × [available minutes] = [min/probe]. [Pass/Fail — need ≥ 2 min/probe]
+
+---
+
 ## Question-Level Annotations
 
 [For each flagged question: quote it, state the problem, provide a rewritten alternative]
@@ -231,8 +273,11 @@ Brief evaluated against: [filename or "No brief provided"]
 Save the evaluation as a markdown file to the user's workspace. After presenting:
 
 1. Highlight the 1-3 changes that would have the biggest impact on data quality
-2. If REVISE or worse, offer to walk through the fixes for the critical issues
-3. If behavioral guide has component imbalance, name which component is under-covered and why it matters
-4. Flag if the guide scope doesn't match the brief scope
+2. **Present the relevance audit** — if probes don't serve a research question or the time budget doesn't work, say so directly: "You have X probes for a Y-minute interview — that's Z minutes per probe. Cut these N probes that don't serve your core questions to get to a realistic pace."
+3. If REVISE or worse, offer to walk through the fixes for the critical issues
+4. If behavioral guide has component imbalance, name which component is under-covered and why it matters
+5. Flag if the guide scope doesn't match the brief scope
+
+If the guide is a focused guide (no coding systems, no note-taking template, no brief-to-guide mapping), evaluate it on its focused scope — these sections are intentionally omitted to keep the guide usable in the interview. Only flag their absence if the research context genuinely requires them (e.g., training new interviewers, multi-site studies needing consistent coding).
 
 Do not over-explain. The evaluation should stand on its own. A short paragraph on the highest-leverage fixes is enough.

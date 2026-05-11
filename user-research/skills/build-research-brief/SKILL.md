@@ -96,11 +96,25 @@ At every input-gathering step, challenge the user's framing:
 
 ---
 
+## Step 2.5: Determine Output Scope
+
+Before drafting, ask the user:
+
+> "Should I create a **focused brief** — the essentials to align your team, recruit participants, and go to field — or an **extended brief** that also covers logistics, roles, timeline, detailed behavioral decompositions, and ethics? Focused is usually enough to get started."
+
+**Default to focused.** Only use extended when the user explicitly requests it or when the research involves multiple segments, a large cross-functional team, regulatory requirements, or complex stakeholder alignment.
+
+---
+
 ## Step 3: Draft the Brief
 
 ### Output Structure
 
-Produce a markdown document following this structure. Include all Universal sections. Include Behavioral or General sections based on the detected research type. Include both if mixed.
+Produce a markdown document using the **focused** or **extended** structure below, based on the scope chosen in Step 2.5.
+
+#### Focused Brief (default)
+
+The focused brief contains only what's needed to align the team on what to learn, from whom, and how to know when you're done. It should fit on 2-3 pages. Every section must directly serve the research question — if a section doesn't change what you'd ask or who you'd recruit, cut it.
 
 ```
 # Research Brief: [Title]
@@ -112,35 +126,72 @@ Research Type: [Behavioral / General / Mixed]
 [One specific question tied to a business decision]
 Decision this informs: [What changes based on findings]
 
-## 2. Background & Current Beliefs
-[Business context, what's known, what's been tried]
+## 2. Background & Hypotheses
+[2-3 sentences of business context — what's happening, what's been tried]
 Hypotheses to test:
 - [Hypothesis 1]
 - [Hypothesis 2]
-
-## 3. Risk Map
-[What goes wrong if assumptions are wrong — ranked by severity]
-Elephant in the room: [The question being avoided]
+Elephant in the room: [The question everyone's avoiding]
 
 --- BEHAVIORAL SECTIONS (include when behavioral) ---
 
-## 4B. Target Behavior Specification
+## 3B. Target Behavior
 Behavior statement: "After [CONTEXT], the user will [SPECIFIC ACTION]."
 - Who: [specific segment]
 - What: [observable action]
 - When: [timing/trigger]
 - Where: [context/setting]
 - How often: [frequency needed]
-- With whom: [social context]
 
-Aspiration this serves: [higher-level goal]
+## 4B. Key Hypotheses by Component
+[Not the full COM-B/B=MAP table — state the 2-3 most likely barriers as testable hypotheses]
+- "We believe [BEHAVIOR] is not happening because [component]. Specifically, [hypothesis]. We will test this by [method]."
+Troubleshooting priority: Prompt → Ability → Motivation
 
-## 5B. Behavior Selection Rationale
+--- GENERAL SECTIONS (include when general) ---
+
+## 3G. Big 3 Questions
+1. [Scary question that could reshape the business]
+2. [Murkiest unknown about customer behavior]
+3. [Question about willingness to pay/commit]
+
+## 4G. Target Segment
+- Who: [specific sub-group defined by behavior, not just demographics]
+- Where to find them: [channels, communities, lists]
+- Existing behavior: [what they do today instead]
+
+--- UNIVERSAL SECTIONS (always include) ---
+
+## 5. Participants
+- Segment definition: [behavioral criteria, not just demographics]
+- Sample size: [5-15, with rationale]
+- Recruitment channels: [where and how]
+- Screening criteria: [behavior-first screening]
+
+## 6. Core Research Questions
+[Numbered list — each tied to a hypothesis or decision. Maximum 7 questions. If you have more, prioritize — which questions, if unanswered, would make the research pointless?]
+
+## 7. Methods & Data Sources
+| Question | Method | Rationale |
+|----------|--------|-----------|
+
+## 8. Success Criteria
+[What "done" looks like — specific, falsifiable]
+```
+
+#### Extended Brief
+
+Use when the user requests it. Start with the full focused brief above, then add the sections below. Include Behavioral or General extended sections based on the detected research type.
+
+```
+--- BEHAVIORAL EXTENDED SECTIONS ---
+
+## 3B-ext. Behavior Selection Rationale
 (If multiple candidate behaviors were considered)
 | Behavior | Impact | Likelihood | Spillover | Measurability | Total |
 |----------|--------|------------|-----------|---------------|-------|
 
-## 6B. Behavioral Decomposition
+## 4B-ext. Full Behavioral Decomposition
 
 ### COM-B Analysis
 | Component | Sub-component | Hypothesis | Research Question |
@@ -158,63 +209,40 @@ Aspiration this serves: [higher-level goal]
 **Prompt:** Current type (Person/Context/Action/None), candidate anchors, trailing edge
 
 ### Action Line Position: [Above / Below / No prompt]
-### Troubleshooting Priority: Prompt → Ability → Motivation
 
-## 7B. Competing Behaviors
+## 5B-ext. Competing Behaviors
 | Competing Behavior | Why it persists (driver) | Research implication |
 |--------------------|-------------------------|----------------------|
 
-## 8B. Testable Hypotheses
-- "We believe [BEHAVIOR] is not happening because [component] is insufficient. Specifically, [hypothesis]. We will test this by [method]."
+--- GENERAL EXTENDED SECTIONS ---
 
---- GENERAL SECTIONS (include when general) ---
-
-## 4G. Big 3 Questions
-1. [Scary question that could reshape the business]
-2. [Murkiest unknown about customer behavior]
-3. [Question about willingness to pay/commit]
-
-## 5G. Research Type Classification
+## 3G-ext. Research Type Classification
 [ ] Generative/Exploratory — "What's up with...?"
 [ ] Descriptive/Explanatory — "What and how?"
 [ ] Evaluative — "Are we getting close?"
 [ ] Causal — "Why is this happening?"
 
-## 6G. Customer Segment
-- Who: [specific sub-group defined by behavior, not just demographics]
-- Where to find them: [channels, communities, lists]
-- Existing behavior: [what they do today instead]
-- Selection criteria: Profitable? Reachable? Rewarding?
-
-## 7G. Interview Type
+## 4G-ext. Interview Type
 [Discovery / Switch / Long-time customer / Cancellation / Interactive / Card sort]
 Rationale: [why this type fits]
 
---- UNIVERSAL SECTIONS (always include) ---
+--- UNIVERSAL EXTENDED SECTIONS ---
 
-## 9. Participants
-- Segment definition: [behavioral criteria, not just demographics]
-- Sample size: [5-15, with rationale]
-- Recruitment channels: [where and how]
-- Screening criteria: [behavior-first screening]
+## 9-ext. Risk Map
+[What goes wrong if assumptions are wrong — ranked by severity]
+
+## 10-ext. Full Participants
 - Incentive: [type and amount]
 - Diversity considerations: [demographics, accessibility, org context]
 
-## 10. Core Research Questions
-[Numbered list — each tied to a specific section of the brief]
-
-## 11. Methods & Data Sources
-| Question/Component | Method | Rationale |
-|--------------------|--------|-----------|
-
-## 12. Logistics
+## 11-ext. Logistics
 - Format: [audio-only / screen share / in-person]
 - Duration: [minutes]
 - Interviews per day: [max 2]
 - Recording: [tool + consent process]
 - Note capture: [method]
 
-## 13. Roles
+## 12-ext. Roles
 | Role | Owner |
 |------|-------|
 | Point Person | |
@@ -223,25 +251,22 @@ Rationale: [why this type fits]
 | Recruiter | |
 | Analyst(s) | |
 
-## 14. Ethics & Bias Acknowledgment
+## 13-ext. Ethics & Bias Acknowledgment
 Known biases: [design, sampling, interviewer, sponsor, social desirability]
 Mitigation: [specific actions]
 Consent: [process]
 
-## 15. Analysis Approach
+## 14-ext. Analysis Approach
 [Journey map / Pain-frequency matrix / COM-B mapping / Team review]
 
-## 16. Success Criteria
-[What "done" looks like — specific, falsifiable]
-
-## 17. Timeline
+## 15-ext. Timeline
 - Desk research: [dates]
 - Recruiting: [dates]
 - Fieldwork: [dates]
 - Analysis: [dates]
 - Report: [date]
 
-## 18. Commitments & Next Steps
+## 16-ext. Commitments & Next Steps
 - Early stage: [facts needed]
 - Mid stage: [commitments to push for]
 - Post-research: [decision/action plan]
@@ -283,8 +308,8 @@ After drafting, run the brief through these checks before presenting:
 Give the user the complete brief as a markdown file saved to their workspace. After presenting:
 
 1. Ask which sections feel weakest or most uncertain
-2. Offer to stress-test specific hypotheses
-3. Note what desk research should happen before fieldwork
-4. Flag if the brief scope is too ambitious for their stated constraints
+2. Note what desk research should happen before fieldwork
+3. Flag if the brief scope is too ambitious for their stated constraints
+4. If you produced a focused brief, offer: "Want me to expand this into an extended brief with full behavioral decomposition, logistics, roles, and timeline?"
 
 Do not over-explain. The brief should stand on its own. A short paragraph on what you flagged during the quality check is enough.

@@ -96,6 +96,32 @@ If any critical parameter is missing, ask the user — but never more than 3 que
 
 ---
 
+## Step 3.5: Determine Output Scope
+
+Before building, ask the user:
+
+> "Should I create a **focused guide** — just the probes you'll actually use in the interview, with time boxes and dig triggers — or an **extended guide** that also includes COM-B coding columns, note-taking templates, brief-to-guide mapping, and the full phrase bank? Focused keeps the guide to something you can actually hold in your head during the conversation."
+
+**Default to focused.** Only use extended when the user explicitly requests it or when they're training new interviewers who need the scaffolding.
+
+### Focused Guide includes:
+- Opening (VFWPA or equivalent)
+- Core question sections with time boxes — **must-ask probes only** (bold)
+- Compact dig triggers (4-5 lines, not a full table)
+- Reaching for the Door
+- Closing (referral ask + catch-all)
+- Key conversational rules (top 3-4, not all 13)
+
+### Extended Guide adds:
+- Full Interviewer Notes section with complete phrase bank
+- Optional probes (italicized) in every section
+- COM-B coding column and B=MAP tags for real-time tagging
+- Brief-to-Guide Mapping table
+- Note-Taking Template
+- Full 13 conversational rules
+
+---
+
 ## Step 4: Build the Guide
 
 Read the appropriate reference file(s) based on the research type detected in Step 2. Follow the methodology in the reference file to construct the guide.
@@ -131,10 +157,15 @@ The guide must:
 
 Before presenting, run the guide through these checks:
 
+### Interview Realism Check (run first)
+- [ ] **Probe count vs. time budget:** Count all must-ask probes. Divide available interview time (minus opening and closing) by probe count. If you get less than 2 minutes per probe, the guide is overstuffed — the interviewer will either rush through questions or skip half of them. Cut probes until you have 2-3 minutes per must-ask probe.
+- [ ] **Core questions capped:** No more than 5-7 core research questions driving the guide. More than that means the brief is trying to learn too much in one study.
+- [ ] **Section count:** Focused guides should have 4-6 sections (not counting opening/closing). If you have more, merge or cut sections that don't directly serve a research question.
+
 ### Every Guide Must Pass These
 - [ ] Every question passes The Mom Test (about their life, not your idea; specifics in the past, not generics about the future)
 - [ ] No questions ask "Would you...?", "Do you think...?", or "How much would you pay for...?"
-- [ ] Every core research question from the brief has at least 2 probes in the guide
+- [ ] Every core research question from the brief has at least one probe in the guide (focused) or at least 2 probes (extended)
 - [ ] Every hypothesis from the brief is testable through the guide — without being revealed
 - [ ] Opening uses VFWPA framework (or equivalent from the reference) — not "Thanks for agreeing to this interview"
 - [ ] "Reaching for the door" question included at the halfway mark
@@ -145,13 +176,12 @@ Before presenting, run the guide through these checks:
 
 ### Behavioral Guides Must Also Pass These
 - [ ] Guide follows Prompt → Ability → Motivation order (not starting with why)
-- [ ] All 6 COM-B sub-components covered with at least 2 probes each
-- [ ] B=MAP sections cover all 3 components (Prompt, Ability, Motivation)
-- [ ] Ability Chain links (Time, Money, Physical effort, Mental energy, Routine fit) each have probes
+- [ ] All 3 B=MAP components (Prompt, Ability, Motivation) have probes
+- [ ] Ability Chain links (Time, Money, Physical effort, Mental energy, Routine fit) each have at least one probe
 - [ ] Competing behaviors section included
 - [ ] No "Why did/didn't you..." questions (invites rationalization) — use contextual reconstruction instead
-- [ ] Observational assessment prompts included where applicable
-- [ ] COM-B coding column or tag system included for real-time tagging during interviews
+- [ ] (Extended only) All 6 COM-B sub-components covered with at least 2 probes each
+- [ ] (Extended only) COM-B coding column or tag system included for real-time tagging
 
 ### General Guides Must Also Pass These
 - [ ] Interview type matches the research question and brief
@@ -167,50 +197,41 @@ Save the complete guide as a markdown file to the user's workspace. Filename: `r
 
 After saving:
 
-1. Present a summary: research type detected, interview type, section count, estimated duration, number of probes
-2. Highlight any quality check failures and how you addressed them
-3. Note which sections map to which research questions from the brief
+1. Present a summary: research type detected, interview type, section count, estimated duration, must-ask probe count, and time per probe
+2. Highlight any realism check concerns (too many probes for the time, sections that don't serve a research question)
+3. If you produced a focused guide, offer: "Want me to expand this into an extended guide with optional probes, coding systems, and note-taking templates?"
 4. Offer: "Want me to adjust any section, add probes for a specific hypothesis, or adapt this for a different segment?"
 
 ---
 
 ## Output Format
 
-The saved guide must follow the template structure from the reference file. At minimum, every guide includes:
+Use the **focused** or **extended** template below, based on the scope chosen in Step 3.5.
+
+### Focused Guide (default)
+
+The focused guide is what the interviewer actually carries into the conversation. It should fit on 2-3 printed pages. No coding systems, no mapping tables — just the probes, time boxes, and enough scaffolding to stay on track.
 
 ```markdown
 # Research Guide: [Segment / Topic]
 
-**Research Brief:** [title or filename]
 **Research Type:** [Behavioral / General / Mixed]
 **Interview Type:** [Discovery / Switch / etc.]
 **Target Duration:** [X minutes]
-**Date:** [date]
+**Must-ask probes:** [count] | **Time per probe:** [~X min]
 
 ---
 
-## Guide at a Glance
+## Key Rules (keep visible)
+1. Stories, not opinions. "Tell me about the last time..."
+2. Silence is a tool. Wait 3 beats after every question.
+3. [1-2 more rules most relevant to this specific guide]
 
-| Section | Duration | Purpose | Brief Questions Covered |
-|---------|----------|---------|------------------------|
-| Opening | X min | ... | — |
-| ... | ... | ... | Q1, Q3 |
-
----
-
-## Interviewer Notes
-
-### Conversational Rules (keep visible)
-[Top 5-7 rules from the reference file, adapted to this specific guide]
-
-### Phrase Bank (for when you panic)
-[5-7 validating/redirecting phrases]
-
-### Dig Triggers
-- Emotion → [probe]
-- Feature request → [probe]
-- Generic claim → [probe]
-- Aspiration instead of behavior → [probe]
+## Dig Triggers
+- Emotion → "Tell me more about that."
+- Feature request → "What would that let you do?"
+- Generic claim → "When's the last time that happened?"
+- "I'm just lazy" → redirect to ability: "Walk me through what would need to happen physically for you to do this."
 
 ---
 
@@ -218,18 +239,12 @@ The saved guide must follow the template structure from the reference file. At m
 [VFWPA framing or equivalent — written in natural language]
 
 ## [Section 2 Title] (X min)
-**Purpose:** [what this section produces]
-**COM-B/B=MAP mapping:** [if behavioral]
+**Purpose:** [what this section answers — tied to a research question]
 
-**Must-ask probes:**
-- **[Probe 1]**
-- **[Probe 2]**
+- **[Must-ask probe 1]**
+- **[Must-ask probe 2]**
 
-*Optional probes (use when signals surface):*
-- *[Probe 3]*
-- *[Probe 4]*
-
-[Repeat for each section...]
+[Repeat for each section — must-ask probes only, 2-4 per section]
 
 ## Reaching for the Door (halfway mark)
 "Thank you so much — I've learned a lot. Is there anything else you think I should know?"
@@ -239,15 +254,47 @@ The saved guide must follow the template structure from the reference file. At m
 - "Who else should I talk to?"
 - "Is there anything else I should have asked?"
 [Administrative wrap-up: incentive, consent confirmation, next steps]
+```
 
----
+### Extended Guide
+
+Start with everything in the focused guide, then add these sections:
+
+```markdown
+## Guide at a Glance
+
+| Section | Duration | Purpose | Brief Questions Covered |
+|---------|----------|---------|------------------------|
+| Opening | X min | ... | — |
+| ... | ... | ... | Q1, Q3 |
+
+## Full Interviewer Notes
+
+### Conversational Rules (keep visible)
+[Top 5-7 rules from the reference file, adapted to this specific guide]
+
+### Phrase Bank (for when you panic)
+[5-7 validating/redirecting phrases]
+
+## Optional Probes (per section)
+
+[For each section, add optional probes below the must-ask probes:]
+
+*Optional probes (use when signals surface):*
+- *[Probe 3]*
+- *[Probe 4]*
+
+## COM-B/B=MAP Coding (behavioral guides)
+
+**COM-B/B=MAP mapping per section:** [which components each section covers]
+**Coding key:** C-Ph | C-Ps | O-Ph | O-So | M-Re | M-Au
+**B=MAP tags:** P | A-T | A-$ | A-PE | A-ME | A-RF | M-Per | M-Act | M-Ctx | CB
 
 ## Brief-to-Guide Mapping
 
 | Brief Research Question | Guide Section(s) | Key Probes |
 |------------------------|-------------------|------------|
 | [Q1 from brief] | Section X | Probes X.1, X.3 |
-| ... | ... | ... |
 
 ## Note-Taking Template
 

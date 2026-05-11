@@ -207,6 +207,43 @@ Scan the analysis for known failure patterns. Each detected pattern gets flagged
 - Missing automatic motivation
 - Attribution bias (self-blame accepted without investigation)
 
+#### Pass 5: Relevance Audit
+
+The previous passes check whether the analysis is well-constructed. This pass checks whether every finding and recommendation **earns its place** given the research question and the decision it was supposed to inform.
+
+For each finding in the analysis, ask:
+
+1. **Does this finding inform the decision stated in the research brief?** If the team wouldn't do anything differently knowing this, it's trivia — interesting but not actionable.
+2. **Is the "so what" specific enough to act on?** "Users struggle with onboarding" is a theme, not a finding. If you can't name what the team should do differently because of this finding, it hasn't earned its place.
+3. **Does the evidence behind this finding actually support the conclusion?** A finding backed by 1 self-report quote and 6 compliments is noise dressed as signal.
+
+For each recommendation in the analysis, ask:
+
+4. **Does this recommendation follow from a finding, or is it the analyst's opinion?** Recommendations should be traceable to findings. If you can't point to the finding that produced this recommendation, it's speculation.
+5. **Is this recommendation within the team's control and scope?** "Change the company culture" is not actionable. "Add a prompt at the end of the standup workflow" is.
+
+For the analysis as a whole, ask:
+
+6. **Did the analysis actually answer the research question?** Sometimes an analysis produces 10 interesting findings but never addresses the core question. Flag this directly.
+7. **Is the analysis proportional to the research?** A 20-page analysis for 5 interviews is probably padding. A focused analysis (executive summary, key findings, next steps) may be all that's warranted.
+
+**What to flag:**
+
+| Signal | Verdict | Action |
+|--------|---------|--------|
+| Finding directly informs the stated decision | Keep | — |
+| Finding is interesting but tangential to the research question | Cut or demote to appendix | Note it exists but don't let it compete for attention with primary findings |
+| Finding has weak evidence (1-2 self-reports) presented with high confidence | Downgrade or cut | Either lower the confidence or remove if it doesn't survive the downgrade |
+| Recommendation doesn't trace to a finding | Cut | Analyst opinion belongs in conversation, not in the deliverable |
+| Analysis has 8+ findings | Flag over-inclusion | Recommend prioritizing to 3-5. If everything is important, nothing is. |
+| Extensive behavioral decomposition for a simple discovery study | Flag over-engineering | The analysis framework should match the research type and complexity |
+
+**Output for each flagged item:**
+- **Finding/recommendation:** [quote the headline]
+- **Research question served:** [which one — or "none"]
+- **Recommendation:** Keep / Cut / Demote to appendix / Merge with another finding
+- **Rationale:** [one sentence]
+
 ---
 
 ## Step 3: Produce the Evaluation Report
@@ -298,6 +335,20 @@ the scores is reduced accordingly.
 
 ---
 
+## Relevance Audit
+
+**Did the analysis answer the research question?** [Yes / Partially / No — with evidence]
+
+[For each finding/recommendation that doesn't earn its place:]
+
+| Finding/Recommendation | Research Question Served | Recommendation | Rationale |
+|---|---|---|---|
+
+**Analysis weight vs. research weight:** [Is the analysis proportional to the data? Flag if a 20-page decomposition was produced from 5 interviews.]
+**Finding count:** [N findings. If >5, flag over-inclusion — recommend prioritizing.]
+
+---
+
 ## Strengths
 
 [What the analysis does well — be specific. Researchers need positive signal too.]
@@ -338,11 +389,12 @@ After saving the evaluation report:
 2. Show the scorecard as a table
 3. Highlight the top 3 critical gaps with concrete fixes
 4. List detected failure patterns
-5. Note strengths
-6. If raw data was unavailable, state the confidence limitation
+5. **Present the relevance audit** — if findings don't serve the research question or recommendations don't trace to findings, say so directly: "Findings X and Y are interesting but don't inform the decision you set out to make. I'd recommend cutting them and leading with Finding Z, which directly answers your research question."
+6. Note strengths
+7. If raw data was unavailable, state the confidence limitation
 
 Then offer:
-- "Want me to produce a revised analysis addressing the [N] critical gaps?"
+- "Want me to produce a revised analysis addressing the [N] critical gaps and cutting the [N] tangential findings?"
 - "Want to drill into any specific criterion?"
 - "Want me to rewrite specific sections?"
 - "Want me to do a deeper cross-check against the raw data?" (if raw data is available but you did a light pass)

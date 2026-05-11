@@ -19,6 +19,38 @@ Default to Mode A unless the user explicitly asks to be walked through the proce
 
 ---
 
+## Output Scope
+
+Before starting analysis, ask the user:
+
+> "Should I produce a **focused analysis** — key findings, what changed, and concrete next steps — or an **extended analysis** with full behavioral decomposition, quote bank, system dynamics, and intervention mapping? Focused gives you what you need to make decisions Monday morning."
+
+**Default to focused.** Only use extended when the user explicitly requests it or when the research involves complex behavioral coding that stakeholders need to see.
+
+### Focused Analysis includes:
+- Executive Summary (3-5 sentences)
+- Key Findings (3-5 findings, each with evidence, confidence level, and business implication)
+- What Changed (hypothesis updates — before/after table)
+- What To Do Next (prioritized actions — the most important section)
+- Open Questions (what still needs answering)
+
+### Extended Analysis adds:
+- Full data classification summary
+- Customer journey map / pain-frequency matrix (general)
+- Full COM-B diagnosis and B=MAP coding summary (behavioral)
+- Per-segment behavioral profiles (behavioral)
+- Bright spot configuration and competing behaviors (behavioral)
+- System dynamics (behavioral)
+- Intervention map with BCW functions and Fogg levers (behavioral)
+- Behavior recipes (behavioral)
+- Segment patterns and earlyvangelist identification (general)
+- Commitment quality assessment (general)
+- Full quote bank organized by theme
+- Detailed confidence assessment table
+- Warning signs
+
+---
+
 ## Step 0: Gather Inputs
 
 Before analyzing anything, you need research data and context.
@@ -232,7 +264,11 @@ If no brief exists, state the implicit hypotheses the research reveals and what 
 
 ### Output Structure
 
-Save a markdown file to the user's workspace. The structure adapts to research type.
+Save a markdown file to the user's workspace. Use the **focused** or **extended** structure based on the scope chosen earlier.
+
+#### Focused Analysis (default)
+
+The focused analysis answers one question: "Based on what we learned, what should we do?" It leads with actions, not methodology. It should fit in 3-4 pages.
 
 ```
 # Research Analysis: [Title]
@@ -245,49 +281,98 @@ Save a markdown file to the user's workspace. The structure adapts to research t
 ---
 
 ## Executive Summary
-[3-5 sentences: what you studied, the headline finding, the primary recommendation]
+[3-5 sentences: what you studied, the headline finding, the primary recommendation. End with the single most important thing the team should do.]
 
 ---
 
-## 1. Data Overview
-- Participants: [count, segments represented]
-- Data quality: [signal-to-noise ratio, any concerns]
-- Coverage: [which research questions have strong data, which are thin]
+## What To Do Next
 
-## 2. Data Classification Summary
-| Category | Count | % of total data points |
-|----------|-------|----------------------|
-| Specific past actions [B] | | |
-| Self-report [SR] | | |
-| Observed [O] | | |
-| Discarded (compliments/fluff) | | |
+[This is the most important section. Lead with it.]
 
---- GENERAL SECTIONS (include when general/mixed) ---
+### Highest priority
+**[Action 1]** — [one sentence: what to do, why, and what evidence supports it]
 
-## 3G. Key Findings by Theme
+### Should also do
+**[Action 2]** — [one sentence]
+**[Action 3]** — [one sentence]
+
+### If more research is needed
+- [Next research question 1]
+- [Next research question 2]
+
+---
+
+## Key Findings
+
+[3-5 findings. Each finding must have evidence and an implication. No finding without a "so what."]
+
+### Finding 1: [headline — a claim, not a theme name]
+**Evidence:** [participant count, key behavioral evidence with [B]/[SR]/[O] tags, representative quote]
+**Confidence:** [High / Medium / Low — with brief rationale]
+**So what:** [What this means for the product/business — the specific decision this informs]
+
+### Finding 2: [headline]
+[Same structure]
+
+### Finding 3: [headline]
+[Same structure]
+
+[Maximum 5 findings. If you have more, you haven't prioritized.]
+
+---
+
+## What Changed
+
+| Hypothesis (from brief) | Before | After | Key Evidence |
+|--------------------------|--------|-------|-------------|
+| [hypothesis 1] | [belief] | [updated belief] | [what changed it] |
+
+[If no brief: state the implicit hypotheses the research revealed and what the data says.]
+
+---
+
+## Open Questions
+[What the data doesn't answer — be specific about what kind of research or data would answer each]
+
+---
+
+## Data Quality Note
+- Signal-to-noise: [ratio — how much was behavioral evidence vs. compliments/fluff]
+- Sample: [any concerns about coverage, diversity, or size]
+- Limitations: [what this analysis can't tell you and why]
+```
+
+#### Extended Analysis
+
+Start with everything in the focused analysis above, then add the sections below. Include General or Behavioral sections based on research type.
+
+```
+--- GENERAL EXTENDED SECTIONS (include when general/mixed) ---
+
+## Findings by Theme (detailed)
 [For each theme: pattern name, strength, supporting evidence, key quotes, implications]
 
-## 4G. Customer Journey Map
+## Customer Journey Map
 [If process data exists: steps, functional/emotional/social dimensions, pain points, time/money costs]
 
-## 5G. Pain and Frequency Matrix
+## Pain and Frequency Matrix
 [2×2 grid with problems plotted; pricing signals extracted]
 
-## 6G. Segment Patterns
+## Segment Patterns
 [Convergence and divergence by segment; recommendations for segment refinement]
 
-## 7G. Earlyvangelist Identification
+## Earlyvangelist Identification
 [Participants showing all 4 signs: have the problem, know they have it, have budget, cobbled together own solution]
 
-## 8G. Commitment Quality Assessment
+## Commitment Quality Assessment
 [Ranked signals: nothing → words → time → reputation → money → combined]
 
---- BEHAVIORAL SECTIONS (include when behavioral/mixed) ---
+--- BEHAVIORAL EXTENDED SECTIONS (include when behavioral/mixed) ---
 
-## 3B. COM-B Behavioral Diagnosis
+## COM-B Behavioral Diagnosis
 [Completed COM-B-D form: each component assessed with evidence, strength rating, and what needs to change]
 
-## 4B. B=MAP Coding Summary
+## B=MAP Coding Summary
 ### Bottleneck Distribution
 [% Prompt / % Ability / % Motivation as primary bottleneck]
 
@@ -297,50 +382,44 @@ Save a markdown file to the user's workspace. The structure adapts to research t
 ### Prompt Profile
 [Types in use, anchor quality, failure modes]
 
-## 5B. Per-Segment B=MAP Profiles
+## Per-Segment B=MAP Profiles
 [For each behavioral segment: profile, diagnosis statement, key evidence]
 
-## 6B. Bright Spot Configuration
+## Bright Spot Configuration
 [What the successful B=MAP profile looks like — the design blueprint]
 
-## 7B. Competing Behaviors
+## Competing Behaviors
 [What users do instead, COM-B drivers, B=MAP profile of competing behavior]
 
-## 8B. System Dynamics
+## System Dynamics
 [Reinforcing loops, balancing mechanisms, feedback delays identified in the data]
 
-## 9B. Intervention Map
+## Intervention Map
 [For each priority barrier: COM-B component, barrier, evidence, candidate intervention functions (BCW) and design levers (Fogg)]
 
-## 10B. Recommended Behavior Recipes
+## Recommended Behavior Recipes
 [For each segment: "After [anchor], they will [tiny behavior]" — only if data supports it]
 
---- UNIVERSAL SECTIONS (always include) ---
+--- UNIVERSAL EXTENDED SECTIONS ---
 
-## Hypothesis Update
-[Table: before/after for each hypothesis from the brief, or implicit hypotheses extracted]
+## Data Classification Summary
+| Category | Count | % of total data points |
+|----------|-------|----------------------|
+| Specific past actions [B] | | |
+| Self-report [SR] | | |
+| Observed [O] | | |
+| Discarded (compliments/fluff) | | |
 
 ## Quote Bank
 [Organized by theme, with context and evidence tags]
 
-## Confidence Assessment
+## Detailed Confidence Assessment
 | Finding | Confidence | Basis |
 |---------|------------|-------|
 | [finding] | High / Medium / Low | [why — sample size, evidence type, consistency] |
 
 ## Warning Signs
 [Any of: all compliments no commitments, inconsistent data suggesting broad segment, unexpected answers that should change plans, missing data that limits conclusions]
-
-## Recommended Next Actions
-1. [Highest-priority action with rationale]
-2. [Second priority]
-3. [Third priority]
-- Next 3 research questions (if more research needed)
-- Segment changes to consider
-- Commitment escalation targets
-
-## Open Questions
-[What the data doesn't answer; what needs follow-up research]
 ```
 
 ---
@@ -401,17 +480,14 @@ Before presenting the analysis, verify:
 
 After saving the analysis file:
 
-1. Present the executive summary and top 3 findings
-2. Highlight the highest-confidence, highest-impact insight
-3. Note any warning signs in the data
-4. State what the data does NOT answer (open questions)
-5. Offer to drill into specific themes, segments, or behavioral components
+1. Present the executive summary and the "What To Do Next" section — these are what the team needs first
+2. Highlight the highest-confidence, highest-impact finding
+3. State what the data does NOT answer (open questions)
 
 Then offer:
-- "Want me to produce the intervention map in more detail?" (behavioral)
-- "Want me to draft personas from this data?" (general)
-- "Want me to compare findings against your original hypotheses?"
-- "Want me to extract marketing copy from the quote bank?"
+- If focused: "Want me to expand this into an extended analysis with full behavioral decomposition, quote bank, and intervention mapping?"
+- "Want me to drill into a specific finding or segment?"
+- "Want me to extract marketing copy from participant quotes?"
 - "Ready to move to research analysis evaluation?" (skill 6 handoff)
 
 ---
@@ -433,3 +509,7 @@ Then offer:
 7. **Flag data quality issues.** If transcripts are thin, if important probes were missed, if the sample skews in ways that limit generalizability — say so. Honest analysis includes its own limitations.
 
 8. **Separate findings from recommendations.** Findings are what the data shows. Recommendations are your analytical judgment about what to do. Keep them in distinct sections so the reader can evaluate each independently.
+
+9. **Every finding needs a "so what."** A finding without a business implication is an observation, not an insight. "5 of 7 users abandoned at step 3" is an observation. "5 of 7 users abandoned at step 3, which means our onboarding completion rate can't improve without simplifying that step" is a finding. If you can't state the implication, the finding isn't ready.
+
+10. **Lead with actions, not methodology.** The reader's first question is "what should we do?" not "how did you analyze this?" Put the recommended next steps before the detailed findings. The methodology validates the actions — it doesn't replace them.

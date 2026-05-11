@@ -156,6 +156,33 @@ Anti-patterns to check (pull the full list from the relevant reference file):
 - Motivation monopoly (behavioral)
 - Solution baked in (behavioral)
 
+#### Pass 4: Relevance Audit
+
+The previous passes check whether the brief is well-constructed. This pass checks whether everything in the brief **earns its place** given the stated research question and the decision it informs.
+
+For each section in the brief, ask:
+
+1. **Does this section change what you'd ask in interviews?** If removing the section wouldn't change a single probe in the guide, it's overhead — recommend cutting it.
+2. **Does this section change who you'd recruit?** If not, it's context for the researcher's head, not the brief.
+3. **Does this section inform the decision stated in Section 1?** If the decision wouldn't change regardless of what this section reveals, it's tangential.
+
+**What to flag:**
+
+| Signal | Verdict | Action |
+|--------|---------|--------|
+| Section directly serves a core research question | Keep | — |
+| Section is methodologically complete but doesn't serve any research question | Cut or demote | Recommend removing from the brief or moving to an appendix |
+| Research question doesn't connect to the stated decision | Cut the question | If learning the answer wouldn't change the decision, it's curiosity, not research |
+| Hypothesis isn't falsifiable through the planned methods | Cut or redesign | Either change the method or drop the hypothesis |
+| COM-B component has no corresponding research question (behavioral) | Flag as speculative | Only include components where you have reason to suspect a barrier |
+| Full extended sections included but research is simple (5 casual interviews, one segment) | Recommend focused format | The brief's weight should match the research's weight |
+
+**Output for each flagged item:**
+- **Section/element:** [what you're questioning]
+- **Relevance to research question:** [how it connects — or doesn't]
+- **Recommendation:** Keep / Cut / Merge into another section / Move to appendix
+- **Rationale:** [one sentence — why this doesn't earn its place]
+
 ---
 
 ## Step 3: Produce the Evaluation Report
@@ -215,6 +242,17 @@ Save a markdown file to the user's workspace with this structure:
 
 ---
 
+## Relevance Audit
+
+[For each section/element that doesn't earn its place:]
+
+| Section/Element | Serves Research Question? | Recommendation | Rationale |
+|---|---|---|---|
+
+**Brief weight vs. research weight:** [Is the brief's complexity proportional to the research? Flag if a 15-page brief is being written for 5 casual interviews.]
+
+---
+
 ## Strengths
 
 [What the brief does well — be specific. Researchers need positive signal too.]
@@ -246,10 +284,11 @@ After saving the evaluation report:
 2. Show the scorecard as a table
 3. Highlight the top 3 critical gaps with concrete fixes
 4. List detected anti-patterns
-5. Note strengths
+5. **Present the relevance audit** — if any sections don't earn their place, say so directly: "Sections X and Y don't serve your research question — I'd recommend cutting them to keep the brief focused."
+6. Note strengths
 
 Then offer:
-- "Want me to produce a revised brief addressing the [N] critical gaps?"
+- "Want me to produce a revised brief addressing the [N] critical gaps and cutting the [N] flagged sections?"
 - "Want to drill into any specific criterion?"
 - "Want me to rewrite specific sections?"
 
@@ -291,7 +330,7 @@ Weight behavioral and general scores proportionally based on the brief's emphasi
 
 4. **Don't inflate.** If the brief is bad, say so. A researcher who goes to the field with a broken brief wastes everyone's time — theirs, the participants', and the team's. Being kind here means being direct.
 
-5. **Don't evaluate what isn't there.** If the brief is a rough draft missing logistics, don't FAIL it on logistics — note it as "not yet addressed" and focus scoring on what's present. Distinguish between "wrong" and "not yet written."
+5. **Don't evaluate what isn't there.** If the brief is a rough draft missing logistics, don't FAIL it on logistics — note it as "not yet addressed" and focus scoring on what's present. Distinguish between "wrong" and "not yet written." If the brief is a focused brief (no logistics, roles, timeline, or detailed decompositions), evaluate it on its focused scope — these sections are intentionally omitted to keep the brief actionable. Only flag their absence if the research context genuinely requires them.
 
 6. **Preserve the researcher's intent.** The goal is to strengthen the brief, not to impose a different research question. If the researcher's question is valid but poorly structured, fix the structure. Don't substitute your question.
 
