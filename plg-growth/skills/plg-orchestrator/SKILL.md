@@ -25,13 +25,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-Every step below uses these principles:
-1. **Issue Trees (MECE decomposition)** — decompose the PLG problem into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** — form testable hypotheses at each branch before gathering data
-3. **Driver Disaggregation** — break metrics into mathematical and behavioral drivers
-4. **80/20 Prioritization** — focus on 2-3 highest-sensitivity branches
-5. **So-What Synthesis (Minto Pyramid)** — conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** — every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **the whole PLG problem space**: decompose into the master issue tree and route to the 2–3 highest-leverage branches. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Step-by-Step Methodology
 
@@ -59,17 +53,17 @@ PLG Success
 ├── 2. Where is the biggest revenue opportunity? → plg-revenue-analysis
 ├── 3. Which acquisition model fits? → acquisition-model-selector
 ├── 4. Which funnel stage is the bottleneck?
-│   ├── Acquisition → [future: acquisition skills]
-│   ├── Activation → [future: activation skills]
-│   ├── Retention → [future: retention skills]
-│   ├── Monetisation → [future: monetisation skills]
-│   └── Satisfaction → [future: satisfaction skills]
+│   ├── Acquisition → acquisition-domain
+│   ├── Activation → activation-domain
+│   ├── Retention → retention-domain
+│   ├── Monetisation → monetisation-domain
+│   └── Satisfaction → satisfaction-domain
 └── 5. What cross-cutting capabilities are missing?
-    ├── Growth loops → [future]
-    ├── Product-led sales → [future]
-    ├── Experimentation → [future]
-    ├── Data setup → [future]
-    └── Transformation → [future]
+    ├── Growth loops → growth-loops
+    ├── Product-led sales → product-led-sales
+    ├── Experimentation → plg-experimentation
+    ├── Data setup → plg-data-setup
+    └── Transformation → plg-transformation
 ```
 
 ### Step 3: Run Rapid Suitability Check (4 Criteria)
@@ -171,8 +165,16 @@ The biggest drop-off in this funnel points to the priority skill.
 | `plg-readiness` | User is unsure if PLG fits; early-stage; no PMF signals yet; wants positioning/decision-driver research |
 | `plg-revenue-analysis` | User has a working product and wants to find highest-leverage growth lever |
 | `acquisition-model-selector` | User needs to decide freemium vs trial vs ungated vs reverse trial |
-| Future domain skills | User has a clear funnel bottleneck (acquisition, activation, retention, monetisation, satisfaction) |
-| Future cross-cutting skills | User needs growth loops, PLS, experimentation, data infra, or org transformation |
+| `acquisition-domain` | User has a clear acquisition bottleneck (traffic, channel mix, signup conversion, CAC) |
+| `activation-domain` | User has an activation bottleneck (aha moment, time-to-value, onboarding completion) |
+| `retention-domain` | User has a retention bottleneck (usage frequency, habit formation, engagement depth) |
+| `monetisation-domain` | User has a monetisation bottleneck (free-to-paid conversion, pricing fit, expansion, NRR) |
+| `satisfaction-domain` | User has a satisfaction/advocacy bottleneck (NPS/CSAT, referral rate, review signals) |
+| `growth-loops` | User needs to design or optimize self-reinforcing growth loops (viral, content, paid, sales) |
+| `product-led-sales` | User needs PQL scoring, sales-assist triggers, or land-and-expand playbooks |
+| `plg-experimentation` | User needs experiment design, prioritization, or statistical rigor |
+| `plg-data-setup` | User needs event tracking, funnel analytics, or PLG data infrastructure |
+| `plg-transformation` | User needs org transformation: alignment, growth team structure, PLG culture shift |
 
 ## Anti-Patterns to Watch For
 

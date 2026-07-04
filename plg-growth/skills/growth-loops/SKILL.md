@@ -1,6 +1,6 @@
 ---
 name: growth-loops
-description: "Design, evaluate, and optimize growth loops — viral, content, paid, and sales loops — with network effects analysis, k-factor math, and loop-funnel integration."
+description: "Design, evaluate, and optimize growth loops — viral, content, paid, and sales loops — including k-factor/viral-coefficient math, network-effects analysis, and loop-funnel integration. Owns loop DESIGN and virality math. For analyzing acquisition channels or signup conversion, use acquisition-domain instead."
 ---
 
 # Growth Loops
@@ -16,7 +16,6 @@ Trigger phrases:
 - "viral loop"
 - "content loop"
 - "design a growth loop"
-- "viral growth"
 - "compounding growth"
 - "network effects"
 - "loops vs funnels"
@@ -27,15 +26,19 @@ Trigger phrases:
 - "UGC loop"
 - "flywheel"
 
+Note: This skill owns loop **design** and virality math (k-factor, viral coefficient, network effects). For analyzing acquisition channels, signup conversion, or which channels bring users in, route to `acquisition-domain`.
+
+## Quick Answer Mode
+
+Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good k-factor?", "how do I calculate viral coefficient?", "which loop type fits my product?" — just answer it directly and concisely, drawing on the frameworks below (loop types, k-factor math, network effects) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+
+Reach for the full methodology when the user wants a real Growth Loop Blueprint, loop design, or loop-vs-funnel analysis — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to design the full growth loop?"
+
+---
+
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose growth loops into mutually exclusive, collectively exhaustive types
-2. **Hypothesis Trees** -- form testable hypotheses about which loops fit the product
-3. **Driver Disaggregation** -- break loop performance into mathematical drivers (k-factor, cycle time, conversion at each step)
-4. **80/20 Prioritization** -- focus on the 1-2 loops with highest structural fit
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **growth loops**: decompose into loop types, disaggregate loop performance into k-factor / cycle time / step conversion, and focus on the 1–2 loops with highest structural fit. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Step-by-Step Methodology
 

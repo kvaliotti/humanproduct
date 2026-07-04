@@ -10,44 +10,46 @@ Orchestrate the full five-skill strategic-research pipeline. Each step consumes 
 ## Pipeline
 
 ```
-1. industry-process-map        → industry-process-map-[slug].md         (+ YAML handoff)
-2. audience-segment-research   → audience-segment-research-[slug].md    (+ YAML handoff)
-3. willingness-to-pay-research → willingness-to-pay-research-[slug].md  (+ YAML handoff)
-4. competitor-evaluation       → competitor-evaluation-[slug].md        (+ YAML handoff)
-5. strategic-synthesis-report  → strategic-synthesis-[slug].html + .md  (final deliverable)
+1. industry-process-map        → strategic-research/01-industry-process-map.md      (+ YAML handoff)
+2. audience-segment-research   → strategic-research/02-audience-segments.md         (+ YAML handoff)
+3. willingness-to-pay-research → strategic-research/03-willingness-to-pay.md        (+ YAML handoff)
+4. competitor-evaluation       → strategic-research/04-competitor-evaluation.md     (+ YAML handoff)
+5. strategic-synthesis-report  → strategic-research/05-synthesis-report.html + .md  (final deliverable)
 ```
+
+All artifacts land in a `strategic-research/` subfolder of the current working directory, under fixed step-numbered names (see `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`).
 
 ## Arguments
 
 - `$1` — the anchor. Can be a product name ("SplitMetrics"), a category ("mobile ad optimization"), or an industry ("B2B revenue intelligence"). Required.
-- `--from=step-N` — optional. Resume from step N (2, 3, 4, or 5). Assumes prior steps' artifacts already exist in `/sessions/adoring-cool-cray/mnt/tempSkills/` with the matching `[slug]`.
+- `--from=step-N` — optional. Resume from step N (2, 3, 4, or 5). Assumes prior steps' artifacts already exist in the `strategic-research/` subfolder of the current working directory under their fixed step-numbered names (`01-industry-process-map.md`, etc.).
 
 ## Behavior
 
-1. **Parse the anchor** from `$ARGUMENTS`. Derive a kebab-case `[slug]` from the anchor.
+1. **Parse the anchor** from `$ARGUMENTS`. Artifact filenames are fixed and step-numbered (no slug needed for them); when a skill derives a kebab-case ID from a name (segment / competitor / matrix-cell IDs), apply the slug algorithm in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` (lowercase; non-alphanumeric → single hyphen; trim) so IDs stay reproducible on resume.
 2. **Confirm scope** with the user via `AskUserQuestion` if ambiguous (max 2 questions — anchor clarification, B2B vs. B2C if not obvious). Otherwise state assumptions explicitly and proceed.
 3. **Sequentially invoke each skill in order**. Between steps:
    - Verify the upstream artifact was written and its YAML handoff is valid.
    - Stop and surface the error if a step fails.
-4. **On step 5 completion**, present the `computer://` link to the HTML report and a one-sentence top-line. Do not restate content in chat.
+4. **On step 5 completion**, tell the user the local path to the HTML report (`strategic-research/05-synthesis-report.html`) and a one-sentence top-line. Do not restate content in chat.
 
 ## Resume behavior (`--from=step-N`)
 
 If `--from=step-N` is given:
 
-1. Load all prior steps' YAML handoffs from their markdown artifacts.
+1. Load all prior steps' YAML handoffs from their fixed-name markdown artifacts in `strategic-research/` (`01-industry-process-map.md`, `02-audience-segments.md`, `03-willingness-to-pay.md`, `04-competitor-evaluation.md`).
 2. Validate that segment IDs, matrix cell IDs, and WTP band IDs are consistent across handoffs.
 3. Begin execution at step N.
 
-If any prior handoff is missing or malformed, halt and tell the user which upstream artifact needs to be regenerated.
+If any prior artifact is missing at its fixed path or its handoff is malformed, halt and tell the user which upstream artifact (by filename) needs to be regenerated.
 
 ## Writing style for chat between steps
 
 One line per step completion:
 
 ```
-✓ Step 1 · industry-process-map → industry-process-map-[slug].md (conf N%)
-✓ Step 2 · audience-segment-research → audience-segment-research-[slug].md (conf N%)
+✓ Step 1 · industry-process-map → strategic-research/01-industry-process-map.md (conf N%)
+✓ Step 2 · audience-segment-research → strategic-research/02-audience-segments.md (conf N%)
 ...
 ```
 
@@ -73,4 +75,4 @@ Runs all 5 steps on anchor "SplitMetrics".
 ```
 /strategic-research "AI Chief of Staff app" --from=step-4
 ```
-Resumes from step 4, assuming steps 1–3 already produced artifacts for slug `ai-chief-of-staff-app`.
+Resumes from step 4, assuming steps 1–3 already wrote their artifacts to `strategic-research/` (`01`–`03`).

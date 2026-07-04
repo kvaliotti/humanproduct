@@ -15,46 +15,27 @@ The user must provide a research brief to evaluate. Sources:
 
 1. **Pasted in chat** — user pastes the brief text directly
 2. **File reference** — user points to a file in the workspace
-3. **Just completed skill 1** — brief was output by build-research-brief in a prior turn or session
+3. **Just completed skill 1** — brief was output by build-research-brief in a prior turn or session. Look in the workspace for files matching `research-brief-*.md`, newest first — this is the exact filename pattern build-research-brief saves to. Don't rely on scanning for generic recent `.md` files; match this pattern specifically so you don't grab a guide or analysis file by mistake.
 
-If no brief is provided, ask: "Which research brief should I evaluate? You can paste it here, point me to a file, or I can look for one in your workspace."
+If no brief is provided or found, ask: "Which research brief should I evaluate? You can paste it here, point me to a file, or I can look for a `research-brief-*.md` file in your workspace."
 
 Do not proceed without a brief.
+
+**Exception — quick/directional pass:** If the user explicitly asks for a quick pass, a directional read, or says something like "just give me a fast take" or "skip the formal process," you may proceed on whatever partial content they share (a rough paste, a half-finished draft, even a verbal description) instead of insisting on a fully located brief. Clearly label the output **Quick/Directional Pass — not a full evaluation**, skip the scored rubric in Step 2, and give a short list of the most important risks plus what a full evaluation would additionally check. This is not the default — only bypass the gate when the user asks for it.
 
 ---
 
 ## Step 1: Detect the Research Type
 
-Before reading reference files or scoring anything, classify the research based on the brief's content. This determines which evaluation criteria to weight and which reference to use as primary.
+Before reading reference files or scoring anything, determine the research type — this decides which evaluation criteria to weight and which reference to use as primary.
 
-### Behavioral Research
-The brief centers on **getting users to do (or stop doing) a specific action**. Signals in the brief:
+**Check the brief first.** Look for a `Research Type:` field near the top of the brief (build-research-brief always writes one). If present, trust it and skip detection — state "Research type detected: [X] (inherited from brief)." Only re-derive the type from scratch if the field is genuinely absent (e.g., a pasted brief with no header), using the signal list in `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md`.
 
-- Target behavior specified (or attempted)
-- Adoption, activation, onboarding, engagement, retention, habit formation, feature usage
-- Behavior change framing ("users aren't doing X", "how to get users to Y")
-- Churn framed as behavior ("users stop logging in after week 2")
-- Conversion actions (signup → first value, trial → paid)
-- COM-B or B=MAP decomposition present (or should be)
+Once the type is known:
 
-**Action:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still evaluate general criteria (logistics, ethics, recruitment) from `references/general-evaluation.md`, but weight behavioral criteria highest.
-
-### General Research
-The brief centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration focus
-- Market validation, willingness to pay, competitive understanding
-- Feature prioritization, product-market fit assessment
-- Customer segmentation, persona building
-- "Why are users churning?" framed as understanding, not behavior change
-- Evaluative research (testing prototypes, concepts)
-
-**Action:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Behavioral criteria (COM-B, B=MAP) are informational — note if they'd strengthen the brief, but don't penalize their absence.
-
-### Mixed
-The brief touches both — e.g., "understand why users churn AND design interventions to retain them."
-
-**Action:** Read both reference files. Evaluate against both frameworks. Flag the dual nature. Weight each framework proportionally to its presence in the brief.
+- **Behavioral:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still evaluate general criteria (logistics, ethics, recruitment) from `references/general-evaluation.md`, but weight behavioral criteria highest.
+- **General:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Behavioral criteria (COM-B, B=MAP) are informational — note if they'd strengthen the brief, but don't penalize their absence.
+- **Mixed:** Read both reference files. Evaluate against both frameworks. Flag the dual nature. Weight each framework proportionally to its presence in the brief.
 
 ---
 

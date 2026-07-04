@@ -1,6 +1,6 @@
 {
   "name": "strategic-research",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "End-to-end strategic research pipeline. Five skills that chain: industry-process-map → audience-segment-research → willingness-to-pay-research → competitor-evaluation → strategic-synthesis-report. Each skill consumes the upstream YAML handoff and produces a structured artifact; the final skill renders a self-contained HTML report with executive summary, per-section analysis, cross-skill synthesis, tables, heatmaps, and interactive charts.",
   "author": {
     "name": "Konstantin Valiotti",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "keywords": [
     "strategy",
-    "product-management",
+    "product-strategy",
     "research",
     "competitive-analysis",
     "segmentation",

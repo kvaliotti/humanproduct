@@ -28,15 +28,17 @@ Trigger phrases:
 - "feature gating"
 - "upgrade triggers"
 
+## Quick Answer Mode
+
+Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good free-to-paid conversion rate?", "how do I calculate ARPA?", "seat-based or usage-based pricing for my product?" — just answer it directly and concisely, drawing on the frameworks below (Pricing Triangle, model-dependent ARPA) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+
+Reach for the full methodology (the three operating modes) when the user wants a real monetisation analysis, pricing strategy, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full monetisation analysis?"
+
+---
+
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose monetisation into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses at each branch before gathering data
-3. **Driver Disaggregation** -- break monetisation metrics into mathematical and behavioral drivers
-4. **80/20 Prioritization** -- focus on 2-3 highest-sensitivity branches
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **monetisation**: decompose via the pricing triangle, and disaggregate ARPA into model-dependent drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 
@@ -70,10 +72,13 @@ Monetisation Success
 │   ├── Unlimited vs limited base use case
 │   ├── Conversion drivers (what creates upgrade urgency)
 │   └── Time-to-limit alignment with value realization
-├── 5. ARPA Decomposition
-│   ├── Core revenue: seats x price per seat
-│   ├── Add-on revenue: # add-ons x add-on price
-│   └── Usage overage revenue
+├── 5. ARPA Decomposition (model-dependent — mirror the Pricing Metric in branch 2)
+│   ├── Seat-based: avg seats x price/seat
+│   ├── Usage-based: avg units consumed x price/unit (+ base/committed fee)
+│   ├── Outcome-based: avg successful outcomes x price/outcome (e.g., per-lead)
+│   ├── Transactional/marketplace: take rate x GMV per account (+ fixed fees)
+│   ├── Add-on revenue: # add-ons x add-on price (across models)
+│   └── Overage revenue (across models)
 └── 6. Conversion to Paid Levers
     ├── Checkout friction and UX
     ├── Pricing page clarity and anchoring
@@ -112,11 +117,17 @@ Walk through the lever checklist across four categories:
 
 #### Step 4: Decompose ARPA Mathematically
 
+ARPA decomposition is **model-dependent** — pick the formula that matches the pricing metric identified in branch 2, then decompose each component. Do not force a seat-based lens onto a usage- or outcome-priced product.
+
 ```
-ARPA = (Avg Seats × Price/Seat) + (Avg Add-ons × Add-on Price) + Usage Overage
+Seat-based:               ARPA = (Avg Seats × Price/Seat) + (Avg Add-ons × Add-on Price) + Usage Overage
+Usage-based:              ARPA = Base/Committed Fee + (Avg Units Consumed × Price/Unit) + Overage
+Outcome-based:            ARPA = (Avg Successful Outcomes × Price/Outcome)         # e.g., per-lead, per-successful-transaction
+Transactional/marketplace: ARPA = (Take Rate × GMV per Account) + Fixed/Listing Fees
+Hybrid:                   base platform fee + one or more of the components above
 ```
 
-For each component:
+For each component (whichever model applies):
 - What is the current level?
 - What is the benchmark?
 - What is the sensitivity (1% improvement in this component = $X revenue impact)?
@@ -166,7 +177,7 @@ Guide the user through these analyses. Ask which they have data for, and priorit
 #### ARPA Decomposition and Trends
 - ARPA trend over time (monthly/quarterly)
 - ARPA by cohort, segment, plan
-- Component breakdown: seats vs add-ons vs usage
+- Component breakdown by pricing model (seats / units / outcomes / take-rate) vs add-ons vs overage
 - New customer ARPA vs expansion ARPA
 
 #### Plan/Tier Mix Analysis
@@ -205,8 +216,9 @@ For each analysis, guide the user to:
 
 **Goal:** Generate hypothesis-driven work items organized by issue tree branch.
 
-Load the work plan template:
-> Read `references/work-plan-template.md`
+Load the shared work plan skeleton, then the monetisation-specific examples:
+> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
+> Read `references/work-plan-examples.md` (monetisation OST / experiment / research examples)
 
 **Determine work plan type based on user situation:**
 

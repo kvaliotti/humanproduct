@@ -148,11 +148,11 @@ Use the template in `assets/output-template.md`. Structure:
 
 The YAML handoff block is non-negotiable — it's the contract with downstream skills. Its schema is in `references/handoff-schema.md`.
 
-Write the artifact to `/sessions/bold-dreamy-mccarthy/mnt/tempSkills/industry-process-map-[short-slug].md` where `[short-slug]` is a kebab-case tag of the anchor or industry (e.g., `splitmetrics-apple-ads`).
+Write the artifact to `strategic-research/01-industry-process-map.md` in the user's current working directory (create the `strategic-research/` folder if it does not exist). This fixed path lets downstream skills and `--from` resume find it deterministically. See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
 
 ### Phase 7 — Share
 
-Link the file with a `computer://` link. Keep the message short — title, one-sentence summary of the chosen framing, link. Don't rehash the content in chat; the file is the deliverable.
+Tell the user the local path where the file was written — `strategic-research/01-industry-process-map.md`. Keep the message short — title, one-sentence summary of the chosen framing, path. Don't rehash the content in chat; the file is the deliverable.
 
 ## MECE audit — mandatory before Phase 6
 
@@ -168,19 +168,15 @@ If you can't pass all five, the framing is wrong. Go back to Phase 3.
 
 ## Writing style for the output
 
-The output is a strategic artifact read by a CPO-level user. Write accordingly:
+Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
 
-- **No filler.** No "this document aims to..." openers. Start with the framing table.
 - **Tables and trees over prose.** Prose only when a concept needs explanation.
 - **Verbs in axis labels.** "Deciding target audience", not "Target audience analysis".
-- **Specific names, not categories.** "Appfigures, AppTweak, SensorTower" beats "ASO tools".
 - **Honest uncertainty.** If a cell is speculative or data is thin, mark it with `?` and explain in the open questions section.
 
 ## When this skill is the wrong tool
 
-- User wants a competitive teardown of specific named competitors → use `product-management:competitive-brief`.
-- User wants to evaluate a specific product idea → use `pm-sage:evaluate-idea`.
-- User wants positioning work → use `pm-sage:position-product`.
-- User wants user research synthesis → wait for skill #2 in this plugin.
+- User wants the audience/users mapped → use `audience-segment-research` (skill #2 in this plugin).
+- User wants a competitive teardown of named vendors, a specific product-idea evaluation, or positioning work → these are outside this plugin; see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`.
 
 This skill maps the **space**, not the products in it and not the users in it. Stay in lane.

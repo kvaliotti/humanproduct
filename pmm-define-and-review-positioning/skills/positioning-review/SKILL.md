@@ -123,4 +123,4 @@ Output a structured report:
 - Be direct. "This positioning is generic" is more useful than "there might be opportunities for improvement."
 - Always provide evidence for scores. "Fails the substitution test because [competitor X] could use this same language" is useful. "Fails" alone is not.
 - Don't just diagnose — prescribe. Every identified problem gets a specific fix.
-- Reference case studies from `references/case-studies.md` when a relevant example exists.
+- Reference case studies from `${CLAUDE_PLUGIN_ROOT}/references/case-studies.md` when a relevant example exists.

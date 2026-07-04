@@ -26,26 +26,27 @@ Two modes:
 1. **Framework filling mode** — the user wants to create or complete a Sit/Beh analysis for their product/feature
 2. **PRD integration mode** — a PRD exists (likely from the prd-draft/prd-evaluate pipeline) and the sit-beh analysis should enrich it with behavioural mechanisms
 
-Check for existing `.sitbeh/` directory in the project root. If framework documents exist there, read them and use them to enrich your work. If not, and the user wants to create one, proceed with filling mode.
+Check for existing `.sitbeh/` directory in the current working directory (cwd). If framework documents exist there, read them and use them to enrich your work. If not, and the user wants to create one, proceed with filling mode.
 
 ## PRD integration mode
 
-When this skill is invoked after prd-draft and prd-evaluate:
+When this skill is invoked after prd-draft and prd-evaluate, the PRD already contains candidate situations — do **not** regenerate or duplicate them. Skip Step 1's situation-generation entirely; instead ingest the existing situations and start the analysis from Step 2.
 
-1. Read the PRD's "Real-world situations to address (sit-beh)" section
-2. Take each situation and run the full framework analysis (Steps 1-4 below)
-3. After completing the analysis, update the PRD:
+1. Read the PRD's "Real-world situations to address (sit-beh)" section. If no PRD path was given, search the current working directory for files matching `PRD-*.md` and use the most recently modified one; if multiple exist, list them and ask the user which to use; if none exist, ask the user for the PRD before proceeding.
+2. For each existing situation, check it matches the canonical situation format (see Step 1 below) and lightly reformat if needed — do **not** invent new situations, drop existing ones, or run Step 1's generation step.
+3. Take each existing situation and run Steps 2-4 of the framework (build scenario → target behaviour → don't-know/don't-want/can't barriers → product-led mechanisms → reinforcement) on it.
+4. After completing the analysis, update the PRD:
    - Add new acceptance criteria derived from product-led mechanisms
    - Add new user stories for mechanisms that represent distinct functionality
    - Enrich the FAQ with behavioural insights
-   - Update situational limitations in the sit-beh section
-4. Save the framework to `.sitbeh/` for future reference
+   - Refine (do not replace) the situational limitations already in the sit-beh section
+5. Save the framework to `.sitbeh/` for future reference
 
 ## Framework filling mode
 
 ### Step 0: Gather input
 
-Accept whatever the user provides — a PRD, a product description, a conversation, or just a vague idea. If the input is thin, ask focused questions:
+Accept whatever the user provides — a PRD, a product description, a conversation, or just a vague idea. If the user references a PRD but gives no path, search the current working directory for files matching `PRD-*.md` and use the most recently modified one; if multiple exist, list them and ask which to use; if none exist, ask the user for the content or path before proceeding. If the input is thin, ask focused questions:
 
 1. **What are you building?** (product initiative)
 2. **What business outcome does success look like?** (business goal — measurable if possible)
@@ -55,9 +56,11 @@ If the user provides a PRD or detailed description, extract answers yourself and
 
 ### Step 1: Identify situations
 
-Situations are the heart of this framework. They replace personas with real moments. Each situation follows this structure:
+Situations are the heart of this framework. They replace personas with real moments. Each situation is one sentence following this canonical structure — the same format used in the PRD template and in the target behaviour statement (Step 2c):
 
-> A **[type of person / person that...]** + **[activation moment: during/after/within... context]** + **[desired outcome: to Verb + specific goal]**
+> **[person]** + **[moment/trigger]** + **[desired outcome]** + **[limitation/friction]**
+
+Spelled out: A **[type of person / person that...]**, **[moment/trigger: during/after/within... context]**, wants to **[desired outcome: Verb + specific goal/outcome/avoided negative]**, **[limitation/friction: within / taking no more than / with / while / ... + precise constraint and its context]**.
 
 Generate 1-3 candidate situations. These should be genuinely different — different contexts, different motivations, different constraints. Not just "new user vs. returning user" but real-life moments.
 
@@ -78,9 +81,9 @@ If you were a coach standing next to this person, what steps would you tell them
 These should be concrete and sequential — a realistic chain of actions, not aspirational platitudes. Usually 2-7 actions unique to the situation.
 
 #### 2c. Target behaviour statement
-Merge everything into one statement (this is a reference artifact, not user-facing copy):
+Merge everything into one statement (this is a reference artifact, not user-facing copy). Start with the situation in the canonical format from Step 1, then append the behaviour actions:
 
-> **[Person]** + **[activation moment]** + **[desired outcome]** + **[behaviour actions joined by commas]** + **[situational limitations]**
+> **[person]** + **[moment/trigger]** + **[desired outcome]** + **[limitation/friction]**, by **[behaviour actions joined by commas]**
 
 #### 2d. Thinking about the situation
 What might this person think when facing this situation? Focus on negative, doubtful, or avoidant thoughts — the internal monologue that could derail the target behaviour. Be specific and authentic.
@@ -111,7 +114,7 @@ Address two scenarios:
 
 ### Step 5: Save and integrate
 
-Save the completed framework to `.sitbeh/` in the project root:
+Save the completed framework to `.sitbeh/` in the current working directory (cwd):
 
 ```
 .sitbeh/

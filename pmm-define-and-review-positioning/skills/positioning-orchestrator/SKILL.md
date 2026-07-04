@@ -31,14 +31,14 @@ Phase 5: Sales Story Builder (Post-positioning — 7-stage narrative)
 
 ### Phase 1: Core Positioning Workshop
 
-Use the `positioning-workshop` skill for Steps 1-7. This produces:
+Use the `positioning-workshop` skill for Steps 1-7. Its SKILL.md has an explicit "Handoff (When Running as Part of positioning-orchestrator)" section: it stops after Step 7 and emits a `phase_1_output` YAML block instead of continuing into its own Phase 3/4 — those are handled by this orchestrator's Phase 2 and Phase 4 instead. This produces:
 - Best-fit customer profile
 - Competitive alternatives (grouped and ranked)
 - Unique attributes
 - Value themes with proof
 - Target market characteristics
 
-If the user wants a deeper exploration of competitive alternatives, invoke the `competitive-alternatives` skill for Steps 4-6 instead of the workshop's built-in version.
+If the user wants a deeper exploration of competitive alternatives, invoke the `competitive-alternatives` skill for Steps 4-6 instead of the workshop's built-in version. It emits its own YAML handoff (`competitive_alternatives` / `unique_attributes` / `value_themes`) — merge that into `phase_1_output` in place of the workshop's version of those fields.
 
 At the end of Phase 1, summarize what was established and confirm with the user before proceeding.
 
@@ -65,7 +65,13 @@ If all three: include it. Otherwise: skip. "Better boring than baffling."
 
 ### Phase 4: Capture and Pressure Test
 
-Assemble the full 5+1 positioning canvas. Write the positioning narrative and one-liner. Run the 9-question pressure test.
+This reproduces `positioning-workshop`'s Step 10 capture, since Phase 1 stopped short of it. Use the same source files rather than re-deriving the format:
+- Canvas structure: `${CLAUDE_PLUGIN_ROOT}/skills/positioning-workshop/references/positioning-canvas-template.md`
+- Narrative and elevator shape: same template, "Positioning Narrative" and "One-Line Elevator Version" sections
+- Pressure test question definitions: `${CLAUDE_PLUGIN_ROOT}/references/pressure-test.md`
+- Full 3-tier scoring rubric with fix directions (use this depth here, since the orchestrator is the comprehensive path): `${CLAUDE_PLUGIN_ROOT}/skills/positioning-review/references/pressure-test-scoring.md`
+
+Assemble the full 5+1 positioning canvas from Phase 1's core analysis and Phase 2's market frame, using the template above. Write the positioning narrative and one-liner. Run the 9-question pressure test against the assembled positioning, scoring each with the rubric.
 
 Deliverables:
 1. Filled 5+1 positioning canvas

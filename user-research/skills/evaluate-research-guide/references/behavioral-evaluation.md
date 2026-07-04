@@ -1,6 +1,6 @@
 # Behavioral Research Guide Evaluation Reference
 
-Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (Fogg).
+Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (Fogg). For the underlying framework definitions (6 COM-B sub-components, PAC, Ability Chain, Prompt types, troubleshooting order, TDF mapping, standard coding tags), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first. This file covers evaluation-specific criteria only: what adequate guide coverage looks like against each framework, not the frameworks themselves.
 
 Use this reference when evaluating guides where the research goal is to understand, drive, change, or sustain a specific user behavior — adoption, activation, engagement, retention, habit formation, feature usage, onboarding completion, conversion actions, churn prevention framed as behavior.
 

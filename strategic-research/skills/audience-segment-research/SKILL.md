@@ -52,17 +52,7 @@ Pure demographics ("men 18–30", "SMBs 50-200") are rejected as **primary** seg
 
 ### 4. Integrate tensions — do not resolve them prematurely
 
-When two credible sources disagree about a segment, both stay. Every tension is classified, not silenced:
-
-| Class | Meaning | Action |
-|---|---|---|
-| **Subsegment split** | Two real sub-types inside the segment | Split into sub-segments |
-| **Context-dependent** | Same buyer, different situations | Add a context qualifier |
-| **Stated vs. revealed** | Survey vs. behavior | Tag each; behavior outweighs |
-| **Temporal shift** | Segment has changed over time | Note the direction and date |
-| **Unresolved** | Genuinely unclear | Hold explicitly as an open question |
-
-Tensions live in a dedicated log in the output — not hidden inside prose. Holding a tension visible is more useful than resolving it wrongly. See `references/tensions-and-singletons.md`.
+When two credible sources disagree about a segment, both stay. Every tension is classified into one of five classes — subsegment-split, context-dependent, stated-vs-revealed, temporal, or unresolved — and held in a dedicated log in the output, not hidden inside prose. Holding a tension visible is more useful than resolving it wrongly. Full taxonomy (diagnostic questions, actions, log format, anti-patterns) in `${CLAUDE_PLUGIN_ROOT}/references/tension-taxonomy.md`; singleton handling in `references/tensions-and-singletons.md`.
 
 ### 5. Preserve singletons and outliers
 
@@ -179,7 +169,7 @@ Profile fields (full structure in the template):
 | Confidence | 0–100% this segment is real |
 | Evidence roll-up | Count of behavioral vs. stated observations |
 
-Profiles are at least 250 words. Shorter = the segment isn't real, or research is too thin. Go back to Phase 2.
+Fill every field with specific, sourced content. A profile you can't populate — thin or generic across most fields — signals the segment isn't real or the research is too thin; go back to Phase 2. Keep each profile tight; the whole report must stay readable in one sitting.
 
 ### Phase 6 — Cross-segment synthesis
 
@@ -207,13 +197,13 @@ Use `assets/output-template.md`. Full structure:
 11. Appendix — rejected segmentation lenses
 12. YAML handoff block
 
-Write to `/sessions/wonderful-quirky-ptolemy/mnt/tempSkills/audience-segment-research-[slug].md` where `[slug]` is a kebab-case tag of the anchor or industry (e.g., `splitmetrics-apple-ads`).
+Write to `strategic-research/02-audience-segments.md` in the user's current working directory (create the `strategic-research/` folder if it does not exist). This fixed path lets skill #3, skill #4, and `--from` resume find it deterministically. See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
 
 The YAML handoff block is non-negotiable. Schema in `references/handoff-schema.md`.
 
 ### Phase 8 — Share
 
-Link the file with a `computer://` link. Short message: title, chosen lens in one sentence, link. Don't restate content in chat.
+Tell the user the local path where the file was written — `strategic-research/02-audience-segments.md`. Short message: title, chosen lens in one sentence, path. Don't restate content in chat.
 
 ## Quality audit — mandatory before Phase 7
 
@@ -232,22 +222,20 @@ If any check fails, loop back to the relevant phase.
 
 ## Writing style
 
-- **No preamble.** Start with the framing table.
+Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
+
 - **Tables and structured profiles over prose.** Prose only where nuance requires it.
-- **Specific names, not categories.** "A 12-person performance-marketing team at a FinTech with 6+ countries" beats "mid-market marketing teams".
-- **Source tags on non-obvious claims.** Inline `[src: G2 review 2024-09]` or `[src: r/PPC thread]`.
-- **Confidence marks as percentages.** No hedge words ("somewhat", "arguably").
-- **Honest gaps.** "Thin evidence — 2 data points, 1 behavioral" beats dressing it up.
 - **Verbs for segment labels** where possible. "Outsource-and-oversee paid acquisition buyers" beats "Agency-reliant marketers".
 
 ## When this skill is the wrong tool
 
+Sibling skills in this plugin:
+
 | User wants | Use |
 |---|---|
 | Map the space (processes, workflow) | `industry-process-map` (skill #1) |
-| Willingness-to-pay / pricing sensitivity | Skill #3 (downstream in this plugin) |
-| Competitive teardown of named vendors | `product-management:competitive-brief` |
-| Synthesize a pile of interviews you already have | `product-management:synthesize-research` |
-| Positioning canvas | `pm-sage:position-product` (feed it this skill's output) |
+| Willingness-to-pay / pricing sensitivity | `willingness-to-pay-research` (skill #3) |
+
+For a competitive teardown of named vendors, synthesizing interviews you already have, or a positioning canvas — all outside this plugin — see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`.
 
 This skill maps **who**. Stay in lane.

@@ -23,7 +23,7 @@ A five-skill Claude Code / Cowork plugin that turns a product, category, or indu
                ▼  YAML handoff (of all four)
 ┌────────────────────────────────────┐
 │ 5. strategic-synthesis-report      │  Executive summary + per-section analysis + cross-skill insights
-│    → strategic-synthesis-[slug].html │  Self-contained HTML with tables, heatmaps, radar charts
+│    → strategic-research/05-synthesis-report.html │  Self-contained HTML with tables, heatmaps, radar charts
 └────────────────────────────────────┘
 ```
 
@@ -87,6 +87,9 @@ strategic-research/
 ├── README.md
 ├── commands/
 │   └── strategic-research.md         ← /strategic-research orchestrator
+├── references/                       ← shared across all skills
+│   ├── common-conventions.md         ← output paths, filenames, writing style, redirects
+│   └── tension-taxonomy.md           ← the 5-class tension taxonomy (+ competitor variant)
 └── skills/
     ├── industry-process-map/
     │   ├── SKILL.md
@@ -108,14 +111,14 @@ strategic-research/
 
 ## Outputs
 
-For anchor `[slug]`, the pipeline produces in `/sessions/adoring-cool-cray/mnt/tempSkills/`:
+The pipeline writes to a `strategic-research/` subfolder of the current working directory, under fixed step-numbered names:
 
-- `industry-process-map-[slug].md`
-- `audience-segment-research-[slug].md`
-- `willingness-to-pay-research-[slug].md`
-- `competitor-evaluation-[slug].md`
-- `strategic-synthesis-[slug].html`  ← the final deliverable
-- `strategic-synthesis-[slug].md`    ← 1-page companion summary
+- `strategic-research/01-industry-process-map.md`
+- `strategic-research/02-audience-segments.md`
+- `strategic-research/03-willingness-to-pay.md`
+- `strategic-research/04-competitor-evaluation.md`
+- `strategic-research/05-synthesis-report.html`  ← the final deliverable
+- `strategic-research/05-synthesis-report.md`    ← 1-page companion summary
 
 ## When to use this plugin
 
@@ -128,9 +131,9 @@ For anchor `[slug]`, the pipeline produces in `/sessions/adoring-cool-cray/mnt/t
 ## When NOT to use this plugin
 
 - You only need one of the outputs — call the individual skill
-- You already have the research and just need a PRD → `pm-sage:write-prd`
-- You need positioning work → `pm-sage:position-product` (feed it the skill #2 + skill #3 handoffs)
-- You need a sprint plan or roadmap → `product-management:sprint-planning`, `product-management:roadmap-update`
+- You already have the research and just need a PRD → use a PRD / spec-writing tool
+- You need positioning work → use a dedicated positioning skill or workshop (feed it the skill #2 + skill #3 handoffs)
+- You need a sprint plan or roadmap → use a roadmap / sprint-planning tool
 
 ## License
 

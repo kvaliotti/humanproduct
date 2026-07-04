@@ -1,8 +1,10 @@
 # Pressure Test Scoring Rubric
 
+Core question text and pass/fail criteria for all 9 tests live in the shared reference: `${CLAUDE_PLUGIN_ROOT}/references/pressure-test.md`. This file adds the 3-tier (✅/⚠️/❌) scoring rubric and fix direction needed for a formal audit — read the shared file first, then apply the scoring below.
+
 ## Test 1: Substitution Test
 
-**Question:** If a competitor swapped their product name into your positioning narrative, would it still sound true?
+See shared reference, test 1, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -14,7 +16,7 @@
 
 ## Test 2: 10-Names Test
 
-**Question:** Can you name 10 real customers or target accounts that fit the target market definition?
+See shared reference, test 2, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -26,7 +28,7 @@
 
 ## Test 3: Alternative Test
 
-**Question:** Are competitive alternatives comprehensive — including non-obvious options?
+See shared reference, test 3, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -38,7 +40,7 @@
 
 ## Test 4: Adjective Test
 
-**Question:** How many hype adjectives appear in the positioning?
+See shared reference, test 4, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -52,7 +54,7 @@
 
 ## Test 5: Proof Test
 
-**Question:** Does every value theme cite specific, checkable proof?
+See shared reference, test 5, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -66,7 +68,7 @@
 
 ## Test 6: Category Test
 
-**Question:** Does the market category trigger correct feature expectations?
+See shared reference, test 6, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -78,7 +80,7 @@
 
 ## Test 7: Kill-the-Tagline Test
 
-**Question:** If you deleted the tagline and only had the 5+1 canvas, could a salesperson still pitch?
+See shared reference, test 7, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -90,7 +92,7 @@
 
 ## Test 8: Sharpness Test
 
-**Question:** Can a new hire explain the positioning in 60 seconds after reading it once?
+See shared reference, test 8, for the core question.
 
 | Score | Criteria |
 |-------|----------|
@@ -102,7 +104,7 @@
 
 ## Test 9: Cross-Functional Alignment Test
 
-**Question:** Would sales, marketing, product, and CS all tell the same story?
+See shared reference, test 9, for the core question.
 
 | Score | Criteria |
 |-------|----------|

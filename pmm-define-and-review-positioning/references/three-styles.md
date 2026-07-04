@@ -1,5 +1,7 @@
 # Three Positioning Styles: Deep Reference
 
+Shared reference for Step 8 (Market Frame and Positioning Style). Used by both `positioning-workshop` (Phase 3) and `market-frame-selector` (the dedicated deep-dive skill for this step).
+
 ## Style 1: Head to Head — Win an Existing Market
 
 ### How It Works

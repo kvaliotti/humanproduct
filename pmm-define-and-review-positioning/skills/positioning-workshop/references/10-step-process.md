@@ -70,47 +70,15 @@ Each component depends on the previous. Starting in the wrong place produces pos
 
 ## Core Analysis
 
-### Step 4: List True Competitive Alternatives
+### Steps 4-6: Competitive Alternatives, Unique Attributes, Value Themes
 
-**Core question:** "What would our best customers do if we didn't exist?"
+**Canonical reference:** These three steps are the analytical core of positioning and have their own deep-dive skill: `${CLAUDE_PLUGIN_ROOT}/skills/competitive-alternatives/SKILL.md`. It carries the full elicitation sequence, the attribute-category taxonomy, and the "So what?" clustering method. Use it (standalone or as a sub-step) instead of reconstructing the method here. What follows is the one-line essence of each step for quick orientation.
 
-**Alternative types:** Direct competitor, general-purpose tools (Excel, Google Docs), manual process ("hire an intern"), do nothing, combinations.
+**Step 4 — List True Competitive Alternatives.** Core question: "What would our best customers do if we didn't exist?" Alternative types: direct competitor, general-purpose tools, manual process, do nothing, combinations. Critical distinction: competitive alternatives ≠ competitors — alternatives are what customers actually USE today. Rank most to least common, group into 2-5 clusters.
 
-**Method:**
-1. Reference best-fit customer list from Step 1
-2. Ask only what THOSE customers would see as alternative
-3. Rank most to least common
-4. Group into 2-5 clusters
+**Step 5 — Isolate Unique Attributes.** Definition: something the product/company HAS or DOES (not value — that's Step 6). Explore beyond product features: delivery model, business model, expertise, partnerships, team composition. Provable only; opinion doesn't count. Cast a wide net, then narrow.
 
-**Critical:** Competitive alternatives ≠ competitors. Alternatives are what customers actually USE today.
-
-### Step 5: Isolate Unique Attributes
-
-**Definition:** Something product/company HAS or DOES. Not value — that's Step 6.
-
-**Categories to explore:**
-- Technical features (algorithms, integrations, speed)
-- Delivery model (SaaS vs. on-prem, self-serve vs. managed)
-- Business model (subscription vs. one-time, freemium)
-- Expertise/experience (industry depth, certifications)
-- Partnerships (exclusive integrations, channel relationships)
-- Team skills (unique discipline combinations)
-
-**Rules:**
-- Provable only — opinion doesn't count
-- Include potential negatives
-- Focus on "consideration" attributes (purchase decision) over "retention" attributes (renewal decision)
-- Don't filter yet — cast wide net
-
-### Step 6: Map Attributes to Value Themes
-
-**Chain:** Feature (what you have) → Benefit (what it enables) → Value (customer goal it serves)
-
-**Method:**
-1. Map each attribute to value (one attribute can have multiple values; attributes can combine)
-2. Group related value points from customer perspective
-3. Shorten to 1-4 clusters
-4. Each theme needs proof — no proof = demoted or cut
+**Step 6 — Map Attributes to Value Themes.** Chain: Feature → Benefit → Value (customer goal). Group related value points into 1-4 clusters from the customer's perspective. Each theme needs proof or it gets demoted/cut.
 
 ### Step 7: Determine Who Cares Most
 
@@ -137,7 +105,7 @@ Each component depends on the previous. Starting in the wrong place produces pos
 - Examine adjacent (especially growing) markets
 - Ask customers (cautiously)
 
-**Three styles:** See `market-frame-decision.md` for full detail.
+**Three styles:** See `${CLAUDE_PLUGIN_ROOT}/references/three-styles.md` for full detail (decision criteria, work required, case studies for each style). The `market-frame-selector` skill is the dedicated deep-dive for this step.
 
 ### Step 9: Trend (Optional)
 

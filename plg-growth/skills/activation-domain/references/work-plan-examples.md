@@ -1,25 +1,9 @@
-# Activation Work Plan Template
+# Activation Work Plan — Domain Examples
 
-Use this template to generate hypothesis-driven work items for improving activation. Built around the 3-step iterative framework: Segment, Identify, Improve. Minimum 2 full quarters per cycle.
+Domain-specific worked examples for activation work plans. Use alongside the shared skeleton at `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md`. Built around the 3-step iterative framework: Segment, Identify, Improve. **Minimum 2 full quarters per cycle.**
 
----
-
-## Work Item Format
-
-```
-### [Short descriptive title]
-
-**Issue Tree Branch:** [Which branch of the activation issue tree this addresses]
-**Hypothesis:** "Users who [action] within [timeframe] are [X]% more likely to [outcome]"
-**Segment:** [Which user segment this targets]
-**Behavior to Influence:** [The specific supporting behavior to increase]
-**Work Type:** Research | Data Analysis | Strategy Decision | Experiment | Operations
-**Priority:** P1 (high sensitivity) | P2 (moderate) | P3 (low)
-**Connected Metric:** [Activation rate, TTV, or specific supporting metric]
-**Success Criteria:** [How we know this worked]
-**Quarter:** [Target quarter for execution]
-**Dependencies:** [What must be true or done first]
-```
+**Activation hypothesis format:** "Users who [action] within [timeframe] are [X]% more likely to [outcome]."
+**Extra work-item fields for activation:** `Segment` (which user segment) and `Behavior to Influence` (the specific supporting behavior to increase), plus `Quarter` instead of a short timeline.
 
 ---
 
@@ -27,9 +11,7 @@ Use this template to generate hypothesis-driven work items for improving activat
 
 ### Step 1: Segment the User Base
 
-Before optimizing activation, understand that different users activate differently.
-
-**Segmentation dimensions:**
+Different users activate differently. Segment before optimizing.
 
 | Dimension | How to Segment | Why It Matters |
 |-----------|---------------|----------------|
@@ -44,38 +26,21 @@ Before optimizing activation, understand that different users activate different
 
 For each segment, re-run the activation analysis:
 
-1. **Run CSI/Aha Score per segment** (see `references/metric-identification.md`)
-   - Is the activation metric the same for all segments?
-   - Are volume thresholds different? (SMB might need 1 project, enterprise might need 3)
-   - Are time windows different? (Enterprise might take longer but still activate)
+1. **Run CSI/Aha Score per segment** (see `references/metric-identification.md`) — is the activation metric the same for all segments? Are volume thresholds or time windows different?
+2. **Map supporting behaviors** — which actions precede activation? Are there "stepping stone" events? (e.g., "Users who watch the intro video are 40% more likely to create a project.")
+3. **Quantify per segment** — activation rate, TTV, drop-off step, supporting-behavior completion rate.
 
-2. **Map supporting behaviors**
-   - Which actions precede activation in each segment?
-   - Are there "stepping stone" events that make activation more likely?
-   - Example: "Users who watch the intro video are 40% more likely to create a project"
-
-3. **Quantify per segment**
-   - Activation rate per segment
-   - TTV per segment
-   - Drop-off step per segment
-   - Supporting behavior completion rate per segment
-
-**Output for each segment:**
+**Output per segment:**
 > "In the [segment] segment, users who [supporting behavior] within [timeframe] are [X]% more likely to [activate]. Currently, [Y]% of this segment completes this behavior. The primary barrier is [barrier type]."
 
 ### Step 3: Improve Supporting Behaviors Through Experiments
 
-For each supporting behavior identified in Step 2, design interventions:
-
 1. Diagnose the barrier (Don't Know / Can't / Don't Want)
 2. Select tactics from `references/activation-barriers.md`
-3. Design an experiment
-4. Run for statistical significance
-5. Roll out winners, iterate on losers
+3. Design an experiment; run for statistical significance
+4. Roll out winners, iterate on losers
 
-**Minimum 2 full quarters per cycle.** Activation improvements compound:
-- Quarter 1: Segment + Identify + first experiments
-- Quarter 2: Iterate experiments + measure retention impact + plan next cycle
+**Minimum 2 full quarters per cycle:** Q1 = Segment + Identify + first experiments; Q2 = iterate + measure retention impact + plan next cycle.
 
 ---
 
@@ -144,17 +109,14 @@ For each supporting behavior identified in Step 2, design interventions:
 
 ---
 
-## Work Plan Review Checklist
+## Activation-specific checklist additions
 
-Before finalizing a work plan, verify:
+On top of the generic checklist in the shared template, verify:
 
 - [ ] Activation metric is defined (or metric identification is the first work item)
-- [ ] Every item has a hypothesis in the format "Users who [X] within [Y] are [Z]% more likely to [W]"
+- [ ] Every item uses the hypothesis format "Users who [X] within [Y] are [Z]% more likely to [W]"
 - [ ] Items are prioritized by drop-off volume, not ease of implementation
 - [ ] User segments are explicit (not "all users" for everything)
 - [ ] Barrier type is identified for each improvement item (Don't Know / Can't / Don't Want)
-- [ ] Success criteria are specific and measurable
 - [ ] Plan spans at least 2 quarters (activation is not a sprint project)
-- [ ] Mix of quick wins (P1, this quarter) and strategic bets (P1-P2, next quarter)
-- [ ] Measurement infrastructure is in place or is an explicit work item
 - [ ] Each item connects to activation rate, TTV, or a supporting behavior metric

@@ -31,13 +31,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose transformation into mutually exclusive, collectively exhaustive dimensions
-2. **Hypothesis Trees** -- form hypotheses about which dimensions are blocking PLG execution
-3. **Driver Disaggregation** -- break organizational effectiveness into its component drivers
-4. **80/20 Prioritization** -- focus on the 2-3 dimensions with highest impact on PLG execution
-5. **So-What Synthesis (Minto Pyramid)** -- lead with the transformation recommendation, then supporting analysis
-6. **Hypothesis-Driven Work Plans** -- every transformation action ties to a hypothesis about what is blocking PLG
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **org transformation**: decompose into the four transformation dimensions and prioritize the 2–3 dimensions most blocking PLG execution. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Four Operating Modes
 
@@ -225,7 +219,7 @@ Based on the assessment scores, customize the phased plan:
 
 #### Step 4: Load Team Structuring Reference
 
-> Read `references/team-structuring.md`
+> Read `${CLAUDE_PLUGIN_ROOT}/references/team-structuring.md`
 
 Apply the right team model based on company size and maturity.
 

@@ -1,5 +1,7 @@
 # Platform Constraints Reference
 
+This is the single source of truth for vendor limits in this plugin — `event-definition`, `tracking-plan-review`, and `platform-formatter` all read this file rather than restating numbers inline. Vendor limits change over time; verify the figures below against each platform's current official documentation before relying on them for capacity planning.
+
 ## Amplitude
 
 | Constraint | Limit |
@@ -162,7 +164,7 @@
 | Constraint | Limit |
 |---|---|
 | Max event types | 500 distinct event names |
-| Properties (parameters) per event | 25 custom parameters |
+| Properties (parameters) per event | 25 custom parameters *(verify against current GA4 docs — vendor limits change)* |
 | Event name length | 40 characters |
 | Parameter name length | 40 characters |
 | Parameter value length | 100 characters |
@@ -176,7 +178,7 @@
 ### GA4-specific notes
 - Most constrained platform. Design for GA4 constraints first if GA4 is a target.
 - Has automatically collected events (page_view, session_start, first_visit, etc.) and recommended events (purchase, sign_up, login, etc.) with predefined parameter names
-- Custom parameters must be registered in the GA4 admin before they appear in reports (up to 50 custom event parameters, 25 custom user properties)
+- Custom parameters must be registered in the GA4 admin before they appear in reports (up to 25 custom parameters per event, 25 custom user properties — verify against current GA4 docs, as vendor limits change)
 - Event names are case-sensitive: "task_created" and "Task_Created" are different events
 - Conversion events: any event can be marked as a conversion
 - Enhanced measurement auto-tracks: scrolls, outbound clicks, site search, video engagement, file downloads

@@ -1,6 +1,6 @@
 ---
 name: review-research-analysis
-description: Evaluate and stress-test a completed research analysis before the team acts on its findings. Use this skill when the user says "review my analysis", "evaluate my research analysis", "is my analysis good", "stress-test my findings", "critique my research", "score my analysis", "check my analysis", "audit my research findings", "rate my analysis", "are my conclusions solid", "review the interview analysis", "evaluate findings", provides a research analysis and asks for feedback or quality assessment, or has just completed an analysis (via interview-analysis or otherwise) and wants it reviewed before making product decisions. Also trigger when the user says "next step" after completing interview analysis. This skill catches analytical failures — cherry-picked validation, false positives, wrong behavioral diagnoses, missing dimensions — before the team acts on flawed conclusions.
+description: Evaluate and stress-test a completed research analysis before the team acts on its findings. Use this skill when the user says "review my analysis", "evaluate my research analysis", "is my analysis good", "stress-test my findings", "critique my research", "score my analysis", "check my analysis", "audit my research findings", "rate my analysis", "are my conclusions solid", "review the interview analysis", "evaluate findings", provides a research analysis and asks for feedback or quality assessment, or has just completed an analysis (via analyze-research or otherwise) and wants it reviewed before making product decisions. Also trigger when the user says "next step" after completing research analysis. This skill catches analytical failures — cherry-picked validation, false positives, wrong behavioral diagnoses, missing dimensions — before the team acts on flawed conclusions.
 ---
 
 # Review Research Analysis
@@ -15,58 +15,34 @@ The user must provide the research analysis to evaluate. Sources:
 
 1. **Pasted in chat** — user pastes the analysis text directly
 2. **File reference** — user points to a file in the workspace
-3. **Just completed skill 5** — analysis was output by interview-analysis in a prior turn or session
+3. **Just completed skill 5** — analysis was output by analyze-research in a prior turn or session. Look in the workspace for files matching `research-analysis-*.md`, newest first — the exact pattern analyze-research saves to. Don't rely on scanning for generic recent `.md` files.
 
-If no analysis is provided, ask: "Which research analysis should I evaluate? You can paste it here, point me to a file, or I can look for one in your workspace."
+If no analysis is provided or found, ask: "Which research analysis should I evaluate? You can paste it here, point me to a file, or I can look for a `research-analysis-*.md` file in your workspace."
 
 Also request the raw data the analysis was based on:
 - Interview transcripts or notes
-- Research brief (if available)
-- Research guide (if available)
+- Research brief (if available) — look for `research-brief-*.md` if not provided directly
+- Research guide (if available) — look for `research-guide-*.md` if not provided directly
 
 Raw data is essential for verifying whether the analysis faithfully represents what participants said. Without it, the evaluation is limited to internal consistency checks — flag this limitation prominently if raw data is unavailable.
 
 Do not proceed without at least the analysis itself.
 
+**Exception — quick/directional pass:** If the user explicitly asks for a quick pass or directional read (e.g., "just sanity-check this" or "quick take, don't need the full review"), you may proceed on whatever analysis content they share, even a rough paste with no located raw data. Clearly label the output **Quick/Directional Pass — not a full evaluation**, skip Pass 2's scored rubric and Pass 3's raw-data cross-check, and give the top 2-3 risks plus what a full evaluation would additionally verify. This is not the default — only bypass when the user asks for it.
+
 ---
 
 ## Step 1: Detect the Research Type
 
-Before reading reference files or scoring anything, classify the research based on the analysis content. This determines which evaluation framework to use.
+Before scoring anything, determine the research type — this decides which evaluation framework to use.
 
-### Behavioral Research
+**Check the analysis first.** Look for a `Research Type:` field near the top (analyze-research always writes one). If present, inherit it and state "Research type detected: [X] (inherited from analysis)." Only re-derive from scratch if the field is genuinely absent, using the signal list in `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md`.
 
-The analysis centers on **getting users to do (or stop doing) a specific action**. Signals:
+Once the type is known:
 
-- Target behavior identified (or attempted)
-- Adoption, activation, onboarding, engagement, retention, habit formation, feature usage
-- Behavior change framing ("users aren't doing X", "how to get users to Y")
-- COM-B decomposition present (or should be)
-- B=MAP coding, Ability Chain assessment, prompt/anchor analysis
-- Intervention functions or Tiny Habit recipes proposed
-- Barriers coded to specific behavioral components
-
-**Action:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still check general criteria (evidence quality, bias, actionability) from `references/general-evaluation.md`, but weight behavioral criteria highest.
-
-### General Research
-
-The analysis centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration findings
-- Market validation, willingness to pay, competitive understanding
-- Feature prioritization, product-market fit assessment
-- Customer segmentation, persona building
-- Pain × frequency prioritization
-- Commitment ladder or earlyvangelist identification
-- "Why are users churning?" framed as understanding, not behavior change
-
-**Action:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Behavioral criteria (COM-B, B=MAP) are informational — note if they'd strengthen the analysis, but don't penalize their absence.
-
-### Mixed
-
-The analysis touches both — e.g., "understanding why users churn AND diagnosing behavioral barriers to retention."
-
-**Action:** Read both reference files. Evaluate against both frameworks. Flag the dual nature. Weight each framework proportionally to its presence in the analysis.
+- **Behavioral:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still check general criteria (evidence quality, bias, actionability) from `references/general-evaluation.md`, but weight behavioral criteria highest.
+- **General:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Behavioral criteria (COM-B, B=MAP) are informational — note if they'd strengthen the analysis, but don't penalize their absence.
+- **Mixed:** Read both reference files. Evaluate against both frameworks. Flag the dual nature. Weight each framework proportionally to its presence in the analysis.
 
 ---
 
@@ -134,28 +110,19 @@ Scoring: 1 = Unreliable/Fail, 2 = Partially reliable/Needs Work, 3 = Trustworthy
 - Earlyvangelist Identification — when finding early adopters was the goal
 - Reporting Quality — when a deliverable report was produced
 
-**For Behavioral analyses, score these criteria:**
-
-Primary Score (Behavioral Rigor):
+**For Behavioral analyses, score these criteria** (same 0-100 weighted scale as General — see `references/behavioral-evaluation.md` for what evidence backs each row):
 
 | # | Criterion | Score | Weight |
 |---|---|---|---|
-| B1 | Diagnostic Accuracy — right bottleneck identified | /5 | 30% |
-| B2 | Coding Rigor — correct classification | /5 | 20% |
-| B3 | Pattern Validity — defensible patterns and segments | /5 | 20% |
-| B4 | Intervention Validity — recommendations match diagnosis | /5 | 20% |
-| B5 | Completeness — all B=MAP/COM-B dimensions covered | /5 | 10% |
+| B1 | Diagnostic Accuracy — right bottleneck identified, troubleshooting order (P→A→M) respected | /3 | 20% |
+| B2 | COM-B Coding Rigor — all 6 sub-components addressed, no collapsing, classification defensible | /3 | 15% |
+| B3 | Evidence Quality — tagged [B]/[SR]/[O], prevalence reported, disconfirming evidence included | /3 | 15% |
+| B4 | Analytical Rigour — behavior as unit of analysis, no causal leaps, system dynamics considered | /3 | 10% |
+| B5 | Pattern Validity — segments defined by behavioral profile, bright spots profiled, frequency evidence | /3 | 15% |
+| B6 | Intervention Validity — recommendations target the diagnosed bottleneck with the correct lever | /3 | 15% |
+| B7 | Completeness & Traceability — all B=MAP/COM-B outputs present, every finding traces to data | /3 | 10% |
 
-Secondary Score (Process & Evidence):
-
-| Section | Max Score |
-|---|---|
-| COM-B Completeness (5 criteria × /4) | 20 |
-| Evidence Quality (6 criteria × /4) | 24 |
-| Analytical Rigour (6 criteria × /4) | 24 |
-| Prioritisation (4 criteria × /4) | 16 |
-| Traceability (3 criteria × /4) | 12 |
-| **TOTAL** | **96** |
+Scoring: 1 = Not met/Fail, 2 = Partially met/Needs Work, 3 = Fully met/Pass
 
 **For Mixed analyses:** Score both General and Behavioral criteria. Weight each framework proportionally based on the analysis emphasis. State the weighting used.
 
@@ -175,9 +142,11 @@ If raw data (transcripts, notes) is available, perform a sample verification:
 
 If raw data is unavailable, note this limitation and explain that the evaluation is restricted to internal consistency. This is a significant constraint — flag it prominently.
 
-#### Pass 4: Failure Pattern Detection
+#### Pass 4: Failure Patterns and Relevance Audit
 
-Scan the analysis for known failure patterns. Each detected pattern gets flagged with:
+This pass has two halves: first scan for known failure patterns, then check whether what survives actually earns its place.
+
+**Half A — Failure Pattern Detection.** Scan the analysis for known failure patterns. Each detected pattern gets flagged with:
 - **Pattern name**
 - **Evidence** — specific quote or section from the analysis
 - **Why it's dangerous** — what will go wrong in product decisions
@@ -207,9 +176,7 @@ Scan the analysis for known failure patterns. Each detected pattern gets flagged
 - Missing automatic motivation
 - Attribution bias (self-blame accepted without investigation)
 
-#### Pass 5: Relevance Audit
-
-The previous passes check whether the analysis is well-constructed. This pass checks whether every finding and recommendation **earns its place** given the research question and the decision it was supposed to inform.
+**Half B — Relevance Audit.** The checks above test whether the analysis is well-constructed. This half checks whether every finding and recommendation **earns its place** given the research question and the decision it was supposed to inform.
 
 For each finding in the analysis, ask:
 
@@ -275,23 +242,16 @@ Save a markdown file to the user's workspace with this structure:
 
 ### Overall Score
 
-**General Analysis:** Weighted Score: [X / 100]
-**Behavioral Analysis:** Primary (Rigor): [X / 5.0] | Secondary (Process): [X / 96]
-**Mixed:** Both scores with stated weighting
+**Weighted Score: [X / 100]** — one scale for General, Behavioral, and Mixed analyses (Mixed: state the blend weighting between the two criteria sets).
 
-| Score Range (General) | Verdict |
+| Score Range | Verdict |
 |---|---|
 | 85-100 | APPROVED — act on findings |
 | 70-84 | REVISE — address gaps before decisions |
 | 50-69 | MAJOR REWORK — structural issues |
 | <50 | REJECT — cannot trust for decisions |
 
-| Score Range (Behavioral Primary) | Verdict |
-|---|---|
-| 4.0-5.0 | APPROVED — diagnostically sound |
-| 3.0-3.9 | REVISE — verify bottleneck identification |
-| 2.0-2.9 | MAJOR REWORK — recoding likely needed |
-| <2.0 | REJECT — thematic summaries, not diagnoses |
+(For Behavioral analyses, this threshold table doubles as the diagnostic-soundness read: 85-100 means the bottleneck diagnosis is trustworthy; below 50 means the analysis produced thematic summaries, not a diagnosis.)
 
 ---
 
@@ -403,29 +363,15 @@ If the user selects gaps to fix, produce revised versions of those sections only
 
 ---
 
-## Scoring Calculations
+## Scoring Calculation
 
-### General Analysis Score
+One formula for General and Behavioral analyses — every criterion is scored /3 and weighted to a 0-100 total:
+
 ```
 Weighted Score = Σ (criterion_score / 3 × weight × 100)
 ```
 
-### Behavioral Analysis Score
-
-**Primary (Rigor):**
-```
-Weighted Score = Σ (test_score × weight)
-```
-Result is on a 0-5 scale.
-
-**Secondary (Process & Evidence):**
-```
-Score = Σ (section_scores)
-```
-Result is on a 0-96 scale. Convert to percentage for threshold comparison.
-
-### Mixed Analysis Score
-Weight behavioral and general scores proportionally based on the analysis emphasis. State the weighting used. Report both component scores and the blended verdict.
+**Mixed analyses:** Weight the General and Behavioral criterion sets proportionally based on the analysis's emphasis (e.g., 70% general / 30% behavioral if the research was mostly discovery with a small behavioral component). State the weighting used, then apply the same formula across the combined, re-weighted criterion set to produce one 0-100 score.
 
 ---
 

@@ -29,13 +29,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose PLS into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses about PLS readiness, PQA/PQL criteria, and expansion opportunities
-3. **Driver Disaggregation** -- break pipeline metrics into mathematical and behavioral drivers
-4. **80/20 Prioritization** -- focus on the 2-3 highest-value account segments and signals
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **product-led sales**: decompose PLS into branches (readiness, PQA/PQL criteria, expansion), disaggregate pipeline metrics, and focus on the 2–3 highest-value account segments and signals. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Step-by-Step Methodology
 

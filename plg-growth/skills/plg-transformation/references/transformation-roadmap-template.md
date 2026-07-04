@@ -180,7 +180,7 @@ A phased plan for organizational PLG transformation. Customize based on the Four
 | New hires onboarded into PLG | Onboarding includes PLG philosophy | All new PMs, engineers, designers trained on PLG |
 
 ### Activities
-1. **Org restructure:** Move from functional silos to revenue-tree-aligned teams. Each team owns a revenue component or AARMS stage. Use the team-structuring reference.
+1. **Org restructure:** Move from functional silos to revenue-tree-aligned teams. Each team owns a revenue component or AARMS stage. Use the shared team-structuring reference (`${CLAUDE_PLUGIN_ROOT}/references/team-structuring.md`).
 2. **Culture embedding:** PLG thinking becomes default. Experimentation is expected, not exceptional. Failure is shared publicly. Data overrules opinion.
 3. **Metric transformation:** Board deck leads with PLG metrics (activation rate, NDR, self-serve revenue, experiment velocity). Traditional sales metrics become secondary.
 4. **Leadership cadence:** Quarterly revenue tree reviews drive resource allocation. Goals are set from tree sensitivity analysis. Leadership models data-driven behavior.

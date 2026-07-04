@@ -48,7 +48,7 @@ List each candidate market with:
 
 ## Step 2: Evaluate the Three Positioning Styles
 
-Present each style with its decision criteria. Use `references/three-styles-deep.md` for detail.
+Present each style with its decision criteria. Use `${CLAUDE_PLUGIN_ROOT}/references/three-styles.md` for detail (shared with `positioning-workshop`).
 
 ### Style 1: Head to Head
 
@@ -125,7 +125,7 @@ Once the style is selected, define:
 1. **Market category name** — specific enough to trigger correct assumptions
 2. **Why this frame wins** — which assumptions it triggers that help
 3. **Two rejected options** — with reasoning for why they lose
-4. **Work required** — what this positioning style demands (see `references/three-styles-deep.md`)
+4. **Work required** — what this positioning style demands (see `${CLAUDE_PLUGIN_ROOT}/references/three-styles.md`)
 
 ## Step 5: Validate
 
@@ -142,4 +142,4 @@ Output the selected market frame with full rationale, ready for the positioning 
 - Push hard toward Big Fish, Small Pond unless clear evidence supports another style.
 - Challenge category creation attempts: "Is this genuinely a new category, or are you avoiding the discipline of competing within an existing one?"
 - Always require rejected options with reasoning — it proves the choice was deliberate.
-- Cite case studies from `references/case-studies.md` when relevant.
+- Cite case studies from `${CLAUDE_PLUGIN_ROOT}/references/case-studies.md` when relevant.

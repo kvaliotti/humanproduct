@@ -1,8 +1,8 @@
 # Behavioral Research Analysis Reference
 
-Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (BJ Fogg). Use this reference when the research goal is to diagnose why users do or don't perform a specific behavior — adoption, activation, engagement, retention, habit formation, feature usage, onboarding, conversion.
+Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (BJ Fogg). For the underlying framework definitions (6 COM-B sub-components, PAC, Ability Chain, Prompt types, troubleshooting order, TDF mapping, standard coding tags), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first. This file extends the primer's coding tags into the fuller coding vocabulary needed for transcript analysis, and covers analysis-specific application: coding rubrics, per-user profiling, cross-user pattern analysis, and intervention mapping.
 
-Both frameworks decompose behavior into components. They complement each other: COM-B provides a comprehensive diagnostic (6 sub-components with TDF drill-down), B=MAP provides a precise action-design lens (3 components with troubleshooting order). Use both on every behavioral dataset.
+Use this reference when the research goal is to diagnose why users do or don't perform a specific behavior — adoption, activation, engagement, retention, habit formation, feature usage, onboarding, conversion. Use both frameworks on every behavioral dataset: COM-B provides comprehensive diagnostic coverage, B=MAP provides a precise, ordered action-design lens.
 
 ---
 
@@ -86,25 +86,25 @@ For each behavioral instance (or non-instance), code the barriers and enablers t
 
 ## 3. TDF Drill-Down Coding
 
-For COM-B components where barriers cluster, apply finer-grained Theoretical Domains Framework coding.
+For COM-B components where barriers cluster, apply finer-grained Theoretical Domains Framework coding. Use the COM-B → TDF domain mapping from the shared primer (`${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md`, section 5) as the code list. What to listen for in transcript language, per domain:
 
-| COM-B Component | TDF Domains | Look for... |
-|-----------------|-------------|-------------|
-| **Physical Capability** | Skills | Descriptions of being unable to execute physical actions |
-| **Psychological Capability** | Knowledge | "I didn't know...", "I wasn't aware..." |
-| | Skills (cognitive) | "I couldn't figure out...", "It was too complex..." |
-| | Memory, Attention & Decision Processes | "I forgot...", "I was distracted...", "I couldn't decide..." |
-| | Behavioural Regulation | "I meant to but didn't...", "I can't stick to it..." |
-| **Physical Opportunity** | Environmental Context & Resources | "It wasn't there...", "I didn't have time...", "I couldn't find it..." |
-| **Social Opportunity** | Social Influences | "Nobody else does it...", "My manager said...", "People would think..." |
-| | Social/Professional Role & Identity | "That's not my job...", "Someone like me doesn't..." |
-| **Reflective Motivation** | Beliefs about Capabilities | "I can't do it...", "I'm not good at..." |
-| | Beliefs about Consequences | "It won't make a difference...", "What's the point..." |
-| | Intentions | "I plan to...", "I haven't decided..." |
-| | Goals | "It's not a priority...", "I have other things..." |
-| | Optimism | "It probably won't work...", "Things never change..." |
-| **Automatic Motivation** | Emotion | "It stresses me out...", "I dread it...", "It feels good..." |
-| | Reinforcement | "Nothing happens when I do it...", "I never see results..." |
+| TDF Domain | Look for... |
+|------------|-------------|
+| Skills (physical) | Descriptions of being unable to execute physical actions |
+| Knowledge | "I didn't know...", "I wasn't aware..." |
+| Skills (cognitive) | "I couldn't figure out...", "It was too complex..." |
+| Memory, Attention & Decision Processes | "I forgot...", "I was distracted...", "I couldn't decide..." |
+| Behavioural Regulation | "I meant to but didn't...", "I can't stick to it..." |
+| Environmental Context & Resources | "It wasn't there...", "I didn't have time...", "I couldn't find it..." |
+| Social Influences | "Nobody else does it...", "My manager said...", "People would think..." |
+| Social/Professional Role & Identity | "That's not my job...", "Someone like me doesn't..." |
+| Beliefs about Capabilities | "I can't do it...", "I'm not good at..." |
+| Beliefs about Consequences | "It won't make a difference...", "What's the point..." |
+| Intentions | "I plan to...", "I haven't decided..." |
+| Goals | "It's not a priority...", "I have other things..." |
+| Optimism | "It probably won't work...", "Things never change..." |
+| Emotion | "It stresses me out...", "I dread it...", "It feels good..." |
+| Reinforcement | "Nothing happens when I do it...", "I never see results..." |
 
 ---
 

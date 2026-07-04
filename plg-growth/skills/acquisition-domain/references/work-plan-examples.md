@@ -1,74 +1,8 @@
-# Acquisition Work Plan Template
+# Acquisition Work Plan — Domain Examples
 
-Use this template to generate hypothesis-driven work items for product-led acquisition. Every item ties to a branch of the acquisition issue tree and a metric on the revenue driver tree.
+Domain-specific worked examples for acquisition work plans. Use alongside the shared skeleton at `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (work-item format, priority-by-sensitivity, work-type definitions, the three plan formats, generic checklist). Every item ties to a branch of the acquisition issue tree and a metric on the revenue driver tree.
 
----
-
-## Work Item Format
-
-Each work item follows this structure:
-
-```
-### [Short descriptive title]
-
-**Issue Tree Branch:** [Which branch of the acquisition issue tree this addresses]
-**Hypothesis:** [What we believe and why]
-**Work Type:** Research | Data Analysis | Strategy Decision | Experiment | Operations
-**Priority:** P1 (high sensitivity) | P2 (moderate sensitivity) | P3 (low sensitivity)
-**Connected Metric:** [Which metric on the revenue driver tree this moves]
-**Success Criteria:** [How we know this is done / worked]
-**Timeline:** [Estimated duration]
-**Dependencies:** [What must be true or done first]
-```
-
----
-
-## Priority Assignment
-
-Priority comes from sensitivity analysis on the revenue driver tree:
-
-- **P1 (High Sensitivity):** Moving this lever by 10% has outsized impact on revenue. Examples: signup conversion rate when traffic is high, activation rate when signups are strong, channel CAC when burn rate is a concern.
-- **P2 (Moderate Sensitivity):** Meaningful impact but not the biggest lever. Important for sustained growth.
-- **P3 (Low Sensitivity):** Good practice but low immediate impact. Do when P1 and P2 are addressed.
-
----
-
-## Work Type Definitions
-
-### Research
-Filling knowledge gaps. No data yet, need qualitative or secondary research.
-- User intent mapping
-- Channel landscape analysis
-- Competitor acquisition teardown
-- ICP interview for acquisition triggers
-
-### Data Analysis
-Quantitative investigation of existing data to test a hypothesis.
-- Funnel conversion analysis
-- Channel attribution audit
-- Viral coefficient calculation
-- Cohort-based quality analysis
-
-### Strategy Decision
-Using evidence to make a directional choice.
-- Which product-led acquisition strategies to pursue
-- Channel portfolio allocation
-- Signup flow architecture
-- Pricing/packaging impact on acquisition
-
-### Experiment
-Testing a specific change with measurable outcome.
-- A/B test on signup flow
-- New referral incentive test
-- Sidecar product MVP launch
-- New channel pilot
-
-### Operations
-Enabling infrastructure and processes.
-- Analytics/tracking implementation
-- Attribution tooling setup
-- A/B testing infrastructure
-- Team ownership and RACI definition
+**Acquisition P1 examples:** signup conversion rate when traffic is high, activation rate when signups are strong, channel CAC when burn rate is a concern.
 
 ---
 
@@ -111,6 +45,8 @@ Enabling infrastructure and processes.
 | 4 | Personalized onboarding by use case will improve signup-to-activation by 20% | A/B test: generic vs. use-case-specific post-signup flow | Signup-to-activation rate | +20% activation for personalized group | P1 | 3 weeks |
 | 5 | Template gallery pages will rank for 50+ long-tail keywords within 3 months | Create 20 template landing pages with SEO optimization | Indexed pages, organic traffic, template-sourced signups | 50+ keywords ranking page 1-2 in 90 days | P2 | 12 weeks |
 
+Note: for double-sided referral / viral-loop mechanics and k-factor math, route the design work to `growth-loops`; this skill measures the acquisition impact of those loops.
+
 ---
 
 ### Situation C: Needs Discovery (Research Plan)
@@ -125,16 +61,10 @@ Enabling infrastructure and processes.
 
 ---
 
-## Work Plan Review Checklist
+## Acquisition-specific checklist additions
 
-Before finalizing a work plan, verify:
+On top of the generic checklist in the shared template, verify:
 
-- [ ] Every item has a hypothesis (not just "improve X")
-- [ ] Items are prioritized by revenue sensitivity, not ease
-- [ ] Mix of work types (not all experiments, not all research)
-- [ ] Dependencies are explicit (what blocks what)
-- [ ] Success criteria are specific and measurable
-- [ ] Timeline is realistic given team capacity
 - [ ] Each item connects to a metric on the revenue driver tree
-- [ ] P1 items can start immediately (no unresolved dependencies)
 - [ ] Total plan is scoped to 6-8 weeks (not a 6-month wishlist)
+- [ ] Channel economics (CAC, LTV:CAC) are known or are an explicit work item

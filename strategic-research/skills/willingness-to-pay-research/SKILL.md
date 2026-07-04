@@ -230,13 +230,13 @@ Use `assets/output-template.md`. Full structure:
 12. Appendix — rejected value framings
 13. YAML handoff block
 
-Write to `/sessions/optimistic-peaceful-fermi/mnt/tempSkills/willingness-to-pay-research-[slug].md` where `[slug]` is a kebab-case tag of the anchor or industry.
+Write to `strategic-research/03-willingness-to-pay.md` in the user's current working directory (create the `strategic-research/` folder if it does not exist). This fixed path lets skill #4 and `--from` resume find it deterministically. See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
 
 The YAML handoff block is non-negotiable — it's the contract with downstream skills. Schema in `references/handoff-schema.md`.
 
 ### Phase 8 — Share
 
-Link the file with a `computer://` link. Short message: title, one-sentence summary of the WTP variance across segments, link. Don't restate content in chat.
+Tell the user the local path where the file was written — `strategic-research/03-willingness-to-pay.md`. Short message: title, one-sentence summary of the WTP variance across segments, path. Don't restate content in chat.
 
 ## Quality audit — mandatory before Phase 7
 
@@ -253,32 +253,29 @@ Run these checks explicitly. Fix any failure before writing the final artifact.
 - [ ] Are Killers inventoried by segment?
 - [ ] Has at least one round of disconfirming search been run for the dominant hypothesis?
 - [ ] No "would you pay $X" stated-preference claims used as primary evidence?
-- [ ] Is every tension classified (subsegment-split / context-dependent / stated-vs-revealed / temporal / unresolved)?
+- [ ] Is every tension classified per the five classes in `${CLAUDE_PLUGIN_ROOT}/references/tension-taxonomy.md` (subsegment-split / context-dependent / stated-vs-revealed / temporal / unresolved)?
 - [ ] Does the YAML handoff validate against `references/handoff-schema.md`?
 
 If any check fails, loop back to the relevant phase.
 
 ## Writing style
 
-- **No preamble.** Start with the framing table.
-- **Tables and structured profiles over prose.** Prose only where nuance requires it.
+Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
+
 - **Specific alternatives, not categories.** "Displaces a $3,500/mo Publicis retainer" beats "displaces agency spend".
 - **Dollar math wherever possible.** "6 hrs/wk × $95/hr × 48 weeks = $27,360/yr" beats "significant time savings".
-- **Source tags on non-obvious claims.** Inline `[src: G2 review 2025-02, behavioral]`.
-- **Confidence marks as percentages.** No hedge words ("somewhat", "arguably", "it could be said").
-- **Honest gaps.** "Thin evidence — 2 data points, both stated" beats dressing it up.
 - **Verbs for outcomes.** "Ship a briefing deck in under 30 minutes" beats "Briefing deck creation".
 
 ## When this skill is the wrong tool
+
+Sibling skills in this plugin:
 
 | User wants | Use |
 |---|---|
 | Map the space (processes, workflow) | `industry-process-map` (skill #1) |
 | Segment the audience and map stakeholders | `audience-segment-research` (skill #2) |
-| Set list prices, design tiers, pick a monetization model | Downstream pricing/packaging skill (not in this plugin yet) |
-| Competitive teardown of named vendors | `product-management:competitive-brief` |
-| Positioning canvas and market-category claim | `pm-sage:position-product` (feed it this skill's output) |
-| Evaluate a specific product idea | `pm-sage:evaluate-idea` |
-| Write a PRD / working-backwards doc | `pm-sage:write-prd` (feed it this skill's Leaders and proof signals) |
+| Classified competitive set + 7 Powers + strategy canvas | `competitor-evaluation` (skill #4) |
+
+For setting list prices / designing tiers / picking a monetization model, a competitive teardown of named vendors, a positioning canvas, a product-idea evaluation, or a PRD — all outside this plugin — see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`.
 
 This skill maps **what they pay for, why, and how they know it's working**. Pricing execution is a separate discipline. Stay in lane.

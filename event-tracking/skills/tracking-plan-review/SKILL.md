@@ -19,7 +19,7 @@ Audit an existing tracking plan for naming consistency, coverage gaps, redundanc
 Accept the tracking plan in any format:
 - Spreadsheet / table of events
 - List of event names
-- Export from an analytics tool (via ~~analytics tool MCP)
+- Export from an analytics tool (via `~~analytics tool` MCP — see `${CLAUDE_PLUGIN_ROOT}/CONNECTORS.md` for what this placeholder means; resolve it to the user's actual tool rather than echoing it literally)
 - Code grep of tracking calls from a codebase
 - A document describing what's tracked
 - Informal description from the user
@@ -28,6 +28,15 @@ Also request (if not provided):
 - Target analytics platform(s)
 - Analytical questions / use cases the tracking should answer (if the analytics-use-cases skill output exists, use it)
 - Product description or key user flows
+
+## Review Depth
+
+Choose the review depth based on plan size and what the user is asking for:
+
+- **Full audit (default)** — use for production tracking plans, plans with roughly 15+ events, or whenever thoroughness matters more than speed. Runs all 7 audit dimensions below and produces the full scorecard plus detailed findings.
+- **Quick check** — use for small or early-stage plans (roughly under 15 events), a spot-check request, or when the user asks for "quick", "high-level", or "just the big issues." Runs a condensed pass across the three dimensions that catch the highest-value problems fastest: **Naming Consistency** (1), **Redundancy Detection** (3), and **Platform Compliance** (5). Skip the scorecard; report only Critical and Warning findings (drop Info), and note which dimensions were skipped with an offer to run the full audit if the user wants deeper coverage.
+
+Default to the full audit. Drop to quick check only when the plan is clearly small or the user asks for a lighter pass.
 
 ## Audit Dimensions
 
@@ -86,7 +95,7 @@ Check against the target platform's constraints:
 - Data type support (arrays, nested objects)
 - Reserved names conflicts
 
-Read the platform-constraints reference from the event-definition skill (`skills/event-definition/references/platform-constraints.md`) for platform-specific limits. Key thresholds to check: GA4 has 500 event types, 25 params/event, 40-char names (snake_case only); Mixpanel has 255 properties/event, 255-char values; Amplitude has 2,000 event types. See that file for the full matrix.
+Read `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for the full, current limit matrix across all 5 supported platforms (Amplitude, Mixpanel, PostHog, Segment, GA4) — event type caps, properties per event, name/value length limits, and reserved names. That file is the single source of truth for these numbers; don't restate specific figures here, since vendor limits change.
 
 Score: Number of violations / total events
 
@@ -108,6 +117,8 @@ For each event, assess:
 Score: % of events with unambiguous firing conditions
 
 ## Output Format
+
+The format below is for the **full audit**. For a **quick check**, skip the Summary Scorecard entirely and go straight to Detailed Findings, limited to the three dimensions in scope and to Critical/Warning severity — then close with a one-line note on which dimensions and severities were skipped and an offer to run the full audit.
 
 ### Summary Scorecard
 

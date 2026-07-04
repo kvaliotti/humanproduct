@@ -25,12 +25,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-1. **Issue Trees (MECE)** — decompose model selection into product characteristics, audience intent, model fit, and operational complexity
-2. **Hypothesis Trees** — hypothesize best model before deep analysis
-3. **Driver Disaggregation** — separate model effectiveness into conversion rate, revenue quality, and operational cost drivers
-4. **80/20 Prioritization** — focus on the 2-3 factors that most strongly determine model fit
-5. **So-What Synthesis (Minto Pyramid)** — lead with the model recommendation, then the rationale
-6. **Hypothesis-Driven Work Plans** — test the model recommendation with a specific experiment plan
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **acquisition-model selection**: decompose into product characteristics, audience intent, model fit, and operational complexity; disaggregate model effectiveness into conversion rate, revenue quality, and operational cost; and lead with the model recommendation. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## The Five Acquisition Models
 

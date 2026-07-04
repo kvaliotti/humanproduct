@@ -1,6 +1,6 @@
 # Behavioral Research Analysis Evaluation Reference
 
-Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (Fogg).
+Synthesized from COM-B / Behaviour Change Wheel (Michie et al.) and B=MAP / Tiny Habits (Fogg). For the underlying COM-B and B=MAP definitions (the 6 sub-components, PAC, Ability Chain, Prompt types, troubleshooting order, TDF drill-down, standard coding tags), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first if you haven't already. This file covers evaluation-specific criteria only: what "good" looks like when auditing a completed analysis, not the frameworks themselves.
 
 Use this reference when evaluating analysis of research aimed at driving, changing, or sustaining a specific user behavior — adoption, activation, engagement, retention, habit formation, feature usage, onboarding completion, conversion actions, churn reduction framed as behavior change.
 
@@ -199,46 +199,30 @@ Pull 10-15 coded data points at random. For each, verify:
 
 ## Scoring System
 
-### Primary Score: Behavioral Rigor (weighted /5)
+One weighted 0-100 scale — same formula and thresholds as the general analysis scoring, so behavioral and general (and mixed) analyses are reported on a common footing. Every criterion is scored /3 (1 = Not met, 2 = Partially met, 3 = Fully met) and weighted to 100. See `SKILL.md` Pass 2 for the canonical table; the mapping below shows which section of this reference backs each criterion.
 
-| Test | Weight | Score (0-5) |
-|---|---|---|
-| 1. Diagnostic Accuracy — right bottleneck identified (Sections A + D) | 30% | |
-| 2. Coding Rigor — correct classification (Sections B + E) | 20% | |
-| 3. Pattern Validity — defensible patterns and segments (Section F) | 20% | |
-| 4. Intervention Validity — recommendations match diagnosis (Section H) | 20% | |
-| 5. Completeness — all B=MAP/COM-B dimensions covered (Section I) | 10% | |
+| # | Criterion | Backed by | Weight |
+|---|---|---|---|
+| B1 | Diagnostic Accuracy — right bottleneck, troubleshooting order respected | Section D | 20% |
+| B2 | COM-B Coding Rigor — all 6 sub-components addressed, classification defensible | Sections A, E | 15% |
+| B3 | Evidence Quality — tagged, prevalence reported, disconfirming evidence included | Section B | 15% |
+| B4 | Analytical Rigour — behavior as unit of analysis, no causal leaps, system view | Section C | 10% |
+| B5 | Pattern Validity — segments by behavioral profile, bright spots profiled | Section F | 15% |
+| B6 | Intervention Validity — recommendations match diagnosed bottleneck | Section H | 15% |
+| B7 | Completeness & Traceability — all B=MAP/COM-B outputs present, traceable | Sections I, J | 10% |
 
-### Secondary Score: Process & Evidence Quality (/4 per criterion)
-
-| Section | Max |
-|---|---|
-| A. COM-B Completeness (5 criteria) | 20 |
-| B. Evidence Quality (6 criteria) | 24 |
-| C. Analytical Rigour (6 criteria) | 24 |
-| G. Prioritisation (4 criteria) | 16 |
-| J. Traceability (3 criteria) | 12 |
-| **TOTAL** | **96** |
+```
+Weighted Score = Σ (criterion_score / 3 × weight × 100)
+```
 
 ### Decision Thresholds
 
-#### Primary Score (Behavioral Rigor)
-
 | Score | Verdict |
 |---|---|
-| 4.0-5.0 | **APPROVED** — diagnostically sound, proceed to intervention design |
-| 3.0-3.9 | **REVISE** — gaps or potential misdiagnoses, verify bottleneck identification before acting |
-| 2.0-2.9 | **MAJOR REWORK** — significant diagnostic risks, recoding and reanalysis likely needed |
-| Below 2.0 | **REJECT** — analysis produced thematic summaries, not behavioral diagnoses. Reanalyze from transcripts. |
-
-#### Secondary Score (Process & Evidence)
-
-| Score | Verdict |
-|---|---|
-| 80-96 (>83%) | Sound process and evidence |
-| 64-79 (67-83%) | Address gaps before making product decisions |
-| 48-63 (50-67%) | Structural issues in coding, evidence, or prioritisation |
-| <48 (<50%) | Process not rigorous enough to inform decisions |
+| 85-100 | **APPROVED** — diagnostically sound, proceed to intervention design |
+| 70-84 | **REVISE** — gaps or potential misdiagnoses, verify bottleneck identification before acting |
+| 50-69 | **MAJOR REWORK** — significant diagnostic risks, recoding and reanalysis likely needed |
+| Below 50 | **REJECT** — analysis produced thematic summaries, not behavioral diagnoses. Reanalyze from transcripts. |
 
 ---
 

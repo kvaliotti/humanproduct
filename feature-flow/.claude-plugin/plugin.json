@@ -1,0 +1,18 @@
+{
+  "name": "feature-flow",
+  "version": "0.2.0",
+  "description": "End-to-end feature delivery workflow: design (brainstorm + compact product lens) → plan → implement (model-tiered subagents) → test → verify → simplify → PR. Autonomous after plan approval, or step-through. Generic spine; per-repo behavior comes from a .claude/feature-flow.local.md config.",
+  "author": {
+    "name": "Konstantin Valiotti",
+    "email": "valiotti.konst@gmail.com"
+  },
+  "homepage": "https://kvaliotti.substack.com",
+  "license": "MIT",
+  "keywords": [
+    "workflow",
+    "feature-development",
+    "orchestration",
+    "code-review",
+    "tdd"
+  ]
+}

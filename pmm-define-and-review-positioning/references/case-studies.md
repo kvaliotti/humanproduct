@@ -1,6 +1,6 @@
 # Positioning Case Studies
 
-Cite these when the user's situation parallels one. Makes the framework concrete.
+Shared across `positioning-workshop`, `positioning-review`, and `market-frame-selector`. Cite these when a user's situation parallels one — concrete numbers make the framework land. Each entry works two ways: as a **forward-looking example** during a workshop ("here's what this move can do") and as a **diagnostic parallel** during a review ("this is the problem you're describing").
 
 ## Database → Data Warehouse (Repositioning into an Adjacent Category)
 
@@ -12,7 +12,7 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** Prospects stopped comparing to Oracle. Started buying. Changed product roadmap, pricing, and company self-concept.
 
-**When to cite:** User is stuck in a category dominated by a giant. There may be an adjacent category where they'd be the leader.
+**Use when:** The user is stuck in a category dominated by a giant (workshop), or a review finds the positioning pits the product against a category leader it can't beat (review). There may be an adjacent category where they'd be the leader.
 
 ---
 
@@ -24,7 +24,7 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** Revenue grew from $2M to $70M in 18 months. Acquired for $1.7B.
 
-**When to cite:** User has a solid product but can't compete head-on with category leader. A definable subsegment exists with unmet needs.
+**Use when:** The user has a solid product but can't compete head-on with the category leader, and a definable subsegment exists with unmet needs. In review, this is the fix for generic CRM-style positioning that forces a feature-by-feature fight with a much larger incumbent.
 
 ---
 
@@ -36,7 +36,7 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** Revenue grew from $16M (1969) to $318M (1987).
 
-**When to cite:** User is clinging to original product identity even though the market has shifted. Willingness to let go of history can unlock massive growth.
+**Use when:** The user is clinging to the product's original identity even though the market has shifted (workshop), or a review diagnoses positioning baggage — assumptions inherited from launch that no longer fit. Willingness to let go of history can unlock massive growth.
 
 ---
 
@@ -48,7 +48,7 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** Accelerated sales, $30M funding round, Edison Award.
 
-**When to cite:** User's current category triggers wrong assumptions about what the product does. A different frame might make strengths obvious.
+**Use when:** The user's current category triggers wrong assumptions about what the product does. In review, this is the failure mode where the category name misleads prospects about features — the category test fails.
 
 ---
 
@@ -60,7 +60,7 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** Revenue grew from $12M (2006) to $96M (2012). IPO. Acquired by Oracle for $870M.
 
-**When to cite:** User's product is genuinely new and no existing category makes strengths obvious. BUT: warn that category creation is the most expensive and risky style. Eloqua had resources and patience most startups don't.
+**Use when:** The user's product is genuinely new and no existing category makes strengths obvious. BUT: warn that category creation is the most expensive and riskiest style. Eloqua had resources and patience most startups don't — this took 6+ years and massive category investment.
 
 ---
 
@@ -70,11 +70,11 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Insight:** Customers wanted digital invoicing, payments, payroll — not just accounting. "Accounting" in the name narrowed perception.
 
-**Action:** Dropped "Accounting" from name → "Wave" → positioned as "financial software." Made additional products (payroll, payments, credit) feel natural.
+**Action:** Dropped "Accounting" from the name → "Wave" → positioned as "financial software." Made additional products (payroll, payments, credit) feel natural.
 
 **Result:** Grew to 4M+ customers, $200B+ tracked income/expenses.
 
-**When to cite:** User has expanded beyond original product scope but positioning still reflects the original narrow frame.
+**Use when:** The user has expanded beyond the original product scope but positioning still reflects the original narrow frame. In review, this is the case where the product outgrew the category and the category needs to expand too.
 
 ---
 
@@ -86,4 +86,4 @@ Cite these when the user's situation parallels one. Makes the framework concrete
 
 **Result:** 100% increase in inbound leads. Dramatic increase in multi-product purchases.
 
-**When to cite:** User has strong positioning in an established category but wants to add urgency. Trend layering (not trend replacing) is the right move.
+**Use when:** The user has strong positioning in an established category but wants to add urgency. Trend layering (not trend replacing) is the right move — market first, trend second.

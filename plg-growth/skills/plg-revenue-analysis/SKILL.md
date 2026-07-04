@@ -23,12 +23,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-1. **Issue Trees (MECE)** — revenue decomposed into mutually exclusive, mathematically complete branches
-2. **Hypothesis Trees** — hypothesize which branches have highest leverage before analyzing
-3. **Driver Disaggregation** — separate direct (mathematical: x, +, -, /) drivers from indirect (behavioral/correlational) drivers
-4. **80/20 Prioritization** — 2-3 branches that drive the most revenue sensitivity
-5. **So-What Synthesis (Minto Pyramid)** — lead with the opportunity, then the analysis, then the data
-6. **Hypothesis-Driven Work Plans** — each recommendation ties to a testable hypothesis about revenue impact
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **revenue analysis**: decompose revenue into mathematically complete branches, separate direct (mathematical: ×, +, −, ÷) drivers from indirect (behavioral/correlational) drivers, and focus on the 2–3 branches with the most revenue sensitivity. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Step-by-Step Methodology
 
@@ -114,8 +109,8 @@ These are your priority levers.
 
 ### Step 5: Team Structuring
 
-Load the team structuring guide:
-> Read `references/team-structuring.md`
+Load the shared team structuring guide:
+> Read `${CLAUDE_PLUGIN_ROOT}/references/team-structuring.md`
 
 Based on team size and priority levers, recommend structure:
 

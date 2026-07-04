@@ -2,7 +2,7 @@
 
 > Generated: [YYYY-MM-DD] · Skill: strategic-synthesis-report · Inherited from: industry-process-map [✓/✗] · audience-segment-research [✓/✗] · willingness-to-pay-research [✓/✗] · competitor-evaluation [✓/✗]
 >
-> **HTML report:** [strategic-synthesis-[slug].html](computer://strategic-synthesis-[slug].html)
+> **HTML report:** `strategic-research/05-synthesis-report.html` (open it in a browser)
 
 ## Top-line recommendation
 

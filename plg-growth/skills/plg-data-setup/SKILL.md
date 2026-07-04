@@ -30,13 +30,7 @@ Trigger phrases:
 
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose data requirements into mutually exclusive, collectively exhaustive branches (TASE)
-2. **Hypothesis Trees** -- form hypotheses about what data you need before defining tracking
-3. **Driver Disaggregation** -- break each metric into its mathematical components to determine required events and properties
-4. **80/20 Prioritization** -- instrument the 20% of events that drive 80% of analytical value
-5. **So-What Synthesis (Minto Pyramid)** -- lead with what the team needs to decide, then what data enables that decision
-6. **Hypothesis-Driven Work Plans** -- every tracking event exists to support a specific decision or experiment
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **PLG data (TASE)**: decompose data requirements, disaggregate each metric into the events/properties it requires, and instrument the 20% of events that drive 80% of analytical value. Every tracking event must support a specific decision or experiment. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 

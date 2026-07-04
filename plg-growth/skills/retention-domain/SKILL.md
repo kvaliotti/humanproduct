@@ -29,15 +29,17 @@ Trigger phrases:
 - "dormant users"
 - "reactivation"
 
+## Quick Answer Mode
+
+Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good 90-day retention benchmark?", "how do I read a retention curve?", "is my churn voluntary or involuntary?" — just answer it directly and concisely, drawing on the frameworks below (four components, B=MAT, COM-B) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+
+Reach for the full methodology (the three operating modes) when the user wants a real retention diagnosis, churn root-cause analysis, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full retention analysis?"
+
+---
+
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose retention into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses at each branch before gathering data
-3. **Driver Disaggregation** -- break retention into mathematical and behavioral drivers
-4. **80/20 Prioritization** -- focus on 2-3 highest-sensitivity branches
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **retention**: decompose into the four retention components, and disaggregate into mathematical and behavioral drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 
@@ -271,8 +273,9 @@ Combine engagement score with other signals:
 
 **Goal:** Generate hypothesis-driven work items organized by retention component.
 
-Load the work plan template:
-> Read `references/work-plan-template.md`
+Load the shared work plan skeleton, then the retention-specific examples:
+> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
+> Read `references/work-plan-examples.md` (retention sample plans by component with Fogg B=MAT / COM-B levers, checklist additions)
 
 **Determine work plan type:**
 

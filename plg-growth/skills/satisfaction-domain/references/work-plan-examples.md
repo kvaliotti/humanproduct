@@ -1,54 +1,12 @@
-# Satisfaction Work Plan Template
+# Satisfaction Work Plan — Domain Examples
 
-## Work Plan Types
+Domain-specific worked examples for satisfaction work plans. Use alongside the shared skeleton at `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (plan formats, work-item format, priority-by-sensitivity, work-type definitions, generic checklist).
 
-Choose the type based on user situation:
-
-| Situation | Type | Structure |
-|-----------|------|-----------|
-| No satisfaction measurement in place | **OST** | Build measurement infrastructure |
-| Has data, needs to improve scores | **Experiment Backlog** | Prioritized improvements |
-| Needs qualitative understanding of drivers | **Research Plan** | Deep-dive discovery |
+**Extra work-item fields for satisfaction:** track both a `Satisfaction metric` (NPS / CSAT / CES / PMF change expected) and a `Business metric` (retention / expansion / referral impact expected).
 
 ---
 
-## Type 1: OST (Objectives, Strategies, Tactics)
-
-Use when the user needs strategic direction for satisfaction improvement.
-
-### Template
-
-```
-## Satisfaction Work Plan: OST
-
-### Objective
-[Specific, measurable goal]
-Example: "Increase NPS from 25 to 40 within 2 quarters by reducing Detractor rate from 22% to 12%"
-
-### Strategy 1: [Strategy Name]
-Hypothesis: "We believe [strategy] will improve [metric] because [reasoning]"
-
-Tactics:
-1. [Tactic] -- Owner: [who] -- Timeline: [when] -- Metric: [what to measure]
-2. [Tactic] -- Owner: [who] -- Timeline: [when] -- Metric: [what to measure]
-3. [Tactic] -- Owner: [who] -- Timeline: [when] -- Metric: [what to measure]
-
-### Strategy 2: [Strategy Name]
-Hypothesis: "We believe [strategy] will improve [metric] because [reasoning]"
-
-Tactics:
-1. [Tactic] -- Owner: [who] -- Timeline: [when] -- Metric: [what to measure]
-2. [Tactic] -- Owner: [who] -- Timeline: [when] -- Metric: [what to measure]
-
-### Key Unknowns
-- [What we need to learn before committing]
-
-### Success Criteria
-- [How we will know the objective is met]
-- [Leading indicators to track weekly/monthly]
-```
-
-### Satisfaction-Specific OST Examples
+## OST Examples
 
 **Objective:** Increase NPS from 25 to 40 within 2 quarters
 
@@ -73,27 +31,7 @@ Tactics:
 
 ---
 
-## Type 2: Experiment Backlog
-
-Use when the user has satisfaction data and needs to test specific improvements.
-
-### Template
-
-```
-## Satisfaction Experiment Backlog
-
-### Experiment 1: [Name]
-- Branch: [Which issue tree branch this tests]
-- Hypothesis: "We believe [change] will [outcome] because [reasoning]"
-- Metric: [Primary satisfaction metric + downstream business metric]
-- Success criteria: [Threshold, e.g., "CES improvement from 3.8 to 5.0"]
-- Audience: [Who is affected]
-- Duration: [Test duration]
-- Effort: [S/M/L]
-- Expected impact: [Satisfaction change → estimated retention/revenue impact]
-```
-
-### Satisfaction-Specific Experiment Examples
+## Experiment Backlog Examples
 
 **Experiment: Onboarding Redesign**
 - Branch: Root Cause > Opportunity > Onboarding Quality
@@ -127,28 +65,7 @@ Use when the user has satisfaction data and needs to test specific improvements.
 
 ---
 
-## Type 3: Research Plan
-
-Use when the user needs qualitative understanding of satisfaction drivers before making decisions.
-
-### Template
-
-```
-## Satisfaction Research Plan
-
-### Research Question
-[What do we need to learn?]
-
-### Study 1: [Method]
-- Objective: [What this study answers]
-- Method: [Interviews / Observation / Survey / Analysis]
-- Participants: [Who, how many, how recruited]
-- Timeline: [Design, field, analysis]
-- Deliverable: [What the output looks like]
-- Decision it informs: [What strategy depends on this]
-```
-
-### Satisfaction-Specific Research Examples
+## Research Plan Examples
 
 **Research Question:** "Why are 22% of users Detractors and what would convert them?"
 
@@ -178,22 +95,3 @@ Use when the user needs qualitative understanding of satisfaction drivers before
 - Decision it informs: Which workflows to redesign for CES improvement
 
 **Research Sequence:** Study 1 first (identifies themes), then Studies 2 and 3 in parallel (deepens understanding of Passive gap and effort sources).
-
----
-
-## Universal Work Item Format
-
-Regardless of plan type, every work item should include:
-
-```
-### [Item Name]
-- Issue tree branch: [Which branch this addresses]
-- Hypothesis: "We believe [X] because [Y]"
-- Action: [Specific, concrete action]
-- Owner: [Person or team]
-- Timeline: [Start and end date]
-- Satisfaction metric: [NPS / CSAT / CES / PMF change expected]
-- Business metric: [Retention / expansion / referral impact expected]
-- Dependencies: [What must happen first]
-- Risk: [What could go wrong and mitigation]
-```

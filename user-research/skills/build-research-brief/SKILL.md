@@ -21,35 +21,15 @@ Default to Mode A unless the user's input already covers 3+ sections of the brie
 
 ## Step 1: Detect the Research Type
 
-Before reading reference files or drafting anything, classify the research based on what the user describes. This determines which methodology to emphasize.
+Before reading reference files or drafting anything, classify the research based on what the user describes. This determines which methodology to emphasize. Since this skill is almost always the first stop in the pipeline, you're usually detecting from scratch — but if the user hands you prior context (an existing rough brief, notes) that already states a research type, inherit it instead of re-deriving it.
 
-### Behavioral Research
-The user's problem centers on **getting users to do (or stop doing) a specific action**. Signals:
+Read `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md` for the full Behavioral / General / Mixed signal list and the rule for writing/reading the `Research Type:` field. Once classified:
 
-- Adoption, activation, onboarding completion
-- Engagement, retention, habit formation, feature usage
-- Behavior change ("users aren't doing X", "how to get users to Y")
-- Churn prevention framed as behavior ("users stop logging in after week 2")
-- Conversion actions (signup → first value, trial → paid)
+- **Behavioral:** Read `references/behavioral-approach.md`. This is your primary methodology. Still use general approach elements for logistics, participants, and recruitment.
+- **General:** Read `references/general-approach.md`. This is your primary methodology. Borrow behavioral elements (target behavior specification, COM-B or B=MAP decomposition) when the research touches on user actions, but keep them secondary.
+- **Mixed:** Read both reference files. Lead with whichever matches the user's primary intent. Flag the dual nature to the user.
 
-**Action:** Read `references/behavioral-approach.md`. This is your primary methodology. Still use general approach elements for logistics, participants, and recruitment.
-
-### General Research
-The user's problem centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration ("what do users need?", "is this a real problem?")
-- Market validation, willingness to pay, competitive understanding
-- Feature prioritization, product-market fit assessment
-- Customer segmentation, persona building
-- "Why are users churning?" (framed as understanding, not behavior change)
-- Evaluative research (testing prototypes, concepts)
-
-**Action:** Read `references/general-approach.md`. This is your primary methodology. Borrow behavioral elements (target behavior specification, COM-B or B=MAP decomposition) when the research touches on user actions, but keep them secondary.
-
-### Mixed
-Some briefs touch both. Example: "We want to understand why users churn and design interventions to retain them." The understanding part is general; the intervention design is behavioral.
-
-**Action:** Read both reference files. Lead with whichever matches the user's primary intent. Flag the dual nature to the user.
+**Write the result into the brief.** Every brief template below has a `Research Type: [Behavioral / General / Mixed]` line — fill it in with your detected classification so `evaluate-research-brief`, `build-research-guide`, and every downstream skill can trust it without re-detecting.
 
 ---
 
@@ -305,7 +285,9 @@ After drafting, run the brief through these checks before presenting:
 
 ## Presenting the Brief
 
-Give the user the complete brief as a markdown file saved to their workspace. After presenting:
+Give the user the complete brief as a markdown file saved to their workspace. **Save it as `research-brief-[topic].md`** (slugify the research topic/title — e.g. `research-brief-onboarding-activation.md`). This exact naming pattern is how `evaluate-research-brief`, `build-research-guide`, and `analyze-research` locate the brief later without you having to hand it off directly — always use it, even in Mode A guided sessions.
+
+After presenting:
 
 1. Ask which sections feel weakest or most uncertain
 2. Note what desk research should happen before fieldwork

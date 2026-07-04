@@ -1,8 +1,8 @@
 # Behavioral Research Approach
 
-Synthesized from COM-B (Capability, Opportunity, Motivation — Behavior) and B=MAP (Behavior = Motivation + Ability + Prompt, from BJ Fogg's Behavior Design). Use this reference when the research centers on getting users to perform (or stop performing) a specific action — adoption, engagement, retention, onboarding, habit formation, feature usage.
+Synthesized from COM-B (Capability, Opportunity, Motivation — Behavior) and B=MAP (Behavior = Motivation + Ability + Prompt, from BJ Fogg's Behavior Design). For the underlying definitions of both frameworks (the 6 COM-B sub-components, PAC, Ability Chain, Prompt types, troubleshooting order), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first. This file covers brief-writing application only: how to turn those frameworks into the specific research questions and hypotheses a brief needs.
 
-Both frameworks decompose behavior into components. They complement each other: COM-B provides a comprehensive diagnostic (6 sub-components), B=MAP provides a precise action-design lens (3 components with troubleshooting order). Use both in every behavioral brief.
+Use this reference when the research centers on getting users to perform (or stop performing) a specific action — adoption, engagement, retention, onboarding, habit formation, feature usage. Use both frameworks in every behavioral brief: COM-B provides comprehensive diagnostic coverage, B=MAP provides a precise, ordered action-design lens.
 
 ---
 
@@ -80,117 +80,51 @@ Structure research questions around what might need to change for the target beh
 
 ### 4a. Capability
 
-**Physical Capability** — Does the user have the physical skills or stamina?
-- Can the user physically execute the required actions (navigate UI, complete gestures)?
-- Are there accessibility or motor-skill barriers?
-
-**Psychological Capability** — Does the user have the knowledge, cognitive skills, and mental bandwidth?
-- Does the user know the behavior exists and what it involves?
-- Can they remember what to do and when?
-- Can they plan, prioritize, and self-regulate to carry out the behavior?
-- Do they have the mental bandwidth (attention, working memory) given competing demands?
-
 **Research questions:**
-- What do users currently know/not know about [target behavior]?
-- What cognitive load or decision complexity stands in the way?
-- What skills (digital literacy, domain knowledge) does this behavior require?
+- What do users currently know/not know about [target behavior]? (Psychological Capability)
+- What cognitive load or decision complexity stands in the way — attention, working memory, competing demands? (Psychological Capability)
+- What skills (digital literacy, domain knowledge) does this behavior require, and can the user physically execute the required actions — navigate the UI, complete gestures? Any accessibility or motor-skill barriers? (Physical Capability)
 
 ### 4b. Opportunity
 
-**Physical Opportunity** — Does the environment enable the behavior?
-- Is the feature discoverable, accessible, and available at the right moment?
-- Are there time, resource, or tool constraints that block the behavior?
-- Does the physical/digital environment prompt or cue the behavior?
-
-**Social Opportunity** — Do social influences support the behavior?
-- Is the behavior normative among peers, team members, or the user's community?
-- Do managers, colleagues, or social networks encourage or discourage it?
-- Are there cultural or organizational norms that conflict with the behavior?
-
 **Research questions:**
-- What environmental triggers or barriers exist at the moment the behavior should occur?
-- Who influences the user's decision to perform (or not perform) the behavior?
-- What social norms or expectations operate in this context?
+- Is the feature discoverable, accessible, and available at the right moment? What environmental triggers or barriers exist at the moment the behavior should occur? (Physical Opportunity)
+- Who influences the user's decision to perform (or not perform) the behavior — peers, managers, community? (Social Opportunity)
+- What social norms, cultural expectations, or organizational norms operate in this context — do they support or conflict with the behavior? (Social Opportunity)
 
 ### 4c. Motivation
 
-**Reflective Motivation** — Conscious beliefs, intentions, and plans.
-- Does the user believe the behavior will lead to valued outcomes?
-- Does the user intend to do it? Have they made a plan?
-- Does the behavior align with their professional/personal identity?
-- Do they believe they are capable of doing it (self-efficacy)?
-
-**Automatic Motivation** — Emotional responses, habits, impulses.
-- What emotional reaction does the user have to the behavior or its context?
-- Is there an existing habit or routine that supports or competes with the behavior?
-- Are there impulses, desires, or aversions at play?
-
 **Research questions:**
-- What does the user believe will happen if they do/don't perform the behavior?
-- What are their goals and priorities — does this behavior rank?
-- What emotional associations (anxiety, boredom, excitement) attach to the behavior or context?
+- Does the user believe the behavior leads to a valued outcome? Do they intend to do it, and do they believe they're capable (self-efficacy)? (Reflective Motivation)
+- Does the behavior align with their professional/personal identity? (Reflective Motivation)
+- What emotional reaction does the user have to the behavior or its context — anxiety, boredom, excitement? (Automatic Motivation)
+- Is there an existing habit or routine that supports or competes with the behavior? (Automatic Motivation)
 
 ---
 
 ## 5. B=MAP Decomposition
 
+Use the PAC / Ability Chain / Prompt Type definitions from the shared primer (`${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md`, section 2). What follows is brief-specific: what must be captured in the brief for each component.
+
 ### Motivation (M) — Why would the user do this?
 
-Identify motivation sources using the PAC framework:
-
-| Source | Question | Example |
-|--------|----------|---------|
-| **Person** (internal) | Does the user already want this? | Intrinsic desire to save time |
-| **Action** (benefit/punishment) | What carrot or stick exists? | Bonus for completing onboarding |
-| **Context** (social/environmental) | Does the environment push toward this? | Manager requires daily check-in |
-
-**Critical filter (Mom Test):** Are you documenting what users actually do or what they say they'd do? Flag which motivation signals come from observed behavior vs. stated intent.
-
-**Document competing motivations:** Users often have motivations pushing toward and away from the same behavior. Map both vectors.
-
-**Document conflicting motivations:** The same user may want the outcome but not want the specific behavior. Capture this tension explicitly.
-
-**Motivation durability:** Is motivation enduring (aspiration-level), wave-like (temporary surge after signup, then crash), or fluctuating?
+- **Critical filter (Mom Test):** Are you documenting what users actually do or what they say they'd do? Flag which motivation signals come from observed behavior vs. stated intent.
+- **Document competing motivations:** Users often have motivations pushing toward and away from the same behavior. Map both vectors.
+- **Document conflicting motivations:** The same user may want the outcome but not want the specific behavior. Capture this tension explicitly.
+- **State motivation durability:** Enduring, Wave, or Fluctuating (see primer) — this shapes what kind of intervention will hold up.
 
 ### Ability (A) — Can the user do this?
 
-Assess using the Ability Chain — five factors, weakest link determines feasibility:
-
-| Factor | Assessment Question |
-|--------|-------------------|
-| **Time** | How many seconds/minutes does this take? |
-| **Money** | What does this cost the user? |
-| **Physical effort** | What physical actions are required? |
-| **Mental energy** | How much cognitive load does this demand? |
-| **Routine fit** | Does this slot into existing workflows or require restructuring? |
-
-**Discovery Question:** "What is making this behavior hard to do?" — This must appear in every behavioral research brief as a hypothesis to test.
-
-**Breakthrough Question:** "How can we make this behavior easier to do?" — This frames the design opportunity.
-
-**Three ability levers to explore:**
-1. Can users skill up? (training, education)
-2. Can we provide better tools? (UX, automation)
-3. Can we make the behavior tinier? (reduce scope, simplify steps)
+- Score all 5 Ability Chain factors (Time, Money, Physical effort, Mental energy, Routine fit — see primer) and hypothesize the weakest link.
+- **Discovery Question:** "What is making this behavior hard to do?" — must appear in every behavioral research brief as a hypothesis to test.
+- **Breakthrough Question:** "How can we make this behavior easier to do?" — frames the design opportunity via the three ability levers (skill up / better tools / make it tinier — see primer).
 
 ### Prompt (P) — What triggers the behavior?
 
-Classify the current/planned prompt:
-
-| Prompt Type | Reliability | Example |
-|-------------|------------|---------|
-| **Person Prompt** | Low — relies on memory | "I'll remember to check the dashboard" |
-| **Context Prompt** | Medium — external reminder | Push notification, email reminder |
-| **Action Prompt (Anchor)** | High — wired to existing behavior | "After I open Slack, I check the dashboard" |
-
-**Specify the Anchor Moment** if one exists: What existing behavior does (or could) this new behavior follow?
-
-**Find the Trailing Edge:** What is the last specific action in the anchor behavior? This is the precise prompt point.
-
-**Anchor match quality checklist:**
-- Location match: Does the anchor happen in the same place/app? ✓/✗
-- Frequency match: Does the anchor happen at the needed frequency? ✓/✗
-- Theme match: Is the anchor thematically related? ✓/✗
+- Classify the current/planned prompt using the three prompt types from the primer (Person / Context / Action-Anchor).
+- **Specify the Anchor Moment** if one exists: what existing behavior does (or could) this new behavior follow?
+- **Find the Trailing Edge:** the last specific action in the anchor behavior — the precise prompt point.
+- **Run the anchor match checklist** from the primer (location / frequency / theme match) before committing to an anchor hypothesis.
 
 ---
 

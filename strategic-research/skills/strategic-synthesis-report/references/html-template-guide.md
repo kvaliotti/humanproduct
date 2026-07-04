@@ -261,4 +261,4 @@ The `@media print` block at the bottom of the template inverts the theme for pri
 
 ## File size budget
 
-A healthy synthesis report is 120–250 KB of HTML (everything inline). If the file balloons past 500 KB, the skill is dumping raw handoff text into the HTML instead of compressing it — go back to Phase 4 and tighten.
+Chart.js is vendored inline in the template (~208 KB on its own), so a healthy self-contained synthesis report lands around 330–500 KB of HTML. If the file balloons past ~750 KB, the skill is dumping raw handoff text into the HTML instead of compressing it — go back to Phase 4 and tighten. (The inlined library is fixed overhead and is what makes the report fully offline; do not strip it.)

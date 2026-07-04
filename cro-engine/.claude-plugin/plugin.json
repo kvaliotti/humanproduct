@@ -1,0 +1,9 @@
+{
+  "name": "cro-engine",
+  "version": "0.1.0",
+  "description": "A conversion-rate-optimization skill that reviews and improves landing pages, signup flows, paywalls, popups, onboarding, and forms against a panel of CRO best-practice patterns.",
+  "author": {
+    "name": "Konstantin Valiotti"
+  },
+  "keywords": ["cro", "conversion-rate-optimization", "landing-pages", "paywall", "signup", "onboarding", "forms"]
+}

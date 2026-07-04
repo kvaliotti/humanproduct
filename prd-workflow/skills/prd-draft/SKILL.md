@@ -60,9 +60,9 @@ Keep it to 1-3 sentences. State the problem, who has it, and why it matters now.
 Only include if the user provided or implied metrics. Do not fabricate metrics. If no metrics are available, write: "To be defined after solution validation." This is honest and avoids fake precision.
 
 ### Real-world situations (sit-beh format)
-This is the most important section. Convert whatever user/persona information exists into concrete situation statements:
+This is the most important section. Convert whatever user/persona information exists into concrete situation statements, one sentence each, using the canonical format (same as `references/prd-template.md` and the sit-beh skill):
 
-> **[activation moment]** + **[type of person]** + **wants to [desire]** + **[precise limitation]**
+> **[person]** + **[moment/trigger]** + **[desired outcome]** + **[limitation/friction]**
 
 Each situation should be a real moment in time, not a persona description. If the user's input doesn't have enough specificity, draft 2-3 candidate situations based on what you can infer and mark them for validation.
 
@@ -81,12 +81,15 @@ If the user mentioned constraints, list them. If not, infer reasonable scope bou
 Populate with questions that came up during your analysis of the input. These are questions a reasonable engineer or designer would ask. Provide your best answers.
 
 ## Step 4: Verify against the initial request & update PRD
-Launch a sub-agent that will verify the PRD against the initial request: a document that user shared, their prompt, or anything else that led to PRD being written. 
+
+Decide how to verify based on size: a PRD is **substantial** if it has more than ~3 user stories, several non-trivially filled sections, or the initial request itself was a long document/spanned multiple messages. Otherwise it's **small/trivial** (a quick tweak, a single user story, a short input).
+
+- **Substantial PRD** — launch a sub-agent to verify the PRD against the initial request. Pass it exactly two things: (1) the initial request in full — the document, notes, or prompt that led to this PRD — and (2) the drafted PRD in full. Nothing else from this session, so it isn't biased by conversational context. Ask it to produce a table mapping every piece of the initial request to where it landed in the PRD, and to flag anything omitted.
+- **Small/trivial PRD** — skip the sub-agent; re-read the initial input yourself and compare it against the drafted PRD inline.
+
 If the PRD missed parts of the initial request, address them before presenting to the user. If the omission happened because of user's answers during the session, that's OK, but highlight it.
 
-Verification should produce a table of all pieces of the initial request mapped to PRD. It should highlight what was omitted.
-
-Next, update the PRD based on these omissions (unless they happened because of user's actions or discussions within the session, so they are acceptable).
+Update the PRD based on these omissions (unless they happened because of user's actions or discussions within the session, so they are acceptable).
 
 ## Step 5: Present and iterate
 

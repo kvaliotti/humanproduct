@@ -1,0 +1,4 @@
+.DS_Store
+node_modules/
+# per-repo configs are written into the *target* project, not here
+*.local.md

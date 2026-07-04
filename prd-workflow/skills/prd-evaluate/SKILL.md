@@ -28,11 +28,15 @@ Product documents fail in predictable ways. The most dangerous gaps aren't the b
 
 This skill exists to surface these gaps before they become bugs, delays, or design debt.
 
-## Step 0: Launch a separate agent to avoid context pollution
+## Step 0: Decide whether to isolate the evaluation
 
-A separate agent that doesn't have the session context, and, thus, is unpolluted, should be launched for evaluation. 
+For a substantial PRD (multiple user stories, several filled-out sections, or a long/complex document), launch a separate sub-agent to run the evaluation — it carries no session context, so it judges the PRD on what's actually written rather than what you intended it to say. Pass it: (1) the PRD itself (path or full content), and (2) a pointer to `references/evaluation-checklist.md`. Nothing else from this session.
+
+For a small or trivial PRD (short document, one or two user stories, a quick edit), skip the sub-agent — the isolation overhead isn't worth it — and run the evaluation checklist inline instead.
 
 ## Step 1: Ingest the PRD
+
+If the user gave a path or pasted the PRD content, use that. If no path was given, search the current working directory for files matching `PRD-*.md` and use the most recently modified one. If multiple candidates exist, list them and ask the user which one to use. If none exist, ask the user for the PRD path or content — do not fail silently.
 
 Read the full document. Build a mental model of:
 

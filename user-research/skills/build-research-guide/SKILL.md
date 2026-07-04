@@ -34,7 +34,7 @@ Default to Mode B when a research brief is available. In Mode A, batch related q
 
 The guide depends on a research brief. Sources:
 
-1. **Prior skill output** — brief was produced by build-research-brief or evaluate-research-brief in this session or a prior one. Check the workspace for recent brief files.
+1. **Prior skill output** — brief was produced by build-research-brief or evaluate-research-brief in this session or a prior one. Look in the workspace for files matching `research-brief-*.md`, newest first — this is the exact filename pattern build-research-brief saves to. Don't rely on scanning for generic recent `.md` files.
 2. **File reference** — user points to a file
 3. **Pasted in chat** — user pastes the brief text
 4. **No brief available** — user wants to build a guide without a formal brief. Extract the equivalent inputs conversationally (research question, target users, research type, hypotheses). Warn that a brief-first approach produces sharper guides.
@@ -45,34 +45,17 @@ Read the brief fully before proceeding.
 
 ## Step 2: Detect the Research Type
 
-Classify the research based on the brief's content. This determines which reference file to use as the primary methodology.
+This determines which reference file to use as the primary methodology.
 
-### Behavioral Research
-The brief centers on **getting users to do (or stop doing) a specific action**. Signals:
+**Check the brief first.** Look for a `Research Type:` field in the brief — build-research-brief always writes one. If present, inherit it and state "Research type detected: [X] (inherited from brief)." Only re-derive from scratch if the field is absent (e.g., no brief was available in Step 1), using the signal list in `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md`.
 
-- Target behavior specified (e.g., "After [context], user will [action]")
-- COM-B decomposition or B=MAP decomposition present
-- Adoption, activation, onboarding, engagement, retention, habit formation
-- Behavior change framing
-- Conversion actions
+Once the type is known:
 
-**Action:** Read `references/behavioral-guide.md`. This is your primary methodology. The guide must follow the B=MAP troubleshooting order (Prompt → Ability → Motivation) and systematically surface COM-B barriers. Still use general guide elements for opening, closing, and conversational tactics.
+- **Behavioral:** Read `references/behavioral-guide.md`. This is your primary methodology. The guide must follow the B=MAP troubleshooting order (Prompt → Ability → Motivation) and systematically surface COM-B barriers. Still use general guide elements for opening, closing, and conversational tactics.
+- **General:** Read `references/general-guide.md`. This is your primary methodology. Borrow behavioral elements (target behavior probes, COM-B screening) when the research touches on user actions, but keep them secondary.
+- **Mixed:** Read both reference files. Structure the guide with general discovery sections first, then behavioral deep-dive sections. Flag the dual nature to the user.
 
-### General Research
-The brief centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration focus
-- Market validation, willingness to pay
-- Feature prioritization, product-market fit
-- Customer segmentation
-- Evaluative research (prototypes, concepts)
-
-**Action:** Read `references/general-guide.md`. This is your primary methodology. Borrow behavioral elements (target behavior probes, COM-B screening) when the research touches on user actions, but keep them secondary.
-
-### Mixed
-The brief touches both — e.g., "understand why users churn AND design interventions."
-
-**Action:** Read both reference files. Structure the guide with general discovery sections first, then behavioral deep-dive sections. Flag the dual nature to the user.
+**Write the result into the guide.** The guide template below has a `Research Type:` line — fill it in with the type you inherited or detected, so `evaluate-research-guide` and `analyze-research` can trust it downstream.
 
 ---
 

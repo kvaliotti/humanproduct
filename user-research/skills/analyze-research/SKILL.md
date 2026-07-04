@@ -60,12 +60,16 @@ Before analyzing anything, you need research data and context.
 | Input | What to look for | Where to find it |
 |-------|-----------------|------------------|
 | **Research data** | Transcripts, notes, recordings, survey responses, observation logs | User provides files, pastes text, or points to workspace files |
-| **Research brief** (if available) | The original research questions, hypotheses, target behavior, segment definitions | Output from build-research-brief skill, or user-provided |
-| **Research guide** (if available) | The interview script, question structure, probes used | Output from build-research-guide skill, or user-provided |
+| **Research brief** (if available) | The original research questions, hypotheses, target behavior, segment definitions | Output from build-research-brief, or user-provided. If not handed to you directly, look for files matching `research-brief-*.md`, newest first. |
+| **Research guide** (if available) | The interview script, question structure, probes used | Output from build-research-guide, or user-provided. If not handed to you directly, look for files matching `research-guide-*.md`, newest first. |
+
+Match these specific naming patterns rather than scanning for generic recent `.md` files — that avoids picking up an evaluation report or a prior analysis by mistake.
 
 ### What to do if inputs are missing
 
 - **No research data:** Stop. Ask the user to provide transcripts, notes, or other raw data. Analysis without data is speculation.
+
+  **Exception — quick/directional pass:** If the user explicitly asks for a quick take or directional read without full data (e.g., they describe interviews verbally, or share a handful of scattered notes), you may proceed. Clearly label the output **Quick/Directional Pass — not a full analysis**, state plainly that conclusions are provisional and unverified, and skip Step 2's rigorous coding and Step 5's pattern-strength claims. This is not the default — only bypass when asked.
 - **No research brief:** Proceed, but flag that findings won't be anchored to pre-stated hypotheses. Extract the implicit research question from the data itself and state it explicitly.
 - **No research guide:** Proceed. The guide helps you understand what questions were asked, but the data speaks for itself.
 
@@ -77,35 +81,17 @@ Warn the user if they provide fewer than 5 interviews/data points. Analysis on f
 
 ## Step 1: Detect the Research Type
 
-Before reading reference files, classify the research based on the data and any available brief. This determines which analytical framework to emphasize.
+This determines which analytical framework to emphasize.
 
-### Behavioral Research
-The research centers on **why users do or don't perform a specific action**. Signals:
+**Check the brief or guide first.** If a research brief or guide is available, look for a `Research Type:` field — build-research-brief and build-research-guide always write one. If found, inherit it and state "Research type detected: [X] (inherited from brief/guide)." Only re-derive from scratch if no upstream artifact states it, using the signal list in `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md` (data signals like behavioral episodes in transcripts still apply when detecting from scratch).
 
-- Research brief specifies a target behavior
-- Interview questions probe adoption, activation, onboarding, engagement, retention, habit formation, feature usage
-- Transcripts contain behavioral episodes: "I tried to do X but then Y happened"
-- Data includes behavior change, conversion, churn framed as behavior
-- COM-B or B=MAP decomposition present in the brief
+Once the type is known:
 
-**Action:** Read `references/behavioral-analysis.md`. This is your primary analytical framework. Still use general analysis elements (data classification, quote extraction, journey mapping) from `references/general-analysis.md` where they add value.
+- **Behavioral:** Read `references/behavioral-analysis.md`. This is your primary analytical framework. Still use general analysis elements (data classification, quote extraction, journey mapping) from `references/general-analysis.md` where they add value.
+- **General:** Read `references/general-analysis.md`. This is your primary analytical framework. Borrow behavioral elements (COM-B coding, B=MAP profiling) when the data reveals behavioral patterns worth decomposing, but keep them secondary.
+- **Mixed:** Read both reference files. Lead with whichever matches the primary research intent. The understanding part uses general analysis; the intervention design part uses behavioral analysis.
 
-### General Research
-The research centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration research
-- Market validation, willingness to pay, competitive understanding
-- Feature prioritization, product-market fit
-- Customer segmentation, persona building
-- Understanding "why" without a specific behavior to change
-- Evaluative research (prototype/concept testing)
-
-**Action:** Read `references/general-analysis.md`. This is your primary analytical framework. Borrow behavioral elements (COM-B coding, B=MAP profiling) when the data reveals behavioral patterns worth decomposing, but keep them secondary.
-
-### Mixed
-Some research touches both — e.g., "understand why users churn AND identify what behavioral interventions could retain them."
-
-**Action:** Read both reference files. Lead with whichever matches the primary research intent. The understanding part uses general analysis; the intervention design part uses behavioral analysis.
+**Write the result into the analysis.** The analysis template below has a `Research Type:` line — fill it in so `review-research-analysis` can trust it downstream.
 
 ---
 
@@ -264,7 +250,7 @@ If no brief exists, state the implicit hypotheses the research reveals and what 
 
 ### Output Structure
 
-Save a markdown file to the user's workspace. Use the **focused** or **extended** structure based on the scope chosen earlier.
+Save a markdown file to the user's workspace as `research-analysis-[topic].md` (slugify the research topic — e.g. `research-analysis-onboarding-activation.md`). This exact naming pattern is how `review-research-analysis` locates the analysis later without a direct handoff — always use it. Use the **focused** or **extended** structure based on the scope chosen earlier.
 
 #### Focused Analysis (default)
 
@@ -274,7 +260,7 @@ The focused analysis answers one question: "Based on what we learned, what shoul
 # Research Analysis: [Title]
 
 **Date:** [date]
-**Research type:** [Behavioral / General / Mixed]
+**Research Type:** [Behavioral / General / Mixed]
 **Data analyzed:** [N interviews/observations/surveys, participant IDs/segments]
 **Research brief:** [linked if available, or "none provided"]
 

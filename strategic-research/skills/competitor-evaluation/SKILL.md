@@ -292,13 +292,13 @@ Use `assets/output-template.md`. Full structure:
 15. Appendix — rejected framings (alternative groupings, rejected canvases, over-claimed Powers)
 16. YAML handoff block
 
-Write to `/sessions/compassionate-amazing-ptolemy/mnt/tempSkills/competitor-evaluation-[slug].md` where `[slug]` is a kebab-case tag of the anchor or industry (e.g., `splitmetrics-apple-ads`).
+Write to `strategic-research/04-competitor-evaluation.md` in the user's current working directory (create the `strategic-research/` folder if it does not exist). This fixed path lets the synthesis skill and `--from` resume find it deterministically. See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
 
 The YAML handoff block is non-negotiable — it's the contract with the synthesis skill (#5). Schema in `references/handoff-schema.md`.
 
 ### Phase 12 — Share
 
-Link the file with a `computer://` link. Short message: title, one-sentence top-line (e.g., "3 strategic groups, 1 confirmed-Powers competitor, non-consumption still dominant in S2"), link. Don't restate content in chat.
+Tell the user the local path where the file was written — `strategic-research/04-competitor-evaluation.md`. Short message: title, one-sentence top-line (e.g., "3 strategic groups, 1 confirmed-Powers competitor, non-consumption still dominant in S2"), path. Don't restate content in chat.
 
 ## Quality audit — mandatory before Phase 11
 
@@ -315,7 +315,7 @@ Run these checks explicitly. Fix any failure before writing the final artifact.
 - [ ] Is there at least one canvas per strategic group (not a single whole-category canvas)?
 - [ ] Does the Four Actions Framework produce at least one "Create" candidate, drawn from non-consumption research?
 - [ ] Does the segment affinity matrix show the anchor's position in every cell?
-- [ ] Is every tension classified (claimed-vs-revealed / subsegment-split / context-dependent / stated-vs-behavioral / temporal / unresolved)?
+- [ ] Is every tension classified per `${CLAUDE_PLUGIN_ROOT}/references/tension-taxonomy.md` (competitor variant: claimed-vs-revealed / subsegment-split / context-dependent / stated-vs-behavioral / temporal / unresolved)?
 - [ ] Are singletons preserved either per-profile or in a global outliers section?
 - [ ] Does the YAML handoff validate against `references/handoff-schema.md`?
 - [ ] Have "features they have" claims been rejected as winning factors unless tied to buyer behavior?
@@ -324,13 +324,10 @@ If any check fails, loop back to the relevant phase.
 
 ## Writing style
 
-- **No preamble.** Start with the framing table.
-- **Tables and structured profiles over prose.** Prose only where nuance requires it.
+Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
+
 - **Specific alternatives, not categories.** "Motion (AI calendar), a $2.5k/mo EA, or a Notion dashboard" beats "planning tools, assistants, and knowledge bases".
 - **Behavior-anchored claims.** "41 of 58 churn-to reviews name 'slow sync' as reason" beats "users complain about performance".
-- **Source tags on non-obvious claims.** Inline `[src: G2 review 2025-03, behavioral]` or `[src: r/productivity 2024-11]`.
-- **Confidence marks as percentages.** No hedge words ("somewhat", "arguably", "it could be said").
-- **Honest gaps.** "Thin evidence — 2 data points, both stated" beats dressing it up.
 - **Verbs in factor labels.** "Preps me for my next meeting in 30 seconds" beats "Meeting preparation quality".
 - **Skeptical voice on Power claims.** Default to "operational lead" until the persistence-and-hardness test is passed.
 
@@ -349,15 +346,15 @@ If any check fails, loop back to the relevant phase.
 
 ## When this skill is the wrong tool
 
+Sibling skills in this plugin:
+
 | User wants | Use |
 |---|---|
 | Map the space (processes, workflow) | `industry-process-map` (skill #1) |
 | Segment the audience and map stakeholders | `audience-segment-research` (skill #2) |
 | Willingness-to-pay / pricing sensitivity | `willingness-to-pay-research` (skill #3) |
-| Final strategic synthesis and recommendations | Synthesis skill (skill #5, downstream) |
-| A named-competitor battlecard for sales | `product-management:competitive-brief` |
-| Positioning canvas and market category claim | `pm-sage:position-product` (feed it this skill's output) |
-| Evaluate a specific product idea against this landscape | `pm-sage:evaluate-idea` |
-| Write a PRD that differentiates against this landscape | `pm-sage:write-prd` (feed it the strategy canvas) |
+| Final strategic synthesis and recommendations | `strategic-synthesis-report` (skill #5) |
+
+For a sales battlecard, a positioning canvas / market-category claim, a product-idea evaluation, or a PRD that differentiates against this landscape — all outside this plugin — see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`, feeding it this skill's output (e.g., the strategy canvas).
 
 This skill maps **who competes, where, how they win, what their advantages actually are, and where the white space sits**. It does not synthesize the strategic response. Stay in lane.

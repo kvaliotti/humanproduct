@@ -28,27 +28,21 @@ If the user hasn't identified best-fit customers, run a quick version: "Describe
 
 "What would your best customers use or do if your product didn't exist?"
 
-This is NOT "who are your competitors?" It's what customers would ACTUALLY do. The distinction matters.
+This is NOT "who are your competitors?" It's what customers would ACTUALLY do. The distinction matters — `references/elicitation-guide.md` has the research behind this (the database-company example where asking about "problems" produced narrow answers but asking about "alternatives" revealed the true market frame).
 
 ### Guided Elicitation
 
-Walk through each alternative type systematically. For each, ask explicitly:
+Run the full 4-round sequence from `references/elicitation-guide.md`:
+1. **Open-ended** — "If our product didn't exist tomorrow, what would your best customers do instead?"
+2. **Category prompts** — general-purpose tools, manual/human processes, status quo, cobbled combinations, internal builds
+3. **Validation** — is this observed customer behavior or the user's inference?
+4. **Ranking** — most to least common, grouped into clusters
 
-| Type | Prompt |
-|------|--------|
-| Direct competitors | "Are there products that do roughly the same thing as yours?" |
-| Adjacent tools | "Would customers cobble together a solution from general-purpose tools? Which ones?" |
-| Manual processes | "Could they solve this with people instead of software? How?" |
-| Do nothing | "What happens if they just... don't solve this? Is that viable?" |
-| Combinations | "Would they combine 2-3 things? What combination?" |
+`references/elicitation-guide.md` also has a full alternative-types table with B2B and consumer examples for each category.
 
 ### Anti-Pattern Detection
 
-Watch for and challenge:
-- **Only listing VC-funded startups.** "Have your actual customers heard of these companies? What do they currently USE?"
-- **Missing 'do nothing'.** For many products, the status quo is the #1 competitor. Ask explicitly.
-- **Projecting expert knowledge.** "You know the landscape. Your customers don't. What do THEY see as options?"
-- **Confusing aspirational competitors with real ones.** "Does your target segment actually consider Salesforce, or is that who you wish you competed with?"
+Watch for the failure modes and scripted responses in `references/elicitation-guide.md` — most commonly: only listing VC-funded startups, projecting expert landscape knowledge onto customers, listing aspirational competitors (Salesforce) instead of real ones, and forgetting "do nothing" as the default alternative.
 
 ### Output
 
@@ -69,23 +63,14 @@ Aim for 2-5 groups. If more than 5, the best-fit customer definition is probably
 
 ### Systematic Exploration
 
-Don't let the user stop at product features. Probe each category:
-
-| Category | Probe Questions |
-|----------|----------------|
-| Technical features | "What can your product do that none of the alternatives can? Specific capabilities, integrations, algorithms?" |
-| Delivery model | "How is your product delivered differently? SaaS vs. on-prem? Self-serve vs. managed? Mobile-first?" |
-| Business model | "Is your pricing or commercial model different? Free tier? Usage-based? Flat rate vs. per-seat?" |
-| Expertise | "Does your team bring unique industry knowledge? Certifications? Specific domain experience?" |
-| Partnerships | "Do you have exclusive integrations or channel relationships?" |
-| Team composition | "Does your team have a unique combination of skills that alternatives lack?" |
+Don't let the user stop at product features. Work through all 6 categories in `references/attribute-categories.md` — technical features, delivery model, business model, expertise & experience, partnerships & ecosystem, and team composition — using its probe questions and concrete examples for each.
 
 ### Quality Checks
 
 For each attribute, apply:
 1. **Provability test:** "How would you prove this to a skeptic? Data, demo, customer quote?" — If opinion only, flag it.
 2. **Uniqueness test:** "Does ANY alternative also have this?" — If yes, it's not a differentiator.
-3. **Consideration test:** "Would this matter in a purchase decision, or only after they're already a customer?" — Focus on consideration attributes.
+3. **Consideration test:** "Would this matter in a purchase decision, or only after they're already a customer?" — Focus on consideration attributes; see `references/attribute-categories.md` for the full consideration-vs-retention distinction with examples.
 
 ### Negative-as-Positive Check
 

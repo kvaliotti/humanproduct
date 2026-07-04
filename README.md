@@ -1,6 +1,6 @@
 # Human-Led Product Claude Plugins
 
-A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, and scoping new markets into boardroom-ready strategy, all grounded in real user behaviour.
+A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, scoping new markets into boardroom-ready strategy, and shipping features from description to PR, all grounded in real user behaviour.
 
 ## Install the marketplace
 
@@ -19,6 +19,8 @@ Then browse and install plugins:
 /plugin install user-research@human-led-product-claude-plugins
 /plugin install plg-growth@human-led-product-claude-plugins
 /plugin install event-tracking@human-led-product-claude-plugins
+/plugin install feature-flow@human-led-product-claude-plugins
+/plugin install cro-engine@human-led-product-claude-plugins
 ```
 
 ## Plugins
@@ -119,6 +121,32 @@ Five skills:
 
 See [event-tracking/README.md](./event-tracking/README.md) for details.
 
+### feature-flow
+
+The one engineering-delivery plugin in the set. An end-to-end feature workflow — one command takes a rough description to an open PR, sequencing the pieces you already have (plan approval, subagents, `/code-review`, `/simplify`, commit/PR) behind a lean, consistent spine.
+
+```
+/ship <feature description> [--step] [--auto] [--micro|--big]
+```
+
+Four skills:
+- **ship** — orchestrator: branch → design → plan → ⛱ approval gate → implement → verify → review/simplify → PR
+- **storm** — Stage-1 design: brainstorm spine + a compact product lens (situation, behaviour, barriers, edge cases)
+- **verify** — evidence-based gate that runs the right subset of checks by what changed and pastes real output
+- **debug** — root-cause debugging: confirm intended behaviour, find the root cause, then fix at the source
+
+Autonomous after plan approval by default (halting only on a stop-condition), or `--step` to pause at each stage. The spine is generic; per-repo behaviour (verify commands, test policy, stop-conditions, PR settings) comes from a `.claude/feature-flow.local.md` config the plugin offers to create on first run.
+
+Requires: `git` and the GitHub CLI (`gh`, authenticated) for the PR stage. Verify commands default to a Node/npm toolchain if you don't provide a config — set your own in `.claude/feature-flow.local.md` for non-Node projects.
+
+See [feature-flow/README.md](./feature-flow/README.md) for details.
+
+### cro-engine
+
+A conversion-rate-optimization reviewer — audits and improves landing pages, signup flows, paywalls, popups, onboarding, and forms against a library of CRO best-practice patterns and an expert-panel review gate.
+
+One skill (`cro-engine`) backed by pattern references for pages, signup, paywalls, popups, onboarding, and forms.
+
 ## Repository layout
 
 ```
@@ -142,6 +170,14 @@ plg-growth/                       # plugin
 event-tracking/                   # plugin
   .claude-plugin/plugin.json
   skills/
+feature-flow/                     # plugin
+  .claude-plugin/plugin.json
+  skills/                         # ship, storm, verify, debug
+  references/                     # stop-conditions, test-policy, squash-safe-finish
+  config/                         # feature-flow.config.example.md
+cro-engine/                       # plugin
+  .claude-plugin/plugin.json
+  skills/cro-engine/              # SKILL.md + CRO pattern references
 ```
 
 ## Author

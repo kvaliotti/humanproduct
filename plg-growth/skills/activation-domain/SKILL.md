@@ -25,15 +25,17 @@ Trigger phrases:
 - "onboarding drop-off"
 - "setup completion rate"
 
+## Quick Answer Mode
+
+Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good activation rate?", "how do I define my aha moment?", "should setup come before or after first value?" — just answer it directly and concisely, drawing on the frameworks below only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+
+Reach for the full methodology (the three operating modes) when the user wants a real activation analysis, metric definition, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full activation analysis?"
+
+---
+
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose activation into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses at each branch before gathering data
-3. **Driver Disaggregation** -- break activation into mathematical and behavioral drivers
-4. **80/20 Prioritization** -- focus on 2-3 highest-sensitivity branches
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **activation**: decompose the signup→aha path, and disaggregate activation rate into mathematical and behavioral drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 
@@ -220,8 +222,9 @@ Walk the user through:
 
 **Goal:** Generate hypothesis-driven work items using the 3-step iterative framework.
 
-Load the work plan template:
-> Read `references/work-plan-template.md`
+Load the shared work plan skeleton, then the activation-specific examples:
+> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
+> Read `references/work-plan-examples.md` (3-step framework detail, activation sample plans, checklist additions)
 
 #### The 3-Step Iterative Framework
 

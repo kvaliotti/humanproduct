@@ -1,6 +1,6 @@
 ---
 name: plg-readiness
-description: "Deep assessment of PLG fit — evaluates product suitability, pillar maturity, PMF signals, competitive moats, and customer decision-driver research. Use when someone asks 'is PLG right for us', 'PLG readiness', 'PLG fit', 'positioning research', or 'what do customers value'."
+description: "Deep assessment of PLG fit — evaluates product suitability, pillar maturity, PMF signals, competitive moats, and the customer decision-driver research needed to judge whether the product can prove its value through a free/trial experience. Use when someone asks 'is PLG right for us', 'PLG readiness', 'PLG fit', 'PLG suitability', or 'PLG maturity'."
 ---
 
 # PLG Readiness Assessment
@@ -18,19 +18,14 @@ Trigger phrases:
 - "PLG readiness" / "PLG fit assessment"
 - "should we go product-led"
 - "PLG maturity" / "evaluate PLG fit"
-- "PLG positioning" / "what do customers value"
-- "decision drivers" / "positioning research"
-- "why do customers choose us"
-- "data-informed positioning"
+- "PLG suitability"
+- "decision drivers for PLG" / "can the product prove its value pre-purchase"
+
+Note: This skill covers decision-driver research only insofar as it determines PLG fit (can the product prove its top value drivers in a free/trial experience). For product positioning, messaging, or competitive-alternatives work, use the separate `pmm-define-and-review-positioning` plugin.
 
 ## Structured Problem-Solving Backbone
 
-1. **Issue Trees (MECE)** — decompose readiness into 6 independent dimensions
-2. **Hypothesis Trees** — hypothesize fit/gaps before gathering evidence
-3. **Driver Disaggregation** — break "readiness" into measurable components
-4. **80/20 Prioritization** — focus remediation on 2-3 highest-impact gaps
-5. **So-What Synthesis (Minto Pyramid)** — lead with the verdict, then the evidence
-6. **Hypothesis-Driven Work Plans** — every recommendation ties to a hypothesis about what will improve fit
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **PLG readiness**: decompose into 6 independent dimensions, focus remediation on the 2–3 highest-impact gaps, and lead with the verdict. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Step-by-Step Methodology
 

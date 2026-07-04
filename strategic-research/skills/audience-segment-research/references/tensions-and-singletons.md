@@ -30,53 +30,9 @@ Examples:
 - Case study says "deployed in 2 weeks"; practitioner blog says "took us 4 months"
 - Vendor positions as "for agencies"; ecstatic customer list is 70% in-house teams
 
-### Tension classification taxonomy
+### How tensions are classified and logged
 
-Every tension gets classified into one of five types. Each type has a different action.
-
-| Class | Diagnostic question | Action |
-|---|---|---|
-| **Subsegment split** | Are the two signals actually about two different sub-types within what I'm calling one segment? | Split the segment into two sub-segments |
-| **Context-dependent** | Is this the same buyer acting differently in different situations? | Keep as one segment; add context qualifiers to each claim |
-| **Stated vs. revealed** | Is one source a survey and the other behavior? | Tag both; weight behavior heavier; note the divergence |
-| **Temporal shift** | Has the segment changed over time? | Note the shift, direction, and approximate date |
-| **Unresolved** | Do I genuinely not have enough evidence to classify? | Hold as an open question for research/interviews |
-
-### The tension log format
-
-Every tension is recorded in the output's Tension Log section:
-
-```
-Tension #T-NN
-  Segment: <segment name or "cross-segment">
-  Claim A: <statement> — [src: ..., behavioral|stated]
-  Claim B: <contradicting statement> — [src: ..., behavioral|stated]
-  Class: <subsegment-split | context-dependent | stated-vs-revealed | temporal | unresolved>
-  Resolution: <the integration — e.g., "Both true: A for sub-segment X, B for sub-segment Y">
-  Confidence in resolution: <0-100%>
-```
-
-### Anti-patterns when handling tensions
-
-| Anti-pattern | Why wrong | Fix |
-|---|---|---|
-| Silently picking the "better" source | Loses information; hides judgment | Keep both; classify explicitly |
-| Averaging the two claims into a middle position | Produces a fiction true of neither | Hold both; note which is which |
-| Discarding the "weaker" source | Weaker source is often the singleton signal | Downweight, don't delete |
-| Treating all tensions as research noise | Some tensions are the most informative data points | Classify before dismissing |
-| Resolving without evidence | Premature closure | Use "unresolved" and promote to open questions |
-
-### Worked example
-
-**Tension #T-03**
-- **Segment:** Solo indie mobile developers
-- **Claim A:** "They're extremely price-sensitive; most bail above $20/month" [src: Reddit r/indiedev poll Aug 2024, stated]
-- **Claim B:** "A subset pays $199/month for the pro tier within 7 days of signup" [src: vendor cohort data 2025-Q1, behavioral]
-- **Class:** Subsegment split
-- **Resolution:** The $20 ceiling applies to hobbyist-leaning solos (≈80%). The $199 cohort is revenue-positive indies with 1+ profitable app (≈20%). These are two sub-segments, not one — split and profile separately.
-- **Confidence:** 75% — needs validation from 3+ more data points in each sub-cohort.
-
-Note the output: **both claims survive**, the segment is split, and the behavioral data gets the higher weight.
+Every tension is classified into one of five classes (subsegment-split, context-dependent, stated-vs-revealed, temporal, unresolved) and recorded in the output's tension log. The full taxonomy — the diagnostic question and action per class, the tension-log format, the anti-patterns to avoid, and a worked example — lives in the shared reference `${CLAUDE_PLUGIN_ROOT}/references/tension-taxonomy.md`. Use it directly; this skill adds no extra tension classes. The handoff `class:` enum in `references/handoff-schema.md` must stay exactly those five values.
 
 ---
 

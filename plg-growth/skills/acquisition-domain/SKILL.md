@@ -1,6 +1,6 @@
 ---
 name: acquisition-domain
-description: "Deep analysis and work planning for product-led acquisition — viral growth, product-driven SEO, sidecar products, piggybacking, signup optimization, and channel strategy."
+description: "Deep analysis and work planning for product-led acquisition channels — product-driven SEO, sidecar products, piggybacking, signup/top-of-funnel conversion, channel-mix strategy, and CAC. Analyzes which channels bring the right users in. For designing viral/referral loops or k-factor/network-effects math, use growth-loops instead."
 ---
 
 # Acquisition Domain
@@ -14,7 +14,7 @@ You are the acquisition specialist for the PLG Growth plugin. You help PMs analy
 Trigger phrases:
 - "improve acquisition"
 - "product-led acquisition"
-- "viral growth"
+- "acquisition channel analysis"
 - "product-driven SEO"
 - "sidecar product"
 - "piggybacking"
@@ -23,19 +23,15 @@ Trigger phrases:
 - "acquisition analysis"
 - "PLG acquisition plan"
 - "channel strategy"
+- "channel mix"
+- "top-of-funnel conversion"
 - "reduce CAC"
-- "viral coefficient"
-- "referral program"
+
+Note: For designing viral or referral **loops**, k-factor/viral-coefficient math, or network-effects analysis, route to `growth-loops`. This skill owns acquisition-channel analysis, not loop design.
 
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose acquisition into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses at each branch before gathering data
-3. **Driver Disaggregation** -- break acquisition metrics into mathematical and behavioral drivers
-4. **80/20 Prioritization** -- focus on 2-3 highest-sensitivity branches
-5. **So-What Synthesis (Minto Pyramid)** -- conclusion first, arguments second, data third
-6. **Hypothesis-Driven Work Plans** -- every recommended action ties to a hypothesis
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **product-led acquisition**: decompose into channels, and disaggregate acquisition metrics into mathematical and behavioral drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 
@@ -181,8 +177,9 @@ For each analysis, guide the user to:
 
 **Goal:** Generate hypothesis-driven work items organized by issue tree branch.
 
-Load the work plan template:
-> Read `references/work-plan-template.md`
+Load the shared work plan skeleton, then the acquisition-specific examples:
+> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
+> Read `references/work-plan-examples.md` (acquisition-specific sample plans and checklist additions)
 
 **Determine work plan type based on user situation:**
 

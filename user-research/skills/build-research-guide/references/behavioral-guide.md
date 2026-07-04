@@ -1,6 +1,8 @@
 # Behavioral Research Guide Methodology
 
-Synthesized from COM-B (Capability, Opportunity, Motivation — Behavior) and B=MAP (Behavior = Motivation + Ability + Prompt, from BJ Fogg's Behavior Design). Use this reference when building a research guide for behavioral research — adoption, engagement, retention, onboarding, habit formation, feature usage, or any study where the primary goal is understanding why a specific behavior is or isn't happening.
+Synthesized from COM-B (Capability, Opportunity, Motivation — Behavior) and B=MAP (Behavior = Motivation + Ability + Prompt, from BJ Fogg's Behavior Design). For the underlying framework definitions (6 COM-B sub-components, PAC, Ability Chain, Prompt types, troubleshooting order, TDF mapping, standard coding tags), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first. This file covers guide-writing application only: the actual interview probes, section architecture, and phrasing to use at each stage.
+
+Use this reference when building a research guide for behavioral research — adoption, engagement, retention, onboarding, habit formation, feature usage, or any study where the primary goal is understanding why a specific behavior is or isn't happening.
 
 Both frameworks structure the guide differently:
 - **COM-B** provides a comprehensive diagnostic skeleton (6 sub-components with TDF drill-downs)
@@ -285,16 +287,7 @@ The BCW recommends a two-level approach:
 
 **Level 1 — COM-B filter questions:** Run through all 6 sub-components with broad probes (Sections 2-3 above). Identify which components show barriers.
 
-**Level 2 — TDF drill-down:** For components where barriers surface, drill into the specific TDF domains:
-
-| COM-B Component | TDF Domains for Drill-Down |
-|----------------|---------------------------|
-| Physical Capability | Skills |
-| Psychological Capability | Knowledge, Skills, Memory/Attention/Decision Processes, Behavioral Regulation |
-| Physical Opportunity | Environmental Context & Resources |
-| Social Opportunity | Social Influences, Social/Professional Role & Identity |
-| Reflective Motivation | Beliefs about Capabilities, Beliefs about Consequences, Intentions, Goals, Social/Professional Role & Identity, Optimism |
-| Automatic Motivation | Emotion, Reinforcement |
+**Level 2 — TDF drill-down:** For components where barriers surface, drill into the specific TDF domains listed in the shared primer (`${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md`, section 5).
 
 **Decision rule:** If a COM-B component shows no barrier signal after 2-3 probes, move on. If a barrier surfaces, switch to the relevant TDF domain questions for 3-5 minutes before moving to the next COM-B component.
 
@@ -339,33 +332,7 @@ Some participants already do the behavior successfully. Their B=MAP configuratio
 
 ## 13. Note-Taking and Coding System
 
-### COM-B Real-Time Coding
-
-Include a coding column in the note-taking template so the researcher can tag responses to COM-B components during the interview.
-
-| Code | Component |
-|------|-----------|
-| C-Ph | Capability — Physical |
-| C-Ps | Capability — Psychological |
-| O-Ph | Opportunity — Physical |
-| O-So | Opportunity — Social |
-| M-Re | Motivation — Reflective |
-| M-Au | Motivation — Automatic |
-
-### B=MAP Tags
-
-| Tag | Component |
-|-----|-----------|
-| P | Prompt (existence, type, reliability) |
-| A-T | Ability — Time |
-| A-$ | Ability — Money |
-| A-PE | Ability — Physical effort |
-| A-ME | Ability — Mental energy |
-| A-RF | Ability — Routine fit |
-| M-Per | Motivation — Person (intrinsic) |
-| M-Act | Motivation — Action (benefit/punishment) |
-| M-Ctx | Motivation — Context (social/environmental) |
-| CB | Competing behavior |
+Include a coding column in the note-taking template so the researcher can tag responses to COM-B components and B=MAP elements in real time. Use the **standard coding tags** from the shared primer (`${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md`, section 6) — the same tag set `analyze-research` uses when coding transcripts, so notes taken in the field carry straight through to analysis without re-mapping.
 
 ---
 

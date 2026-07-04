@@ -1,14 +1,17 @@
 ---
 name: event-definition
 description: >
-  Define specific analytics events with names, properties, firing conditions,
-  and user properties for a product or feature. Use when the user says "define
-  events for [feature]", "create event spec", "what events do I need", "event
-  specification", "tracking spec", "define tracking for [feature]", "create
-  event taxonomy", "event properties for [feature]", "specify events", or has
-  analytical use cases ready and needs to turn them into concrete event
-  definitions. Also use when the user provides a PRD, feature spec, or user
-  flow and wants events derived from it.
+  Turn ALREADY-DEFINED analytical use cases into concrete event specifications:
+  names, properties, firing conditions, and user property updates. Use when the
+  user has run (or has the output of) the analytics-use-cases skill and says
+  "now define the events", "turn these use cases into events", "convert these
+  use cases to event specs", "build the event taxonomy from this", "name the
+  events for this measurement plan", "event properties for these use cases", or
+  hands over a stakeholder-question/dashboard-spec document and asks for the
+  events that satisfy it. Do NOT treat generic "define events for [feature]" or
+  "set up tracking for [feature]" requests with no use cases yet as a match for
+  this skill — those belong to tracking-orchestrator / analytics-use-cases so
+  the resulting tracking traces back to a documented analytical purpose.
 ---
 
 # Event Definition
@@ -36,11 +39,21 @@ Keep these limitations in mind when mapping use cases to events. Some analytical
 Before defining events, ensure you have:
 
 1. **Naming convention** — detected from existing events, provided by the user, or defaulting to: Area - Subarea (optional) - Verb in Past Tense with Modifiers. Read `references/naming-conventions.md` for full details.
-2. **Target platform(s)** — determines constraints on names, properties, and formats. Read `references/platform-constraints.md` for limits.
-3. **Analytical use cases** (ideal) — the output from the analytics-use-cases skill. OR a feature description / PRD / user flow from which to derive events.
+2. **Target platform(s)** — determines constraints on names, properties, and formats. Read `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for limits.
+3. **Analytical use cases** (required) — the output from the analytics-use-cases skill: stakeholder questions, analysis types, and conceptual event requirements. See "Gate Check" below if this doesn't exist yet.
 4. **Existing events** (if any) — to avoid duplication and ensure consistency.
 
-If analytical use cases are not available, derive them inline: identify the key user flows, infer the questions the team would need answered, then define events against those questions.
+## Gate Check: Use Cases Required
+
+This skill's core guardrail — "every event must serve at least one use case" — cannot be enforced without a use cases document. Before defining any events, check what's actually in hand:
+
+- **Use cases document provided, or analytics-use-cases was just run** — proceed to Step 1.
+- **User jumped straight here** (says "define events for [feature]," "just build the tracking spec," or hands over only a PRD/feature description with no use cases) — do not silently derive use cases inline and proceed. Instead:
+  1. Acknowledge the request.
+  2. Explain briefly: events without documented use cases tend to become tracking nobody ever queries, and this skill can't apply its "every event needs a use case" check without them.
+  3. Offer the fast-track: run the analytics-use-cases skill now — it's fast (~5 minutes) when a PRD or feature description already exists — then come back here.
+  4. If the user still insists on skipping straight to events, proceed, but first derive an explicit, visible (if compressed) set of use cases from the PRD/feature description, and tag every resulting event with the use case it was inferred from so gaps are visible rather than hidden inside "just define the events."
+- **Ambiguous** (e.g., a bare "define events for X" with no prior use-case work visible in the conversation) — ask whether use cases already exist before proceeding. Default assumption is that they don't, so route to analytics-use-cases first.
 
 ## Process
 
@@ -78,6 +91,11 @@ Each step in a flow is a candidate for an event. But not every step needs an eve
 
 ### Step 2: Define Events
 
+Choose a spec depth before writing event blocks:
+
+- **Full spec (default)** — use for production tracking plans, anything handed to engineering, anything touching revenue/compliance/PII, or whenever more than a handful of events are in play.
+- **Quick spec** — use for small or ad-hoc needs: a single event add-on, a prototype, an internal tool, or when the user explicitly asks for "just the basics"/"quick version". See the Quick Spec format below Step 2's full template. Default to full; only drop to quick when scope is clearly small or the user asks.
+
 For each event, produce a specification block:
 
 ```
@@ -107,6 +125,17 @@ PLATFORM NOTES: [Any platform-specific constraints or transformations needed]
 PII: [Yes/No — if yes, which properties are PII]
 STATUS: proposed
 ```
+
+**Quick Spec format** (small/ad-hoc scope only): a condensed block per event —
+
+```
+EVENT: [Event Name — following the naming convention]
+FIRES WHEN: [Precise trigger condition]
+KEY PROPERTIES: [property (type): description, ...]
+USE CASE: [Which analytical question this answers]
+```
+
+Quick spec omits FIRES WHERE, DOES NOT FIRE WHEN, the user/group property tables, PII, and STATUS as explicit fields — it does not omit the thinking behind them. Still decide client-vs-server firing (Step 2b) and flag PII inline in KEY PROPERTIES if any property is personally identifiable; just don't force the full table structure for a handful of low-stakes events. If an event turns out to touch revenue, compliance, or PII, write that one event with the full spec even in an otherwise-quick pass. Steps 3-8 (parameterization test, batch handling, user properties, constraint validation, cross-referencing, sample payloads) still apply regardless of spec depth — quick mode only changes the write-up format, not the analysis.
 
 ### Step 2b: Determine Firing Location (Client vs. Server)
 
@@ -171,7 +200,7 @@ Common triggers for user properties:
 
 ### Step 6: Validate Against Constraints
 
-Check every event and property against the target platform's constraints from `references/platform-constraints.md`:
+Check every event and property against the target platform's constraints from `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`:
 
 - Event name length and format
 - Number of event types (will this push us over the limit?)
@@ -192,7 +221,7 @@ If existing events are available:
 
 ### Step 8: Generate Sample Payloads
 
-For each event, generate a sample JSON payload for the target platform. Use the formats from `references/platform-constraints.md`.
+For each event, generate a sample JSON payload for the target platform. Use the formats from `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`.
 
 If multiple platforms are targeted, generate one payload per platform.
 
@@ -201,7 +230,7 @@ If multiple platforms are targeted, generate one payload per platform.
 The final tracking plan should include:
 
 1. **Summary**: Total events defined, total user properties, total group properties, naming convention used
-2. **Event Specifications**: Full spec block for each event (from Step 2)
+2. **Event Specifications**: Full or Quick spec block for each event, per the depth chosen in Step 2
 3. **User Property Specifications**: All user properties with update methods
 4. **Group Property Specifications**: All group properties (if B2B)
 5. **Event Flow Diagrams**: For each user flow, annotate which events fire at which step

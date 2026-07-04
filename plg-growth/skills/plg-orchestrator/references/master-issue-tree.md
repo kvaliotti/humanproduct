@@ -1,6 +1,6 @@
 # Master PLG Issue Tree
 
-This is the complete MECE decomposition of the PLG problem space. Every branch maps to a skill or future skill in the plugin. Use this tree to diagnose where to focus.
+This is the complete MECE decomposition of the PLG problem space. Every branch maps to a skill in the plugin. Use this tree to diagnose where to focus.
 
 ## Top-Level Tree
 
@@ -80,7 +80,7 @@ PLG Success = Sustainable, product-led revenue growth
 │   │   ├── Channel mix and efficiency
 │   │   ├── Signup conversion rate
 │   │   └── Cost per acquisition
-│   │   → Future skill: plg-acquisition
+│   │   → Skill: acquisition-domain
 │   │
 │   ├── 4.2 Activation
 │   │   ├── Aha moment definition
@@ -88,7 +88,7 @@ PLG Success = Sustainable, product-led revenue growth
 │   │   ├── Activation rate (signup → aha)
 │   │   ├── Onboarding completion
 │   │   └── Setup success rate
-│   │   → Future skill: plg-activation
+│   │   → Skill: activation-domain
 │   │
 │   ├── 4.3 Retention
 │   │   ├── Usage frequency vs natural frequency
@@ -96,7 +96,7 @@ PLG Success = Sustainable, product-led revenue growth
 │   │   ├── Habit formation
 │   │   ├── Feature breadth adoption
 │   │   └── Engagement depth over time
-│   │   → Future skill: plg-retention
+│   │   → Skill: retention-domain
 │   │
 │   ├── 4.4 Monetisation
 │   │   ├── Free-to-paid conversion rate
@@ -105,14 +105,14 @@ PLG Success = Sustainable, product-led revenue growth
 │   │   ├── Expansion revenue (seats, usage, add-ons)
 │   │   ├── Net revenue retention
 │   │   └── Involuntary churn (payment failures)
-│   │   → Future skill: plg-monetisation
+│   │   → Skill: monetisation-domain
 │   │
 │   └── 4.5 Satisfaction / Advocacy
 │       ├── NPS / CSAT scores
 │       ├── Organic referral rate
 │       ├── Review/rating signals
 │       └── Support ticket trends
-│       → Future skill: plg-satisfaction
+│       → Skill: satisfaction-domain
 │
 └── 5. CAPABILITIES: What cross-cutting capabilities are missing?
     ├── 5.1 Growth loops
@@ -120,21 +120,21 @@ PLG Success = Sustainable, product-led revenue growth
     │   ├── Content loops (UGC, SEO, templates)
     │   ├── Paid loops (reinvest revenue into acquisition)
     │   └── Sales loops (PQLs → sales → expansion)
-    │   → Future skill: plg-growth-loops
+    │   → Skill: growth-loops
     │
     ├── 5.2 Product-led sales
     │   ├── PQL definition and scoring
     │   ├── Sales-assist triggers
     │   ├── Self-serve to sales-assist handoff
     │   └── Enterprise expansion playbook
-    │   → Future skill: plg-product-led-sales
+    │   → Skill: product-led-sales
     │
     ├── 5.3 Experimentation capability
     │   ├── A/B testing infrastructure
     │   ├── Experiment prioritization (ICE/RICE)
     │   ├── Statistical rigor
     │   └── Learning velocity
-    │   → Future skill: plg-experimentation
+    │   → Skill: plg-experimentation
     │
     ├── 5.4 Data infrastructure
     │   ├── Event tracking completeness
@@ -142,7 +142,7 @@ PLG Success = Sustainable, product-led revenue growth
     │   ├── Funnel analytics
     │   ├── Cohort analysis capability
     │   └── Revenue attribution
-    │   → Future skill: plg-data-setup
+    │   → Skill: plg-data-setup
     │
     └── 5.5 Organizational transformation
         ├── Cross-functional alignment
@@ -150,7 +150,7 @@ PLG Success = Sustainable, product-led revenue growth
         ├── Incentive alignment (sales comp, product goals)
         ├── PLG metrics adoption
         └── Culture shift (ship fast, measure, iterate)
-        → Future skill: plg-transformation
+        → Skill: plg-transformation
 ```
 
 ## How to Use This Tree

@@ -13,45 +13,26 @@ Perform a structured evaluation of a research guide (interview script, discussio
 
 Before evaluating, you need two inputs:
 
-1. **The research guide** to evaluate (required)
-2. **The research brief** that the guide was built from (strongly recommended)
+1. **The research guide** to evaluate (required). If not pasted or referenced directly, look in the workspace for files matching `research-guide-*.md`, newest first — the exact pattern build-research-guide saves to.
+2. **The research brief** that the guide was built from (strongly recommended). If not provided, look for files matching `research-brief-*.md`, newest first, before asking the user.
 
-If the user provides only the guide, ask whether a brief exists. If it does, request it — evaluating alignment between brief and guide is a core check. If no brief exists, note this as a gap and proceed with the guide alone.
+If the user provides only the guide and no `research-brief-*.md` file is found, ask whether a brief exists. If it does, request it — evaluating alignment between brief and guide is a core check. If no brief exists, note this as a gap and proceed with the guide alone.
+
+Don't rely on scanning for generic recent `.md` files — match the specific naming patterns above so you don't confuse a guide with a brief or an analysis file.
 
 ---
 
 ## Step 2: Detect the Research Type
 
-Classify the research based on the guide's content and stated goals. This determines which evaluation criteria to emphasize.
+This determines which evaluation criteria to emphasize.
 
-### Behavioral Research
-The guide centers on **understanding why users do or don't perform a specific action**. Signals:
+**Check the guide first, then the brief.** Look for a `Research Type:` field in the guide (build-research-guide always writes one); if absent, check the brief. If found in either, inherit it and state "Research type detected: [X] (inherited from guide/brief)." Only re-derive from scratch if neither artifact states it, using the signal list in `${CLAUDE_PLUGIN_ROOT}/references/research-type-detection.md`.
 
-- Questions about adoption, activation, onboarding completion
-- Engagement, retention, habit formation, feature usage
-- Behavior change ("why aren't users doing X", "what prevents Y")
-- Questions structured around barriers, triggers, routines, ability
-- Churn prevention framed as behavior ("users stop logging in after week 2")
-- Conversion actions (signup → first value, trial → paid)
+Once the type is known:
 
-**Action:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still apply core quality checks from the general reference (Mom Test compliance, question quality, dig triggers).
-
-### General Research
-The guide centers on **understanding users, validating problems, or informing decisions**. Signals:
-
-- Discovery / exploration questions
-- Market validation, willingness to pay, competitive understanding
-- Feature prioritization, product-market fit
-- Customer segmentation, persona building
-- Evaluative research (testing prototypes, concepts, usability)
-- Switch interviews, cancellation interviews, long-time customer interviews
-
-**Action:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Borrow behavioral evaluation elements when guide questions touch on user actions or habits, but keep them secondary.
-
-### Mixed
-Some guides touch both. Example: a discovery guide that includes a section on why users aren't completing onboarding. The discovery part is general; the onboarding section is behavioral.
-
-**Action:** Read both reference files. Lead with whichever matches the guide's primary focus. Evaluate behavioral sections with the behavioral framework and general sections with the general framework. Flag the dual nature in your output.
+- **Behavioral:** Read `references/behavioral-evaluation.md`. This is your primary evaluation framework. Still apply core quality checks from the general reference (Mom Test compliance, question quality, dig triggers).
+- **General:** Read `references/general-evaluation.md`. This is your primary evaluation framework. Borrow behavioral evaluation elements when guide questions touch on user actions or habits, but keep them secondary.
+- **Mixed:** Read both reference files. Lead with whichever matches the guide's primary focus. Evaluate behavioral sections with the behavioral framework and general sections with the general framework. Flag the dual nature in your output.
 
 ---
 

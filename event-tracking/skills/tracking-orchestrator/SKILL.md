@@ -29,9 +29,11 @@ Determine which stage to enter based on what the user provides:
 Before routing, establish context. Ask only what is not already clear from the user's request:
 
 1. **What product or feature?** — Name, brief description, and current state (new product, new feature in existing product, or updating existing tracking)
-2. **Target analytics platform(s)?** — Which system(s) will receive the events? (~~analytics tool). This determines naming constraints and property formats.
-3. **Existing tracking?** — Does the product already have events tracked? If yes, ask the user to provide the existing tracking plan, or offer to pull it from ~~analytics tool via MCP, or examine the codebase.
+2. **Target analytics platform(s)?** — Which system(s) will receive the events? (`~~analytics tool`). This determines naming constraints and property formats.
+3. **Existing tracking?** — Does the product already have events tracked? If yes, ask the user to provide the existing tracking plan, or offer to pull it from `~~analytics tool` via MCP, or examine the codebase.
 4. **Naming convention?** — Does the team have an existing convention? If yes, detect it. If no, offer the default: Area - Subarea (optional) - Verb in Past Tense with Modifiers.
+
+`~~analytics tool` (and `~~cdp` elsewhere in this plugin) are placeholders, not literal text — see `${CLAUDE_PLUGIN_ROOT}/CONNECTORS.md` for the placeholder convention and the concrete tools each one resolves to (e.g., Amplitude, Mixpanel, PostHog, GA4 for `~~analytics tool`; Segment for `~~cdp`). Resolve to the user's actual connected tool (or ask which one they use) — never echo the literal `~~` placeholder text back to the user.
 
 ### Detecting existing conventions
 

@@ -22,7 +22,8 @@ This is a facilitated workshop, not a form to fill. At each step:
 
 Use `references/10-step-process.md` for the detailed methodology at each step.
 Use `references/anti-patterns.md` to catch common mistakes in real time.
-Use `references/case-studies.md` to cite relevant examples when the user's situation parallels one.
+Use `${CLAUDE_PLUGIN_ROOT}/references/case-studies.md` to cite relevant examples when the user's situation parallels one.
+Steps 4-6 have a canonical deep-dive skill, `competitive-alternatives` — invoke it directly whenever the user needs more rigor than the summary below.
 
 ## Phase 1: Pre-Work (Steps 1-3)
 
@@ -54,9 +55,9 @@ Get explicit acknowledgment that the user is willing to consider the product bei
 
 ## Phase 2: Core Analysis (Steps 4-7)
 
-### Step 4: Competitive Alternatives
+Steps 4-6 are the analytical core of positioning — where most of it goes wrong. `competitive-alternatives` is the canonical deep-dive skill for these steps, with the full elicitation sequence and attribute taxonomy. The summaries below are enough to keep a workshop moving; hand off to `competitive-alternatives` (or read its reference files directly) whenever the user needs more rigor.
 
-This is the foundational step. See `references/10-step-process.md` (Step 4 section) for the full method.
+### Step 4: Competitive Alternatives (summary)
 
 Core question: "What would your best customers use or do if your product didn't exist?"
 
@@ -73,7 +74,9 @@ Red flags to catch:
 - Missing "do nothing" as an alternative
 - Listing what the user thinks competitors are vs. what customers actually use
 
-### Step 5: Unique Attributes
+Full round-by-round elicitation sequence and failure-mode responses: `${CLAUDE_PLUGIN_ROOT}/skills/competitive-alternatives/references/elicitation-guide.md`.
+
+### Step 5: Unique Attributes (summary)
 
 For each competitive alternative cluster, ask: "What do you have that they don't?"
 
@@ -85,7 +88,9 @@ Rules:
 - Include potential negatives — they may be strengths for the right segment
 - Cast a wide net (8-15 attributes), then narrow
 
-### Step 6: Map Attributes to Value Themes
+Full category-by-category probe questions and examples: `${CLAUDE_PLUGIN_ROOT}/skills/competitive-alternatives/references/attribute-categories.md`.
+
+### Step 6: Map Attributes to Value Themes (summary)
 
 For each attribute, run the "So what?" test twice:
 - Attribute → Benefit (what it enables)
@@ -94,6 +99,8 @@ For each attribute, run the "So what?" test twice:
 Then cluster into 1-4 value themes from the customer's perspective.
 
 Each theme needs proof. If there's no proof, the theme gets demoted or cut.
+
+Full clustering method and proof-assignment guidance: see the `competitive-alternatives` skill (Step 6).
 
 ### Step 7: Who Cares Most
 
@@ -105,11 +112,27 @@ Push for actionable characteristics:
 
 Apply the narrowing test: Can you hit near-term sales targets with just best-fit customers? If yes, stay narrow. If no, broaden until viable.
 
+## Handoff (When Running as Part of positioning-orchestrator)
+
+If this skill is invoked as Phase 1 of the `positioning-orchestrator` pipeline, **stop here after Step 7**. Do not continue into Phase 3 (Market Framing) or Phase 4 (Capture) below — the orchestrator runs those as its own phases via `market-frame-selector` and its own capture step. Summarize Steps 1-7 and emit:
+
+```yaml
+phase_1_output:
+  best_fit_customers: [...]
+  competitive_alternatives:
+    groups: [...]
+  unique_attributes: [...]
+  value_themes: [...]
+  target_market: [...]
+```
+
+If running standalone (the common case — the user invoked `positioning-workshop` directly), ignore this section and continue to Phase 3 and Phase 4 below to produce the full canvas, narrative, and pressure test results.
+
 ## Phase 3: Market Framing (Steps 8-9)
 
 ### Step 8: Market Frame and Positioning Style
 
-Present the three positioning styles from `references/10-step-process.md` (Step 8 section):
+Present the three positioning styles (full detail, decision criteria, and case studies in `${CLAUDE_PLUGIN_ROOT}/references/three-styles.md`):
 1. **Head to Head** — compete directly in existing market
 2. **Big Fish, Small Pond** — win a subsegment with different rules
 3. **Create a New Game** — define a new category
@@ -152,5 +175,5 @@ Produce the final deliverables:
 - Never accept "everyone" as a target market.
 - If the market category choice is weak, say so directly and explain why.
 - Strip adjectives. "Seamless", "powerful", "intuitive" are banned.
-- Cite case studies from `references/case-studies.md` when the user's situation parallels one — it makes the framework concrete.
+- Cite case studies from `${CLAUDE_PLUGIN_ROOT}/references/case-studies.md` when the user's situation parallels one — it makes the framework concrete.
 - When the user is stuck, offer 2-3 concrete options rather than open-ended "what do you think?"

@@ -1,6 +1,6 @@
 # Behavioral Research Brief Evaluation Reference
 
-Synthesized from COM-B (Michie et al.) and B=MAP / Tiny Habits (Fogg).
+Synthesized from COM-B (Michie et al.) and B=MAP / Tiny Habits (Fogg). For the underlying framework definitions (6 COM-B sub-components, PAC, Ability Chain, Prompt types, troubleshooting order), see the shared primer at `${CLAUDE_PLUGIN_ROOT}/references/behavioral-frameworks.md` — read it first. This file covers evaluation-specific criteria only: what a well-built brief looks like against each framework, not the frameworks themselves.
 
 Use this reference when evaluating briefs where the research goal is to drive, change, or sustain a specific user behavior — adoption, activation, engagement, retention, habit formation, feature usage, onboarding completion, conversion actions.
 

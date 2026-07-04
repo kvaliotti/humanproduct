@@ -29,15 +29,17 @@ Trigger phrases:
 - "sample size calculation"
 - "experiment template"
 
+## Quick Answer Mode
+
+Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "how big a sample size do I need?", "what's a reasonable MDE?", "ICE or RICE for prioritization?" — just answer it directly and concisely, drawing on the frameworks below (B=MAT ideation, sample-size math, prioritization) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+
+Reach for the full methodology when the user wants a real experiment design, a prioritized experiment backlog, or a testing-program plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to design the full experiment?"
+
+---
+
 ## Structured Problem-Solving Backbone
 
-Every step uses these principles:
-1. **Issue Trees (MECE decomposition)** -- decompose the experiment space into mutually exclusive, collectively exhaustive branches
-2. **Hypothesis Trees** -- form testable hypotheses at each branch before designing experiments
-3. **Driver Disaggregation** -- break the target metric into mathematical and behavioral drivers to find the right thing to test
-4. **80/20 Prioritization** -- focus on 2-3 experiments with highest expected impact
-5. **So-What Synthesis (Minto Pyramid)** -- lead with the recommendation (what to test and why), then supporting logic, then details
-6. **Hypothesis-Driven Work Plans** -- every experiment ties to a specific hypothesis from the issue tree
+This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **experimentation**: decompose the experiment space, disaggregate the target metric to find the right thing to test, and focus on the 2–3 experiments with highest expected impact. Every experiment ties to a specific hypothesis. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
 ## Three Operating Modes
 

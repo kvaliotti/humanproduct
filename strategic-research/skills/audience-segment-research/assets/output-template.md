@@ -40,7 +40,7 @@ One-paragraph rationale. Why this lens won. What it makes legible that the rejec
 
 ## Segment profiles
 
-{Repeat the profile block for each segment — minimum 250 words per profile}
+{Repeat the profile block for each segment. Fill every field with specific, sourced content; keep it tight enough that the full report reads in one sitting.}
 
 ---
 

@@ -51,7 +51,7 @@ Every claim inherits its confidence from the source handoff. The exec summary st
 
 ### 5. Self-contained HTML
 
-The report is a single `.html` file. CSS inlined in `<style>`. Charts drawn with Chart.js loaded from a CDN (one `<script>` tag). No external images, no React build step, no server required. A user double-clicks the file and it opens in their browser. Printable-to-PDF is the fallback for offline sharing.
+The report is a single `.html` file with **everything inlined** — CSS in `<style>`, and Chart.js vendored directly into an inline `<script>` block (the template already ships the library inlined; never swap it for a CDN `<script src>`). No external images, no fonts, no CDN, no React build step, no server, no network. A user double-clicks the file and it opens in their browser, online or offline. Printable-to-PDF works for sharing.
 
 ### 6. Fail loudly if inputs are missing
 
@@ -167,7 +167,7 @@ Three consolidated views:
 Use `assets/html-template.html` as the scaffold. The template ships with:
 
 - Self-contained CSS (design-system styles for cards, tables, heatmaps, KPIs)
-- Chart.js via CDN (one `<script>` tag)
+- Chart.js vendored inline (one `<script>` block already embedded in the template — do not replace it with a CDN reference)
 - Placeholder sections (`<section id="exec-summary">` etc.) that the skill fills in
 - Heatmap CSS utility classes (`.heat-1` through `.heat-5`)
 - Strategy-canvas radar helper (`renderStrategyCanvas(canvasId, factors, series)`)
@@ -181,15 +181,15 @@ Read `references/html-template-guide.md` before starting to generate the file. I
 - Print-layout CSS breaks
 - Mobile responsiveness
 
-Write the HTML artifact to `/sessions/adoring-cool-cray/mnt/tempSkills/strategic-synthesis-[slug].html` where `[slug]` is a kebab-case tag of the anchor or industry.
+Write the HTML artifact to `strategic-research/05-synthesis-report.html` in the user's current working directory (create the `strategic-research/` folder if it does not exist). See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
 
-Also write a companion 1-page markdown summary to `/sessions/adoring-cool-cray/mnt/tempSkills/strategic-synthesis-[slug].md` — the same exec summary, for reading in terminal / Slack.
+Also write a companion 1-page markdown summary to `strategic-research/05-synthesis-report.md` — the same exec summary, for reading in terminal / Slack.
 
 ### Phase 7 — Share (or fail gracefully)
 
-**Happy path:** Link the HTML file with a `computer://` link. Message: title, one-sentence summary of the top recommendation, confidence %, link. Do not restate content in chat.
+**Happy path:** Tell the user the local path where the report was written — `strategic-research/05-synthesis-report.html` — with a one-sentence summary of the top recommendation and the overall confidence %. Do not restate the report's content in chat; the file is the deliverable, opened in a browser.
 
-**Fallback (inputs missing):** Write a stub HTML report with a red warning banner. The banner names which upstream skill has not run and links to that skill. The body contains whichever sections *can* be populated from the partial inputs. Link the stub with the `computer://` link and a message that explicitly says what is missing.
+**Fallback (inputs missing):** Write a stub HTML report to the same path with a red warning banner. The banner names which upstream skill has not run. The body contains whichever sections *can* be populated from the partial inputs. Tell the user the local path and explicitly name which upstream artifact is missing.
 
 ## Quality audit — mandatory before Phase 6
 
@@ -208,15 +208,16 @@ Run these checks explicitly. Fix any failure before writing the HTML.
 
 ## Writing style
 
-- **Minto everywhere.** Conclusion sentence first. Supporting sentences second. Data third.
-- **No hedge words.** "Arguably", "somewhat", "in some sense" are banned. Replace with a confidence %.
+Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
+
+- **Minto everywhere.** Conclusion sentence first, supporting sentences second, data third.
 - **Specific citations.** `[s1-high-volume-agencies]` beats "high-volume agencies". IDs thread through the whole report.
-- **Tables and visuals over prose.** Prose only where a connection needs explanation.
-- **Verbs in headings and labels.** "Own the briefing cadence" beats "Briefing cadence ownership".
-- **One sentence per bullet.** Bullets longer than a sentence either become a sub-bullet list or become a paragraph.
+- **One sentence per bullet.** A longer bullet becomes a sub-list or a paragraph.
 - **Confidence on every claim.** Inline as `(72%)` after the claim or as a column in tables.
 
 ## When this skill is the wrong tool
+
+Sibling skills in this plugin:
 
 | User wants | Use |
 |---|---|
@@ -224,8 +225,7 @@ Run these checks explicitly. Fix any failure before writing the HTML.
 | Segment the audience and map stakeholders | `audience-segment-research` (skill #2) |
 | Willingness-to-pay / pricing sensitivity | `willingness-to-pay-research` (skill #3) |
 | Classified competitive set + 7 Powers + strategy canvas | `competitor-evaluation` (skill #4) |
-| A PRD grounded in this synthesis | `pm-sage:write-prd` (feed it the cross-skill section) |
-| Positioning canvas from this synthesis | `pm-sage:position-product` (feed it the segments + Leaders + alternatives) |
-| A board update from this synthesis | `product-management:stakeholder-update` (feed it the exec summary) |
+
+For deliverables this plugin does not produce — a PRD grounded in this synthesis, a positioning canvas, a board/stakeholder update — see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` and feed the relevant section (cross-skill synthesis; segments + Leaders + alternatives; or the exec summary) to the appropriate tool.
 
 This skill compresses, connects, and renders. It does not research. It does not decide. It equips the decider.

@@ -51,14 +51,16 @@ If you have the data, provide an estimate of the target segment's size.
 
 ### Real-world situations to address (sit-beh)
 
-Define real-world situations this product experience addresses:
+Define real-world situations this product experience addresses. Each situation is one sentence in this canonical format (same format used throughout the sit-beh skill):
 
-1. [activation moment: during/after/within/...] + a [type of person / person that ...] + wants to [desire: Verb + specific goal/outcomes/avoided negative] + [within / taking no more than / with / added / while / ... + precise limitation and its context]
+> **[person]** + **[moment/trigger]** + **[desired outcome]** + **[limitation/friction]**
+
+1. [type of person / person that ...] + [moment/trigger: during/after/within/...] + wants to [desired outcome: Verb + specific goal/outcome/avoided negative] + [limitation/friction: within / taking no more than / with / while / ... + precise constraint and its context]
 
 2. …add each distinct situation
 
 **Example:**
-> After learning their child's play in 3 days overlaps with the upcoming visit, an initial ADHD patient wants to see any available provider within the same day except 2-4 PM, before it's less than 24h left and they need to pay a $50 rescheduling fee.
+> An initial ADHD patient, after learning their child's play in 3 days overlaps with the upcoming visit, wants to see any available provider within the same day except 2-4 PM, before it's less than 24h left and they need to pay a $50 rescheduling fee.
 
 ### User flows & diagrams
 

@@ -1,39 +1,10 @@
-# Retention Work Plan Template
+# Retention Work Plan — Domain Examples
 
-Use this template to generate hypothesis-driven work items for improving retention. Organized by the 4 retention components. Behavioral science is integrated into experiment design.
+Domain-specific worked examples for retention work plans. Use alongside the shared skeleton at `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md`. Organized by the 4 retention components. Behavioral science (Fogg B=MAT, COM-B) is integrated into every experiment.
 
----
+**Extra work-item fields for retention:** `Retention Component` (Activation | Adoption | Engagement | Resurrection) and `Behavioral Lever` (Fogg M/A/T or COM-B C/O/M — which element the experiment targets).
 
-## Work Item Format
-
-```
-### [Short descriptive title]
-
-**Retention Component:** Activation | Adoption | Engagement | Resurrection
-**Issue Tree Branch:** [Specific branch within the component]
-**Hypothesis:** [What we believe and why]
-**Behavioral Lever:** [Fogg: M/A/T | COM-B: C/O/M — which element this targets]
-**Work Type:** Research | Data Analysis | Strategy Decision | Experiment | Operations
-**Priority:** P1 (high sensitivity) | P2 (moderate) | P3 (low)
-**Connected Metric:** [Which metric on the revenue driver tree this moves]
-**Success Criteria:** [How we know this worked]
-**Timeline:** [Estimated duration]
-**Dependencies:** [What must be true or done first]
-```
-
----
-
-## Priority Assignment
-
-Priority comes from two inputs:
-
-1. **Component priority:** Activation > Engagement > Adoption > Resurrection (fix the earliest broken component first)
-2. **Sensitivity analysis:** Within a component, which lever moves the retention curve most?
-
-Combined:
-- **P1:** Broken component that is earliest in the chain AND high-sensitivity lever
-- **P2:** Meaningful lever in a secondary component, or moderate-sensitivity lever in the primary component
-- **P3:** Nice-to-have improvement in a component that is already performing
+**Component priority ordering:** Activation > Engagement > Adoption > Resurrection — fix the earliest broken component first. Within a component, prioritize by which lever moves the retention curve most. Combine the ordering rule with sensitivity.
 
 ---
 
@@ -63,21 +34,18 @@ Combined:
 **Objective:** Improve 90-day retention from [current]% to [target]% within 2 quarters.
 
 #### Activation Component Experiments
-
 | # | Hypothesis | Behavioral Lever | Experiment | Metric | Success Criteria | Priority |
 |---|-----------|-----------------|-----------|--------|-----------------|----------|
 | 1 | Reducing onboarding from 7 to 3 steps will increase activation by 20% | Fogg: Ability (Time, Physical Effort) | A/B: full onboarding vs. minimal onboarding | Activation rate | +20% activation, no decrease in 7-day retention | P1 |
 | 2 | Template-first experience will increase activation by 25% for users who currently see empty state | Fogg: Ability (Brain Cycles) + Motivation (Pleasure) | A/B: empty state vs. template picker | Activation rate for non-activated at Day 1 | +25% activation | P1 |
 
 #### Adoption Component Experiments
-
 | # | Hypothesis | Behavioral Lever | Experiment | Metric | Success Criteria | Priority |
 |---|-----------|-----------------|-----------|--------|-----------------|----------|
 | 3 | Contextual feature tips will increase adoption of 3 underused features by 30% | Fogg: Trigger (Facilitator) + COM-B: Capability (Psychological) | A/B: feature tips at relevant moments vs. no tips | Feature adoption rate for target features | +30% adoption of each feature | P2 |
 | 4 | Feature adoption breadth > 3 features in first month predicts 2x higher 90-day retention | COM-B: Capability building | Data validation study | Correlation between adoption breadth and retention | Statistically significant 2x+ difference | P1 |
 
 #### Engagement Component Experiments
-
 | # | Hypothesis | Behavioral Lever | Experiment | Metric | Success Criteria | Priority |
 |---|-----------|-----------------|-----------|--------|-----------------|----------|
 | 5 | Weekly digest email will increase WAU/MAU by 10% for at-risk users | Fogg: Trigger (Signal) | A/B: weekly digest vs. no digest for users with engagement score 0.2-0.5 | WAU/MAU for at-risk segment | +10% WAU/MAU, < 1% unsubscribe rate | P1 |
@@ -85,14 +53,12 @@ Combined:
 | 7 | In-app value metric ("You saved X hours this week") will increase motivation | Fogg: Motivation (Hope) | A/B: value display on dashboard vs. no display | Engagement score, session frequency | +10% engagement score for treatment group | P2 |
 
 #### Resurrection Component Experiments
-
 | # | Hypothesis | Behavioral Lever | Experiment | Metric | Success Criteria | Priority |
 |---|-----------|-----------------|-----------|--------|-----------------|----------|
 | 8 | "What's new since you left" email will reactivate 10% of dormant users | Fogg: Trigger (Spark) + Motivation (Hope/Fear) | A/B: what's new email vs. generic "come back" email | Reactivation rate (dormant → active within 7 days) | 10% reactivation from what's new vs. 5% from generic | P2 |
 | 9 | Magic link (passwordless return) will increase reactivation email CTR by 50% | Fogg: Ability (Physical Effort, Time) | A/B: magic link vs. standard login link in reactivation emails | Email CTR, reactivation rate | +50% CTR, +20% reactivation | P2 |
 
 #### Involuntary Churn Experiments
-
 | # | Hypothesis | Behavioral Lever | Experiment | Metric | Success Criteria | Priority |
 |---|-----------|-----------------|-----------|--------|-----------------|----------|
 | 10 | Pre-expiry card notification will prevent 40% of card-expiry churn | Fogg: Trigger (Signal) | Implement pre-expiry emails at 30, 14, 7 days | Card update rate, involuntary churn rate | 40% reduction in card-expiry churn | P1 |
@@ -144,18 +110,15 @@ Combined:
 
 ---
 
-## Work Plan Review Checklist
+## Retention-specific checklist additions
 
-Before finalizing a retention work plan, verify:
+On top of the generic checklist in the shared template, verify:
 
 - [ ] Voluntary vs. involuntary churn split is known (or is a work item)
 - [ ] Work items are organized by the 4 retention components
 - [ ] The earliest broken component is addressed first (Activation before Engagement)
 - [ ] Every experiment specifies which behavioral lever it targets (Fogg M/A/T or COM-B C/O/M)
 - [ ] Involuntary churn fixes are included (highest ROI, often overlooked)
-- [ ] Hypotheses are specific and testable
 - [ ] Success criteria include both the target metric AND a guardrail metric
 - [ ] Engagement scoring or health scoring is in place (or is a work item)
-- [ ] Research is planned if the binding constraint is unknown
-- [ ] Plan includes both quick wins (dunning, notifications) and strategic bets (engagement loops, adoption campaigns)
-- [ ] Each item connects to a retention metric: overall retention rate, component-specific rate, or engagement score
+- [ ] Each item connects to a retention metric: overall rate, component-specific rate, or engagement score

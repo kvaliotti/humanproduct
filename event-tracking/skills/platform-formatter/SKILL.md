@@ -21,26 +21,13 @@ Transform a tracking plan into platform-specific output: compliant event names, 
 2. **Target platform(s)** — one or more of: Amplitude, Mixpanel, PostHog, Segment, GA4
 3. **Naming convention override** (optional) — if the platform requires a different convention than what the tracking plan uses
 
-Read `references/platform-formats.md` for platform-specific formatting rules and templates.
+Read `references/platform-formats.md` for platform-specific formatting rules and templates, and `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for the current vendor limit matrix (event/property name and value lengths, event type caps, reserved names).
 
 ## Process
 
 ### Step 1: Apply Platform Constraints
 
-For each event in the tracking plan, check against the target platform's constraints:
-
-**Name compliance:**
-- Length limits (GA4: 40 chars, Mixpanel: 255 chars, etc.)
-- Format requirements (GA4: snake_case only, must start with letter)
-- Reserved name conflicts (GA4: no "ga_", "google_", "firebase_" prefixes)
-- Case sensitivity implications
-
-**Property compliance:**
-- Number of properties per event (GA4: 25 custom params max)
-- Property name length (GA4: 40 chars)
-- Property value length (GA4: 100 chars, Mixpanel: 255 chars)
-- Supported data types (GA4: no arrays/objects)
-- Reserved property names
+For each event in the tracking plan, check against the target platform's constraints. Read `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for the current limit matrix — that file is the single source of truth for these numbers (event name length/format, reserved-name conflicts, case sensitivity, properties per event, property name/value length, supported data types). Don't restate specific figures here; vendor limits change.
 
 For each violation, generate a compliant alternative and explain the transformation.
 
@@ -50,34 +37,38 @@ If the source tracking plan uses a convention that doesn't match the target plat
 
 | Source convention | Amplitude | Mixpanel | PostHog | Segment | GA4 |
 |---|---|---|---|---|---|
-| Area - Verb (Title Case) | Keep as-is | Keep as-is | Convert to snake_case (recommended) | Keep as-is | Convert to snake_case, truncate to 40 chars |
-| Object Action (Title Case) | Keep as-is | Keep as-is | Keep or convert to snake_case | Keep as-is (native) | Convert to snake_case, truncate to 40 chars |
+| Area - Verb (Title Case) | Keep as-is | Keep as-is | Convert to snake_case (recommended) | Keep as-is | Convert to snake_case, truncate to GA4's name length limit |
+| Object Action (Title Case) | Keep as-is | Keep as-is | Keep or convert to snake_case | Keep as-is (native) | Convert to snake_case, truncate to GA4's name length limit |
 | snake_case | Keep or convert to Title Case | Convert to Title Case (recommended) | Keep as-is (native) | Convert to Title Case | Keep as-is (native) |
+
+GA4's exact name length limit lives in `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` — check it before truncating rather than assuming a fixed number.
 
 Generate a mapping table:
 ```
 | Source Event Name | [Platform] Event Name | Transformation Applied |
 |---|---|---|
-| Tasks - Created Task | task_created | Converted to snake_case, removed area prefix (GA4 40-char limit) |
+| Tasks - Created Task | task_created | Converted to snake_case, removed area prefix (GA4 name length limit) |
 ```
 
 ### Step 3: Format Properties
 
 For each event's properties, format according to platform convention:
 
+Exact length limits for the properties below are in `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` — check that file rather than assuming a number here.
+
 **Property name format:**
 - Amplitude: snake_case or camelCase (recommend snake_case for consistency)
 - Mixpanel: snake_case (properties) with human-readable values
 - PostHog: snake_case
 - Segment: camelCase (per Segment spec)
-- GA4: snake_case, max 40 chars, alphanumeric + underscore only
+- GA4: snake_case, alphanumeric + underscore only
 
 **Property value format:**
 - Amplitude: human-readable strings, numbers, booleans, arrays, objects supported
-- Mixpanel: strings (max 255 chars), numbers, booleans, lists supported. No nested objects.
+- Mixpanel: strings, numbers, booleans, lists supported. No nested objects.
 - PostHog: all types supported including nested objects
 - Segment: all types supported
-- GA4: strings (max 100 chars), numbers only. No booleans (convert to 0/1), no arrays, no objects.
+- GA4: strings, numbers only. No booleans (convert to 0/1), no arrays, no objects.
 
 ### Step 4: Generate Sample Payloads
 
