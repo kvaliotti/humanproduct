@@ -13,14 +13,14 @@ In Claude Code:
 Then browse and install plugins:
 
 ```
-/plugin install prd-workflow@human-led-product-claude-plugins
-/plugin install strategic-research@human-led-product-claude-plugins
-/plugin install pmm-define-and-review-positioning@human-led-product-claude-plugins
-/plugin install user-research@human-led-product-claude-plugins
-/plugin install plg-growth@human-led-product-claude-plugins
-/plugin install event-tracking@human-led-product-claude-plugins
-/plugin install feature-flow@human-led-product-claude-plugins
-/plugin install cro-engine@human-led-product-claude-plugins
+/plugin install prd-workflow@human-led
+/plugin install strategic-research@human-led
+/plugin install pmm-define-and-review-positioning@human-led
+/plugin install user-research@human-led
+/plugin install plg-growth@human-led
+/plugin install event-tracking@human-led
+/plugin install feature-flow@human-led
+/plugin install cro-engine@human-led
 ```
 
 ## Plugins
