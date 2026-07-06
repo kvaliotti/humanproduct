@@ -45,7 +45,15 @@ cro-engine/                       # plugin — one skill; conversion-rate-optimi
   .claude-plugin/plugin.json
   skills/cro-engine/SKILL.md
   skills/cro-engine/references/   # CRO pattern libraries + expert-panel-review
+design-system-master/             # plugin — orchestrator + three skills (review/optimize/create design systems)
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md    # design-system-master (router), review-/optimize-/create-design-system
+  skills/create-design-system/assets/DESIGN.template.md  # scaffold the create skill writes out
+  references/                     # plugin-root shared refs (format, rubric, panel, a11y, patterns, archetypes, codebase-bridge)
+  references/exemplars/           # 5 curated real DESIGN.md specs spanning the archetype range
 ```
+
+Note: `design-md-corpus/` at the repo root (74 product `DESIGN.md` files) is **grounding data, not a plugin** — it is untracked and must not be registered in `marketplace.json` or shipped. The `design-system-master` plugin distills it into `references/` + 5 curated `references/exemplars/`; it does not ship the full corpus.
 
 Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
 
@@ -180,10 +188,26 @@ Distinctive design vs. the other plugins:
 - **Subagent-driven implementation (no Workflow tool)**: Stage 5 hands all writing to implementer subagents via the `Task` tool — parallel Task calls (multiple in one message) for independent disjoint-file tasks, one subagent for coupled tasks — to keep the orchestrator's context clean for gating and debugging. Inline editing is reserved for the rare truly-trivial change; when in doubt, dispatch a subagent. There is deliberately **no dependency on the `Workflow` tool** (it over-spawns) — do not reintroduce it.
 - **External dependencies** (unlike the strategy plugins, which are self-contained prose): `git` + `gh` for the PR/finish stages (both degrade gracefully if `gh` is absent — push + print a compare URL). Verify's fallback defaults assume a Node/npm/Jest toolchain and are guarded so non-Node repos are detected or the user is asked, rather than running `npm` blindly.
 
+## design-system-master architecture
+
+An orchestrator + three capability skills that all read, write, or refactor a single canonical artifact — a **`DESIGN.md`** (the token-referencing `getdesign.md` format: YAML frontmatter of `colors`/`typography`/`rounded`/`spacing`/`components` with `{group.token}` refs, plus prose sections). The three capabilities map to the user's three asks:
+
+1. `design-system-master` — router / `/design-system-master` entry point. Classifies intent (review / optimize / create) and input (a DESIGN.md / a codebase / nothing yet), then routes.
+2. `review-design-system` — scored audit across three lenses (coordination A1–A5, ease-of-use B1–B6, cohesion C1–C5) gated by accessibility (real WCAG contrast math) and complexity-fit, then a five-lens expert panel. Produces a scorecard + top fixes + a "Keep" list.
+3. `optimize-design-system` — improves the spec (consolidate/regularize/fill/fix) and/or retrofits it into a product codebase (extract de-facto tokens → emit CSS vars / Tailwind / Style Dictionary → codemod literals→tokens incrementally). Protects the signature.
+4. `create-design-system` — builds a complete DESIGN.md from scratch, sized to the product's archetype, using `skills/create-design-system/assets/DESIGN.template.md`.
+
+Distinctive design:
+
+- **References live at the plugin root** (`references/`), not per-skill — all three capabilities share them (à la feature-flow / plg-growth). Skills point to them via `${CLAUDE_PLUGIN_ROOT}/references/...`. The set: `design-md-format.md`, `archetypes.md`, `patterns-{color,typography,space-shape-elevation,components-theming}.md`, `review-rubric.md`, `expert-panel.md`, `accessibility.md`, `codebase-bridge.md`, plus `exemplars/` (5 curated real specs). When moving/deleting a reference, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms and fix every pointer.
+- **The anti-overfit invariant** — the load-bearing idea. Every skill classifies the product **archetype** first (`archetypes.md`) and judges complexity as **essential** (domain-required — keep) vs **accidental** (redundant/one-off/undocumented — remove). This is what stops the plugin from naively "simplifying" legitimate complexity (dual-coded green/red, dual font stacks, multi-surface theming, semantic ramps). `archetypes.md` is the most load-bearing reference; keep the essential-vs-accidental guide and the complexity budgets intact when editing.
+- **Grounding, not shipped data** — `references/` and `exemplars/` are distilled from the `design-md-corpus/` (74 specs, untracked, repo root). Do not ship the full corpus in the plugin. The corpus specs are machine-reconstructed marketing-surface extractions with **no numeric contrast ratios** — so accessibility (real contrast math in `accessibility.md`) is the tool's own contribution, never something to claim the corpus already did.
+- **Self-contained prose** (like the strategy plugins): no external runtime deps. It references an optional upstream linter (`npx @google/design.md lint`) and, when applying to a codebase, reads/writes real files — but degrades to prose guidance if neither is present.
+
 ## Distribution
 
 `main` is the published branch — pushing updates it live for anyone who has added the marketplace. Bump `version` in both the plugin's `plugin.json` and the matching entry in `marketplace.json` when shipping breaking changes to a skill or handoff schema.
 
 ## Ignored paths
 
-`.remember/` is Claude session state (logs, tmp). Never commit it. `.DS_Store` is also gitignored. `strategic-research/working/` holds local draft artifacts and should stay out of commits.
+`.remember/` is Claude session state (logs, tmp). Never commit it. `.DS_Store` is also gitignored. `strategic-research/working/` holds local draft artifacts and should stay out of commits. `design-md-corpus/` (74 real `DESIGN.md` specs) is gitignored grounding data for the `design-system-master` plugin — it is not a plugin and must not be committed or shipped; the plugin distills it into `design-system-master/references/` + `references/exemplars/`.

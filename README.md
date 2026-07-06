@@ -1,6 +1,6 @@
 # Human-Led Product Claude Plugins
 
-A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, scoping new markets into boardroom-ready strategy, and shipping features from description to PR, all grounded in real user behaviour.
+A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, scoping new markets into boardroom-ready strategy, shipping features from description to PR, and reviewing, optimising, or building design systems, all grounded in real user behaviour.
 
 ## Install the marketplace
 
@@ -21,6 +21,7 @@ Then browse and install plugins:
 /plugin install event-tracking@human-led
 /plugin install feature-flow@human-led
 /plugin install cro-engine@human-led
+/plugin install design-system-master@human-led
 ```
 
 ## Plugins
@@ -147,6 +148,18 @@ A conversion-rate-optimization reviewer — audits and improves landing pages, s
 
 One skill (`cro-engine`) backed by pattern references for pages, signup, paywalls, popups, onboarding, and forms.
 
+### design-system-master
+
+Your design-system master — review an existing design system, optimise one (including retrofitting it into a product codebase), or build one from scratch as a lintable `DESIGN.md`. Grounded in a corpus of 74 real-world design systems (minimal dev-tools → dense financial/enterprise → expressive consumer/automotive), with a complexity-calibration gate so it never naively simplifies complexity a domain legitimately needs (dual-coded green/red, dual font stacks, multi-surface theming, semantic ramps).
+
+An orchestrator plus three skills:
+- **design-system-master** — entry point / router: diagnoses whether you need review, optimize, or create, and what input you have
+- **review-design-system** — scored audit across coordination, ease-of-use, and cohesion, gated by real WCAG contrast math and complexity-fit, then a five-lens expert panel
+- **optimize-design-system** — consolidate tokens, fill gaps, fix contrast, and/or roll the system into a codebase (CSS variables / Tailwind / Style Dictionary), protecting the signature
+- **create-design-system** — build a complete `DESIGN.md` from scratch, sized to the product's archetype
+
+Run the router with `/design-system-master`, or call any skill standalone. See [design-system-master/README.md](./design-system-master/README.md) for details.
+
 ## Repository layout
 
 ```
@@ -178,6 +191,11 @@ feature-flow/                     # plugin
 cro-engine/                       # plugin
   .claude-plugin/plugin.json
   skills/cro-engine/              # SKILL.md + CRO pattern references
+design-system-master/             # plugin
+  .claude-plugin/plugin.json
+  skills/                         # design-system-master (router), review-/optimize-/create-design-system
+  references/                     # format, rubric, expert-panel, accessibility, patterns, archetypes, codebase-bridge
+  references/exemplars/           # 5 curated real DESIGN.md specs spanning the archetype range
 ```
 
 ## Author

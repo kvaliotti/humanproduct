@@ -51,6 +51,12 @@
       "source": "./cro-engine",
       "description": "Conversion-rate-optimization reviewer: audits and improves landing pages, signup flows, paywalls, popups, onboarding, and forms against a library of CRO best-practice patterns and an expert-panel review gate.",
       "version": "0.1.0"
+    },
+    {
+      "name": "design-system-master",
+      "source": "./design-system-master",
+      "description": "Design system master: review an existing design system (coordination of colors/typography/spacing/shape/elevation, ease of working with it, cohesion), optimise one (consolidate tokens, fill gaps, or retrofit it into a product codebase as CSS variables / Tailwind / Style Dictionary), or create one from scratch as a lintable DESIGN.md. Grounded in a 74-system corpus spanning minimal dev-tools to dense financial and enterprise systems, with a complexity-calibration gate so it never naively simplifies complexity a domain legitimately needs. Orchestrated by /design-system-master or invoke review/optimize/create standalone.",
+      "version": "0.1.0"
     }
   ]
 }

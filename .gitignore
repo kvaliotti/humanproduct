@@ -1,3 +1,5 @@
 .DS_Store
 .remember/
 strategic-research/working/
+# grounding data for design-system-master (74 real DESIGN.md specs) — not a plugin, not shipped
+design-md-corpus/

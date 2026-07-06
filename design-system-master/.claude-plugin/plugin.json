@@ -1,0 +1,30 @@
+{
+  "name": "design-system-master",
+  "version": "0.1.0",
+  "description": "Design system master: review an existing design system for coordination/ergonomics/cohesion, optimise one (including inside a real product codebase), or create one from scratch. Grounded in a corpus of 74 real-world design systems spanning minimal dev-tools to dense financial and enterprise systems, so it never naively 'simplifies' complexity a domain legitimately needs.",
+  "author": {
+    "name": "Konstantin Valiotti",
+    "email": "valiotti.konst@gmail.com"
+  },
+  "homepage": "https://kvaliotti.substack.com",
+  "license": "MIT",
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "colors",
+    "typography",
+    "spacing",
+    "components",
+    "theming",
+    "dark-mode",
+    "accessibility",
+    "contrast",
+    "brand",
+    "ui",
+    "css-variables",
+    "tailwind",
+    "style-dictionary",
+    "design-review",
+    "design-audit"
+  ]
+}
