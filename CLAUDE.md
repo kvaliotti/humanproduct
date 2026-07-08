@@ -51,6 +51,11 @@ design-system-master/             # plugin — orchestrator + three skills (revi
   skills/create-design-system/assets/DESIGN.template.md  # scaffold the create skill writes out
   references/                     # plugin-root shared refs (format, rubric, panel, a11y, patterns, archetypes, codebase-bridge)
   references/exemplars/           # 5 curated real DESIGN.md specs spanning the archetype range
+designing-for-behaviour/          # plugin — orchestrator skill + FOUR analyst AGENTS (the marketplace's only agents-based plugin)
+  .claude-plugin/plugin.json
+  skills/designing-for-behaviour/SKILL.md   # orchestrator + /designing-for-behaviour entry point
+  agents/<lens>-analyst.md        # behavioural-loop / cognitive-ease / capability-results / control-autonomy (read-only inspection)
+  references/                     # plugin-root shared refs (foundations, scoring-rubric, 4 lens-*.md, ethics, coherence-and-anti-bloat, report-template)
 ```
 
 Note: `design-md-corpus/` at the repo root (74 product `DESIGN.md` files) is **grounding data, not a plugin** — it is untracked and must not be registered in `marketplace.json` or shipped. The `design-system-master` plugin distills it into `references/` + 5 curated `references/exemplars/`; it does not ship the full corpus.
@@ -204,10 +209,23 @@ Distinctive design:
 - **Grounding, not shipped data** — `references/` and `exemplars/` are distilled from the `design-md-corpus/` (74 specs, untracked, repo root). Do not ship the full corpus in the plugin. The corpus specs are machine-reconstructed marketing-surface extractions with **no numeric contrast ratios** — so accessibility (real contrast math in `accessibility.md`) is the tool's own contribution, never something to claim the corpus already did.
 - **Self-contained prose** (like the strategy plugins): no external runtime deps. It references an optional upstream linter (`npx @google/design.md lint`) and, when applying to a codebase, reads/writes real files — but degrades to prose guidance if neither is present.
 
+## designing-for-behaviour architecture
+
+A behavioural-design **reviewer** (evaluate + recommend, does NOT implement). One orchestrator skill drives a board of **four read-only lens-analyst agents** — this is the marketplace's only plugin that ships an `agents/` directory (all others are skills-only). It reviews either an existing product/codebase OR an idea/PRD, and answers: how well does this drive **behaviour, adoption, engagement**, where are the gaps, and what integrated set of fixes strengthens one coherent core experience rather than bloating it.
+
+Pipeline (in `skills/designing-for-behaviour/SKILL.md`): intake (codebase or PRD, once, shared) → dispatch 4 lenses **in parallel** (one message, 4 `Task` calls) → roll up score across 3 dimensions → rank gaps → **coherence & anti-bloat review** → report (`behaviour-review-[target].md` + inline summary).
+
+Distinctive design:
+
+- **Six books → four de-duplicated lenses.** The six source books (Atomic Habits, Tiny Habits, Hooked, Badass, Thinking Fast and Slow, Perceptual Control Theory) each repeated the same surface sections (behaviour-definition, adoption, engagement, metrics, ethics). Those are factored out **once** into cross-cutting refs; the three habit books (~70% overlap) merge into one loop lens. The four lenses are: `behavioural-loop-analyst` (Atomic/Tiny/Hooked), `cognitive-ease-analyst` (Kahneman), `capability-results-analyst` (Badass), `control-autonomy-analyst` (PCT + anti-manipulation). When editing a lens, keep it in its lane — the `foundations.md` "what each lens owns / not your lens" carve-up is what prevents the redundant 6× analysis the plugin exists to avoid.
+- **References at the plugin root** (à la feature-flow / plg-growth), shared by the skill AND the agents via `${CLAUDE_PLUGIN_ROOT}/references/...`: `foundations.md` (defs + intake), `scoring-rubric.md` (unified 0/1/2/N-A scale), `lens-{behavioural-loop,cognitive-ease,capability-results,control-autonomy}.md`, `ethics-and-dark-patterns.md`, `coherence-and-anti-bloat.md`, `report-template.md`. Agents stay thin and read their one lens ref at runtime. When moving/deleting a ref, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms.
+- **The anti-bloat coherence review is the load-bearing idea** (`coherence-and-anti-bloat.md`) — the editorial pass that turns four lenses' worth of good-but-additive recommendations into the smallest integrated set, enforces a complexity budget calibrated to the archetype, prefers embedding over adding, runs a subtraction pass, and emits an explicit "deliberately NOT adding" list. Without it a behavioural checklist makes products worse. Keep it, and the N/A scoring discipline that feeds it, intact.
+- **Anti-slop + ethics by contract.** Every score/gap/rec must carry a concrete anchor (screen/flow/`file:line`/quoted copy/PRD section); the ethics gate (`ethics-and-dark-patterns.md`) reframes or cuts any manipulative recommendation, and autonomy wins conflicts. Self-contained prose, read-only agents, no external runtime deps.
+
 ## Distribution
 
 `main` is the published branch — pushing updates it live for anyone who has added the marketplace. Bump `version` in both the plugin's `plugin.json` and the matching entry in `marketplace.json` when shipping breaking changes to a skill or handoff schema.
 
 ## Ignored paths
 
-`.remember/` is Claude session state (logs, tmp). Never commit it. `.DS_Store` is also gitignored. `strategic-research/working/` holds local draft artifacts and should stay out of commits. `design-md-corpus/` (74 real `DESIGN.md` specs) is gitignored grounding data for the `design-system-master` plugin — it is not a plugin and must not be committed or shipped; the plugin distills it into `design-system-master/references/` + `references/exemplars/`.
+`.remember/` is Claude session state (logs, tmp). Never commit it. `.DS_Store` is also gitignored. `strategic-research/working/` holds local draft artifacts and should stay out of commits. `design-md-corpus/` (74 real `DESIGN.md` specs) is gitignored grounding data for the `design-system-master` plugin — it is not a plugin and must not be committed or shipped; the plugin distills it into `design-system-master/references/` + `references/exemplars/`. (The `designing-for-behaviour` plugin was similarly distilled from 6 behavioural-science books into its `references/`; that raw grounding was consumed during authoring and is not retained in the repo.)

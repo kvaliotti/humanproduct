@@ -1,0 +1,21 @@
+{
+  "name": "designing-for-behaviour",
+  "version": "0.1.0",
+  "description": "Evaluate how well a product experience — an existing codebase or an idea/PRD — drives user behaviour, adoption, and engagement. Scores three dimensions, ranks gaps, and prescribes an integrated set of fixes through four de-duplicated behavioural-science lenses plus an anti-bloat coherence review that keeps recommendations forming one strong core experience instead of a pile of bolted-on mechanisms.",
+  "author": {
+    "name": "Konstantin Valiotti",
+    "email": "valiotti.konst@gmail.com"
+  },
+  "homepage": "https://kvaliotti.substack.com",
+  "license": "MIT",
+  "keywords": [
+    "behavioural-design",
+    "product-review",
+    "engagement",
+    "adoption",
+    "retention",
+    "habit-formation",
+    "activation",
+    "ux"
+  ]
+}
