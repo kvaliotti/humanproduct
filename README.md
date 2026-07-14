@@ -22,6 +22,8 @@ Then browse and install plugins:
 /plugin install feature-flow@human-led
 /plugin install cro-engine@human-led
 /plugin install design-system-master@human-led
+/plugin install designing-for-behaviour@human-led
+/plugin install user-story-review@human-led
 ```
 
 ## Plugins
@@ -160,6 +162,32 @@ An orchestrator plus three skills:
 
 Run the router with `/design-system-master`, or call any skill standalone. See [design-system-master/README.md](./design-system-master/README.md) for details.
 
+### designing-for-behaviour
+
+A behavioural-design reviewer — point it at a codebase or at an idea/PRD and it answers: how well does this drive behaviour, adoption, and engagement, where are the gaps, and what integrated set of fixes strengthens one coherent core experience rather than bloating it.
+
+An orchestrator skill driving four read-only analyst agents in parallel (the only agents-based plugin here):
+- **behavioural-loop-analyst** — trigger → action → reward → investment (Atomic Habits, Tiny Habits, Hooked)
+- **cognitive-ease-analyst** — System 1/2, friction, framing, defaults, peak-end (Thinking, Fast and Slow)
+- **capability-results-analyst** — does the user get more capable and get results they care about (Badass)
+- **control-autonomy-analyst** — what the user is trying to control, plus the anti-manipulation backbone (Perceptual Control Theory)
+
+Six books collapse into four de-duplicated lenses, then an **anti-bloat coherence review** turns four lenses' worth of additive suggestions into the smallest integrated set — with an explicit "deliberately NOT adding" list. Run with `/designing-for-behaviour`.
+
+### user-story-review
+
+Reviews the user stories in a PRD or backlog and hands back **one page**: the few things that will sink the milestone, a verdict per story, and rewrites for the worst offenders. Depth on request — a review you have to work through is not a review, it's a new task.
+
+One skill (`user-story-review`), backed by a six-gate rubric and ten value-oriented splitting patterns.
+
+It reads the whole PRD before judging any story, doesn't reward template compliance, separates the causal chain (system change the team *controls* → behaviour change it *influences* → business impact it *contributes to*), names the work that shouldn't be a user story at all, and refuses to emit a quality score. Grounded in *Fifty Quick Ideas to Improve Your User Stories*.
+
+```
+/user-story-review              # auto-discovers the newest PRD-*.md
+```
+
+Pairs with `prd-workflow` as the last gate before engineering. See [user-story-review/README.md](./user-story-review/README.md) for details.
+
 ## Repository layout
 
 ```
@@ -196,6 +224,14 @@ design-system-master/             # plugin
   skills/                         # design-system-master (router), review-/optimize-/create-design-system
   references/                     # format, rubric, expert-panel, accessibility, patterns, archetypes, codebase-bridge
   references/exemplars/           # 5 curated real DESIGN.md specs spanning the archetype range
+designing-for-behaviour/          # plugin
+  .claude-plugin/plugin.json
+  skills/designing-for-behaviour/ # orchestrator + /designing-for-behaviour entry point
+  agents/                         # 4 read-only lens analysts, run in parallel
+  references/                     # foundations, scoring rubric, 4 lens refs, ethics, coherence-and-anti-bloat
+user-story-review/                # plugin
+  .claude-plugin/plugin.json
+  skills/user-story-review/       # SKILL.md + rubric, output contract, splitting patterns
 ```
 
 ## Author

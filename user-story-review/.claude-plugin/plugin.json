@@ -1,0 +1,9 @@
+{
+  "name": "user-story-review",
+  "version": "0.1.0",
+  "description": "Reviews user stories in their PRD context and returns a one-page triage: what will sink this milestone, a verdict per story, and rewrites for the worst offenders. Judges whether a story is true and useful, not whether it matches the 'As a... I want... so that...' template.",
+  "author": {
+    "name": "Konstantin Valiotti"
+  },
+  "keywords": ["user-stories", "prd", "backlog", "review", "story-splitting", "product-management", "agile"]
+}

@@ -63,6 +63,12 @@
       "source": "./designing-for-behaviour",
       "description": "Behavioural-design reviewer: evaluate how well a product experience (an existing codebase or an idea/PRD) drives user behaviour, adoption, and engagement. Scores three dimensions, ranks gaps, and prescribes an integrated set of fixes through four de-duplicated behavioural-science lenses (habit loop, cognitive ease, capability/results, control/autonomy) run as a parallel analyst board, plus an anti-bloat coherence review that keeps recommendations forming one strong core experience instead of a pile of bolted-on mechanisms. Grounded in Atomic Habits, Tiny Habits, Hooked, Badass, Thinking Fast and Slow, and Perceptual Control Theory. Run with /designing-for-behaviour.",
       "version": "0.1.0"
+    },
+    {
+      "name": "user-story-review",
+      "source": "./user-story-review",
+      "description": "User story reviewer: reads a PRD or backlog and returns a one-page triage — the few systemic issues that will sink the milestone, a verdict per story (ready / needs conversation / reframe / split / not a user story), and rewrites for the worst offenders. Judges whether a story is true and useful rather than whether it matches the template: catches feature requests wearing story clothes, generic actors, fake value, technical layers sliced as stories, and outcomes outside the team's control. Grounded in Fifty Quick Ideas to Improve Your User Stories. Run with /user-story-review.",
+      "version": "0.1.0"
     }
   ]
 }

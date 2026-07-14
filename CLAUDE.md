@@ -56,6 +56,10 @@ designing-for-behaviour/          # plugin — orchestrator skill + FOUR analyst
   skills/designing-for-behaviour/SKILL.md   # orchestrator + /designing-for-behaviour entry point
   agents/<lens>-analyst.md        # behavioural-loop / cognitive-ease / capability-results / control-autonomy (read-only inspection)
   references/                     # plugin-root shared refs (foundations, scoring-rubric, 4 lens-*.md, ethics, coherence-and-anti-bloat, report-template)
+user-story-review/                # plugin — one skill; user-story reviewer with a hard one-page output budget
+  .claude-plugin/plugin.json
+  skills/user-story-review/SKILL.md
+  skills/user-story-review/references/   # review-rubric, output-contract, splitting-patterns (single-skill → per-skill, not plugin-root)
 ```
 
 Note: `design-md-corpus/` at the repo root (74 product `DESIGN.md` files) is **grounding data, not a plugin** — it is untracked and must not be registered in `marketplace.json` or shipped. The `design-system-master` plugin distills it into `references/` + 5 curated `references/exemplars/`; it does not ship the full corpus.
@@ -221,6 +225,21 @@ Distinctive design:
 - **References at the plugin root** (à la feature-flow / plg-growth), shared by the skill AND the agents via `${CLAUDE_PLUGIN_ROOT}/references/...`: `foundations.md` (defs + intake), `scoring-rubric.md` (unified 0/1/2/N-A scale), `lens-{behavioural-loop,cognitive-ease,capability-results,control-autonomy}.md`, `ethics-and-dark-patterns.md`, `coherence-and-anti-bloat.md`, `report-template.md`. Agents stay thin and read their one lens ref at runtime. When moving/deleting a ref, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms.
 - **The anti-bloat coherence review is the load-bearing idea** (`coherence-and-anti-bloat.md`) — the editorial pass that turns four lenses' worth of good-but-additive recommendations into the smallest integrated set, enforces a complexity budget calibrated to the archetype, prefers embedding over adding, runs a subtraction pass, and emits an explicit "deliberately NOT adding" list. Without it a behavioural checklist makes products worse. Keep it, and the N/A scoring discipline that feeds it, intact.
 - **Anti-slop + ethics by contract.** Every score/gap/rec must carry a concrete anchor (screen/flow/`file:line`/quoted copy/PRD section); the ethics gate (`ethics-and-dark-patterns.md`) reframes or cuts any manipulative recommendation, and autonomy wins conflicts. Self-contained prose, read-only agents, no external runtime deps.
+
+## user-story-review architecture
+
+One skill (`/user-story-review`) that reads a PRD/backlog and reviews its user stories. Deliberately the smallest plugin here — its design is mostly about what it *refuses* to emit.
+
+Pipeline in `skills/user-story-review/SKILL.md`: find input (arg → newest `PRD-*.md` → any backlog-shaped file → ask) → read PRD context → classify every item into one of five verdicts (READY / NEEDS CONVERSATION / REFRAME / SPLIT-EXPERIMENT / NOT A USER STORY) against the six gates → **triage** → emit.
+
+- **The output budget is the load-bearing idea.** `references/output-contract.md` caps the review at ~1 page: verdict + at most **three** systemic issues + one table row per story + rewrites for the **worst three only**, then a footer naming what's being withheld (splitting options, full question list, non-story work). Depth is pull, never push. The original skill mandated 8 sections including chapter citations, which on a 30-story PRD produced ~10 pages — i.e. it moved the work instead of doing it. **Do not reintroduce sections, raise the caps, or let the rubric be transcribed into the output.** If editing makes the review longer, it is a regression.
+- **Substance over syntax.** The reviewer judges whether a story is true and useful, never template compliance; nonstandard syntax is explicitly not a finding, and wording is not reportable unless it causes real misunderstanding.
+- **The causal chain is the analytical spine** (`references/review-rubric.md`): observable system change (team's *zone of control*) → user behaviour change (*sphere of influence*) → business impact. Most findings are a symptom of collapsing it. The rubric is a lookup keyed by gate, not a script to walk aloud.
+- **No numeric score, ever** — the pattern of failure matters more than arithmetic, and a score hides the failure *type*. Same reason the plugin refuses to force tasks, NFRs, research, or cross-cutting work into fake user stories.
+- **Missing context is a finding, not a blank to fill.** Verdict becomes "Not reviewable yet"; never invent a segment or metric to enable a rewrite.
+- References are **per-skill** (`skills/user-story-review/references/`), not plugin-root — correct here because there is only one skill (à la cro-engine). If a second skill lands and shares them, move them to the plugin root and switch pointers to `${CLAUDE_PLUGIN_ROOT}/references/…`.
+- Grounding: *Fifty Quick Ideas to Improve Your User Stories* (Adzic/Evans/Korac). Distilled into the rubric and splitting patterns; the book's chapter list and per-finding chapter citations were **deliberately cut** (they consumed output space and helped no reader). Don't re-add a traceability file or chapter numbers.
+- Chains off `prd-workflow` by **filename convention** — it auto-discovers the `PRD-[feature-name].md` that `prd-draft` writes, as the last gate before engineering. Keep that glob working if the PRD filename convention changes.
 
 ## Distribution
 
