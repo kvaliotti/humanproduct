@@ -1,182 +1,29 @@
 ---
 name: industry-process-map
-description: Build an end-user-centered process map and matrix for an industry, product category, or solution space — wider than any single vendor. Use this skill whenever the user asks to "map the industry", "understand the market", "map processes in [domain]", "what's happening in [category]", "understand the solution landscape", "build a process matrix", "understand what users actually do in [industry]", or provides a product name / company / industry and wants the broader workflow mapped beyond that one product. Trigger even when the user doesn't say "map" — e.g., they say "help me understand the Apple Ads space" or "how does ad creation actually work end-to-end", or they want a strategic view of a market to feed downstream research on users, competitors, or positioning. Output is one markdown doc with a process tree, one chosen matrix (with rejected candidates in an appendix), a glossary, and a YAML handoff block for downstream skills.
+description: Map what people in a market actually do, step by step, and how each step gets done today (tools, manual work, agencies, or not at all). Wider than any one product. Use when the user says "map the industry", "understand the market", "how does [domain] work end to end", "what do users do in [category]", or names a product or industry and wants the landscape around it. Step 1 of /strategic-research.
+argument-hint: "[product, category, or industry]"
 ---
 
 # Industry Process Map
 
-## Promise
+Output: `strategic-research/01-industry-process-map.md`. Follow `${CLAUDE_PLUGIN_ROOT}/references/plain-writing.md`.
 
-Given a product, a category, or an industry name, produce **one markdown artifact** that captures what end users actually do in that space, structured as:
+## Steps
 
-1. A **process tree** — the user's end-to-end workflow, decomposed into steps and sub-steps.
-2. **One matrix** — the single most useful framing (rows × columns) of that workflow, with a short rationale for why this framing beat the alternatives.
-3. A **glossary** — end-user terminology (not vendor-speak).
-4. A **YAML handoff block** — structured data for downstream skills (customer analysis, positioning, competitive research) to consume.
+1. Decide whose work we're mapping (a job title) and where the map stops. If the anchor is ambiguous, ask one question with AskUserQuestion; otherwise state your assumption and go.
+2. Run 5 to 10 web searches: practitioner forums, job posts, how-to guides, review sites, and the anchor's own site. Look for the steps people describe, the words they use, and what they use instead of software.
+3. Write the file.
 
-The output is deliberately *wider than the anchor product*. If a user anchors on "SplitMetrics", the map covers the full job ("get profitable installs") including Meta Ads, Google UAC, ASO, influencer, and manual approaches — not just Apple Search Ads.
+## Sections
 
-## Operating principles
+1. **Scope:** whose work, the anchor product (if any), and what's out of scope. Three lines.
+2. **The workflow:** 5 to 9 numbered steps, in the order the person does them. Name each step with a verb in their words ("Decide which ads to pause"). Add up to 3 sub-steps as bullets.
+3. **How each step gets done today:** a table with one row per step and columns for the ways it's done (e.g. dedicated tool, spreadsheet, agency, in-house build, skipped). Put real product names in the cells.
+4. **Where it hurts:** the 3 to 5 most painful steps. For each, one sentence on the pain and one on what people do about it, with a source.
+5. **Glossary:** the practitioner terms a newcomer needs, one line each.
+6. **What we don't know**
+7. **Sources**
 
-These four principles are the spine of the skill. When in doubt, return to them.
-
-### 1. Start from the verb, not the noun
-
-Axis labels describe what the user is **doing**, not what vendors **sell**.
-
-- "Competitive intelligence tools" → vendor category. Reject.
-- "Figuring out which keywords competitors are winning" → user verb. Accept.
-
-Vendors carve categories to defend pricing. End users don't care about categories — they care about getting a job done. The map should read like an anthropologist's field notes on user behavior, not a Gartner quadrant.
-
-### 2. Zoom to the right altitude
-
-Every anchor has three altitudes. Pick the middle one.
-
-- **Too zoomed in** (the anchor product's own feature list): "Optimize Apple Search Ads bids." Excludes substitutes.
-- **Too zoomed out** (the ultimate outcome): "Acquire users profitably." Loses structural detail.
-- **Right altitude** (the end-user's recurring workflow): "Decide where to spend paid acquisition budget, brief creative, launch campaigns, optimize them, and report on them."
-
-When uncertain, write all three explicitly, then choose. Bias toward zooming out — a process map that only covers the anchor is useless downstream.
-
-### 3. MECE is the cross-check
-
-Before publishing, verify:
-- **Rows don't overlap.** "Ad creation" and "Creative generation" collapse into one.
-- **Columns don't overlap.** "Apple Ads" and "Mobile paid acquisition" live on different axes.
-- **Together they cover the space.** If a user's real workflow step has no row, the map is incomplete.
-
-MECE is the single most common failure mode. Run the check explicitly and fix before moving on.
-
-### 4. Include substitutes, hacks, and non-consumption
-
-Users don't use products — they solve problems. A complete map includes:
-- Spreadsheets and manual work
-- Agencies and consultants
-- In-house builds
-- Doing nothing / tolerating the pain
-- Adjacent AI tools being repurposed
-
-If the map only lists SaaS tools in a category, it's a competitive landscape, not a process map. Downstream skills depend on knowing what users do *instead*.
-
-## Workflow
-
-Execute in this order. Don't skip phases — each feeds the next.
-
-### Phase 1 — Intake & calibration
-
-Ask clarifying questions with `AskUserQuestion` only when needed. If the user provided enough context up front, skip questions and proceed.
-
-Resolve these four variables before research:
-
-| Variable | What it is | Example |
-|---|---|---|
-| **Anchor** | Optional reference product/company | "SplitMetrics" |
-| **Industry / domain** | The space in the user's words | "Mobile ad optimization" |
-| **End-user persona** | Whose view the map takes | "Mobile UA manager at a consumer app" |
-| **Scope boundary** | How wide to go | "All paid acquisition channels for mobile apps, excluding organic ASO" |
-
-When to ask vs. assume:
-- **Ask** if the anchor is ambiguous (e.g., "Figma" — design tool? whiteboarding? prototyping?) or if no persona is obvious.
-- **Assume** if the user gave a clear anchor + a one-line framing. State the assumptions you're making explicitly before proceeding, so the user can correct.
-
-Cap questions at 2-3. Overasking annoys the user.
-
-### Phase 2 — Web research
-
-Goal: ground the map in how practitioners actually describe the work, not how Claude's training data describes it.
-
-Run 5-10 targeted searches. Skip if the domain is one Claude knows cold *and* the user signals speed. Otherwise research — it catches terminology, substitutes, and workflow steps that pure reasoning misses.
-
-Research playbook is in `references/research-playbook.md`. Read it at the start of this phase.
-
-Capture from research:
-- **Verbs** practitioners use for each workflow step
-- **Channels / methods / platforms** the work happens through
-- **Substitute approaches** (manual, agencies, adjacent tools)
-- **Named steps** in industry workflows (e.g., "creative refresh cadence", "cohort LTV modeling")
-- **The anchor's actual scope** (what cells it claims to cover) — fetch its homepage if useful
-
-### Phase 3 — Generate candidate matrix framings
-
-Produce **3-4 candidate framings** internally. Don't show the user yet. Each candidate has rows, columns, and a one-line reason.
-
-The catalog of common framings — with when each works best — is in `references/matrix-framings.md`. Read it before generating candidates.
-
-Examples of framings (not an exhaustive list):
-- **Process step × Method** (how the step gets done: manually, via tool, via agency, via AI)
-- **Process step × Channel** (Apple Ads, Google, Meta, TikTok, ASO)
-- **User stage × Persona** (where different people in the org touch the workflow)
-- **Job-to-be-done × Context** (same job in different situations)
-- **Pain × Solution category** (pains the user has × classes of response)
-
-### Phase 4 — Score & select the winner
-
-Score each candidate on four criteria (1-5):
-
-1. **MECE** — rows mutually exclusive, columns mutually exclusive, together exhaustive
-2. **Coverage** — captures the full end-user workflow, not just the anchor's slice
-3. **Actionability** — downstream skills (user research, positioning, gap analysis) can use it
-4. **End-user grounding** — axis labels read like user verbs, not vendor categories
-
-Pick the winner. Note a one-paragraph rationale: why this framing beat the others. Save the losers for the appendix — they're evidence the choice was considered, not default.
-
-### Phase 5 — Build the full matrix
-
-Fill every cell. A cell contains:
-- The dominant **approach(es)** users take for that row × that column
-- **Notable tools / methods** — actual names where possible
-- **Maturity note** — commodity, emerging, manual, underserved
-- **Anchor coverage flag** — `[anchor]` if the anchor product plays in this cell
-
-Empty cells are a signal — either the framing is wrong, or the cell represents an underserved space. Call it out explicitly rather than hiding it.
-
-### Phase 6 — Assemble the output
-
-Use the template in `assets/output-template.md`. Structure:
-
-1. **Framing** — anchor, industry, end-user persona, scope boundary
-2. **Process tree** — indented hierarchy of user workflow steps
-3. **Chosen matrix framing** — one paragraph on why this framing won
-4. **The matrix** — markdown table
-5. **Glossary** — end-user terminology
-6. **Substitutes & adjacent approaches** — what users do instead of tools in the category
-7. **Anchor coverage map** (if anchor given) — which cells the anchor plays in
-8. **Open questions & calibration notes** — what's uncertain, what a follow-up skill (user/customer analysis) should probe
-9. **Appendix — rejected matrix framings** — the 2-3 losers with their scores and why they lost
-10. **YAML handoff block** — structured data at the end for downstream skills
-
-The YAML handoff block is non-negotiable — it's the contract with downstream skills. Its schema is in `references/handoff-schema.md`.
-
-Write the artifact to `strategic-research/01-industry-process-map.md` in the user's current working directory (create the `strategic-research/` folder if it does not exist). This fixed path lets downstream skills and `--from` resume find it deterministically. See `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md` for the shared path convention.
-
-### Phase 7 — Share
-
-Tell the user the local path where the file was written — `strategic-research/01-industry-process-map.md`. Keep the message short — title, one-sentence summary of the chosen framing, path. Don't rehash the content in chat; the file is the deliverable.
-
-## MECE audit — mandatory before Phase 6
-
-Before writing the final artifact, run this audit explicitly and fix any failures:
-
-- [ ] Can I name two rows that partially mean the same thing? (If yes, merge.)
-- [ ] Can I name two columns that partially mean the same thing? (If yes, merge.)
-- [ ] Is there a real workflow step I'd mention in a user interview that has no row? (If yes, add it.)
-- [ ] Does every axis label use a user verb, not a vendor noun? (If no, rewrite.)
-- [ ] Have I included at least one non-SaaS substitute per column? (If no, add it.)
-
-If you can't pass all five, the framing is wrong. Go back to Phase 3.
-
-## Writing style for the output
-
-Follow the shared conventions in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`. Emphasis specific to this skill:
-
-- **Tables and trees over prose.** Prose only when a concept needs explanation.
-- **Verbs in axis labels.** "Deciding target audience", not "Target audience analysis".
-- **Honest uncertainty.** If a cell is speculative or data is thin, mark it with `?` and explain in the open questions section.
-
-## When this skill is the wrong tool
-
-- User wants the audience/users mapped → use `audience-segment-research` (skill #2 in this plugin).
-- User wants a competitive teardown of named vendors, a specific product-idea evaluation, or positioning work → these are outside this plugin; see the redirect table in `${CLAUDE_PLUGIN_ROOT}/references/common-conventions.md`.
-
-This skill maps the **space**, not the products in it and not the users in it. Stay in lane.
+Rules:
+- The map covers the whole job, not just what the anchor product does. Include manual work, agencies, and doing nothing.
+- Steps must not overlap, and together they must cover the job from start to finish.

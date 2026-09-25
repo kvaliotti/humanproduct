@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repo is
 
-A Claude Code plugin marketplace (not an application). No build, lint, or test step — it ships content (skills and slash commands) consumed by Claude Code when a user installs a plugin from it. Published at `kvaliotti/humanproduct` and installed via `/plugin marketplace add kvaliotti/humanproduct`.
+A Claude Code plugin marketplace (not an application). No build, lint, or test step — it ships content (skills, slash commands, and sub-agents) consumed by Claude Code when a user installs a plugin from it. Published at `kvaliotti/humanproduct` and installed via `/plugin marketplace add kvaliotti/humanproduct`.
 
 ## Structure
 
@@ -14,20 +14,23 @@ prd-workflow/                     # plugin (directory referenced by marketplace.
   .claude-plugin/plugin.json      # plugin manifest (name, version, description, keywords)
   skills/<skill-name>/SKILL.md    # each skill: YAML frontmatter + markdown body
   skills/<skill-name>/references/ # optional supporting docs the skill reads at runtime
-strategic-research/               # plugin — also ships a slash command
+strategic-research/               # plugin — five short skills + the /strategic-research command
   .claude-plugin/plugin.json
-  commands/<command>.md           # optional: slash commands with frontmatter (description, argument-hint)
-  skills/<skill-name>/SKILL.md
-  skills/<skill-name>/assets/     # optional: templates the skill writes out (HTML, md scaffolds)
-  skills/<skill-name>/references/
+  commands/strategic-research.md  # slash command (description, argument-hint)
+  skills/<skill-name>/SKILL.md    # no per-skill references, assets, or templates
+  references/plain-writing.md     # the one shared file: writing rules every skill follows
 pmm-define-and-review-positioning/ # plugin — six skills, no slash commands
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/references/
-user-research/                    # plugin — six skills, no slash commands
+user-research/                    # plugin — three skills + one agent (modelled on sales-call-analysis)
   .claude-plugin/plugin.json
-  skills/<skill-name>/SKILL.md
-  skills/<skill-name>/references/
+  skills/<skill-name>/SKILL.md    # plan-research, analyze-interviews, synthesize-research
+  agents/interview-analyst.md     # one per participant, spawned by analyze-interviews
+sales-call-analysis/              # plugin — two skills + one agent; the reference for "simple"
+  .claude-plugin/plugin.json
+  skills/<skill-name>/SKILL.md    # analyze-sales-call, aggregate-call-analyses
+  agents/call-analyst.md          # one per client, spawned by analyze-sales-call
 plg-growth/                       # plugin — fourteen skills, no slash commands
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
@@ -36,11 +39,6 @@ event-tracking/                   # plugin — five skills, no slash commands
   .claude-plugin/plugin.json
   skills/<skill-name>/SKILL.md
   skills/<skill-name>/references/
-feature-flow/                     # plugin — four skills; engineering-delivery workflow
-  .claude-plugin/plugin.json
-  skills/<skill-name>/SKILL.md    # ship, storm, verify, debug (ship = /ship entry point)
-  references/                     # plugin-root references (NOT per-skill): stop-conditions, test-policy, squash-safe-finish
-  config/feature-flow.config.example.md  # copied into a target repo as .claude/feature-flow.local.md
 cro-engine/                       # plugin — one skill; conversion-rate-optimization reviewer
   .claude-plugin/plugin.json
   skills/cro-engine/SKILL.md
@@ -51,7 +49,7 @@ design-system-master/             # plugin — orchestrator + three skills (revi
   skills/create-design-system/assets/DESIGN.template.md  # scaffold the create skill writes out
   references/                     # plugin-root shared refs (format, rubric, panel, a11y, patterns, archetypes, codebase-bridge)
   references/exemplars/           # 5 curated real DESIGN.md specs spanning the archetype range
-designing-for-behaviour/          # plugin — orchestrator skill + FOUR analyst AGENTS (the marketplace's only agents-based plugin)
+designing-for-behaviour/          # plugin — orchestrator skill + FOUR analyst AGENTS
   .claude-plugin/plugin.json
   skills/designing-for-behaviour/SKILL.md   # orchestrator + /designing-for-behaviour entry point
   agents/<lens>-analyst.md        # behavioural-loop / cognitive-ease / capability-results / control-autonomy (read-only inspection)
@@ -64,7 +62,7 @@ user-story-review/                # plugin — one skill; user-story reviewer wi
 
 Note: `design-md-corpus/` at the repo root (74 product `DESIGN.md` files) is **grounding data, not a plugin** — it is untracked and must not be registered in `marketplace.json` or shipped. The `design-system-master` plugin distills it into `references/` + 5 curated `references/exemplars/`; it does not ship the full corpus.
 
-Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` if it exposes slash commands), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
+Adding a plugin: create `<plugin>/.claude-plugin/plugin.json` and `<plugin>/skills/...` (plus `<plugin>/commands/...` for slash commands and `<plugin>/agents/<name>.md` for sub-agents, spawned as `<plugin>:<name>`), then register it in the root `marketplace.json` `plugins` array with `name`, `source` (relative path), `description`, `version`.
 
 ## Skill contract
 
@@ -77,7 +75,7 @@ Every `SKILL.md` starts with YAML frontmatter:
 
 Skill bodies are prose instructions the model follows at activation time. They can reference sibling files via relative paths (e.g., `references/prd-template.md`, `assets/html-template.html`).
 
-**Shared references (cross-skill).** When a reference is used by more than one skill in a plugin, it lives once at the plugin root (`<plugin>/references/…`) and skills point to it with the absolute plugin variable `${CLAUDE_PLUGIN_ROOT}/references/<file>.md` — not a per-skill copy. This is the standard for de-duplicated content across the marketplace (e.g. `plg-growth/references/problem-solving-backbone.md`, `user-research/references/behavioral-frameworks.md`, `strategic-research/references/tension-taxonomy.md`, `event-tracking/references/platform-constraints.md`, and all of `feature-flow/references/`). Keep single-skill references under that skill's own `references/`. When you delete or move a reference, grep the whole plugin for its path (both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms) and fix every pointer.
+**Shared references (cross-skill).** When a reference is used by more than one skill in a plugin, it lives once at the plugin root (`<plugin>/references/…`) and skills point to it with the absolute plugin variable `${CLAUDE_PLUGIN_ROOT}/references/<file>.md` — not a per-skill copy. This is the standard for de-duplicated content across the marketplace (e.g. `plg-growth/references/problem-solving-backbone.md`, `strategic-research/references/plain-writing.md`, `event-tracking/references/platform-constraints.md`). Keep single-skill references under that skill's own `references/`. When you delete or move a reference, grep the whole plugin for its path (both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms) and fix every pointer.
 
 ## Command contract
 
@@ -100,19 +98,17 @@ Each skill's SKILL.md describes the handoff to the next. When editing one, keep 
 
 ## strategic-research architecture
 
-Five skills chained by YAML handoffs, orchestrated by the `/strategic-research` command. Each skill emits a markdown artifact plus a YAML handoff block the next skill parses:
+Five short skills run in order by `/strategic-research` (resume with `--from=N`). Each writes one markdown file to a `strategic-research/` subfolder of the user's working directory under a **fixed step-numbered name** and reads whichever earlier files exist:
 
-1. `industry-process-map` — process tree + matrix of what end users do in the space
-2. `audience-segment-research` — segments, stakeholders, tensions
-3. `willingness-to-pay-research` — per-segment value, drivers, proof signals
-4. `competitor-evaluation` — 7 Powers grid, strategy canvases
-5. `strategic-synthesis-report` — consumes all four handoffs, renders a self-contained HTML report (plus a one-page markdown companion) using `assets/html-template.html`
+1. `industry-process-map` → `01-industry-process-map.md` — workflow steps and how each gets done today
+2. `audience-segment-research` → `02-audience-segments.md` — segments, how to spot them, who to target first
+3. `willingness-to-pay-research` → `03-willingness-to-pay.md` — current spend, price range to test, arithmetic shown
+4. `competitor-evaluation` → `04-competitor-evaluation.md` — competitor table, why people pick/leave, gaps
+5. `strategic-synthesis-report` → `05-summary.md` — one page: answer, where to play, how to win, risks, next steps
 
-The YAML handoff schemas are the contract between skills — they live under each skill's `references/handoff-schema.md`. Breaking a schema breaks the pipeline, so treat those files as load-bearing and bump `version` in `plugin.json` + `marketplace.json` when changing one.
-
-Skills are also callable individually. The orchestrator command supports `--from=step-N` to resume mid-pipeline when upstream artifacts already exist.
-
-Artifacts are written to a `strategic-research/` subfolder of the user's current working directory under **fixed step-numbered filenames** (`01-industry-process-map.md` … `05-synthesis-report.html`), so each skill reads the prior one's output and `--from` resume is deterministic. Do not reintroduce derived/slug filenames or absolute sandbox paths here — that broke the chain historically. The synthesis HTML is genuinely self-contained: Chart.js is vendored inline in `assets/html-template.html` (no CDN/network), and shared prose (tension taxonomy, writing conventions) lives in `references/tension-taxonomy.md` and `references/common-conventions.md`.
+- **Plain output is the load-bearing idea.** v1 produced incomprehensible output (YAML handoffs, confidence percentages, tension taxonomies, 7 Powers grids, a Chart.js HTML report). v2 deleted all of that. Every skill follows `references/plain-writing.md`: short sentences, no framework jargon in the output, real names and numbers, a source for every fact or an explicit **(assumption)**, no made-up scores, ≤2 pages per file, and a closing **What we don't know**. Do not reintroduce YAML handoffs, numeric confidence, scoring rubrics, per-skill reference libraries, or an HTML report.
+- Each SKILL.md is a numbered list of output sections plus a few rules (the sales-call-analysis shape). Keep them that short.
+- Chaining is by the fixed filenames only. Don't switch to slug-derived filenames or absolute paths — that broke `--from` resume historically.
 
 ## pmm-define-and-review-positioning architecture
 
@@ -129,16 +125,22 @@ Skills pass structured YAML between phases. Each skill is also callable standalo
 
 ## user-research architecture
 
-Six skills forming a paired build/evaluate pipeline for qualitative user research. Each phase produces a markdown artifact; the evaluate skill stress-tests it before the next phase begins:
+Three skills and one agent, deliberately built in the same shape as `sales-call-analysis` (v0.x had six build/evaluate skills and ~6,000 lines of methodology references; v1 replaced them):
 
-1. `build-research-brief` — defines what to learn, from whom, and why; auto-detects research type (general, behavioral, or mixed)
-2. `evaluate-research-brief` — scored evaluation with fatal-flaw gate, anti-pattern detection, and Mom Test check; verdict gates fieldwork
-3. `build-research-guide` — translates brief into tactical interview guide with probes, timing, and dig triggers
-4. `evaluate-research-guide` — validates guide quality, question phrasing, and structural coverage; verdict gates fieldwork
-5. `analyze-research` — processes transcripts/notes into coded findings; behavioral mode adds COM-B coding and B=MAP analysis
-6. `review-research-analysis` — evaluates analysis rigor, evidence backing, and failure patterns before the team acts on findings
+1. `plan-research` — decision, riskiest assumptions, research questions (≤5), optional target behaviour, screening by past behaviour, and a Mom-Test interview guide, in one file: `research/plan-<topic>.md`.
+2. `analyze-interviews` — confirms the setup with the user, then spawns one `user-research:interview-analyst` (Opus) per participant. The skill's **Analysis** section is the spec the agent follows; the orchestrator passes the agent `${CLAUDE_PLUGIN_ROOT}/skills/analyze-interviews/SKILL.md`. Writes `research/analyses/<participant>.md`: numbered sections alternating analysis and verbatim quotes, with barriers tagged don't know / can't / don't want (the same lens as `prd-workflow`'s `sit-beh`) and hypotheticals marked **(said, not done)**.
+3. `synthesize-research` — one sub-agent per dimension (pains, goals, barriers, workarounds) builds theme → finding tables with participants, quotes, and counts (count = participants, not quotes), then the skill writes answers to the plan's research questions and marks each assumption confirmed / killed / open: `research/YYYY-MM-DD-synthesis.md`.
 
-Each skill loads methodology-specific references from its `references/` directory (`behavioral-*.md` and `general-*.md`); the shared COM-B/B=MAP primer and the research-type signal list are factored into plugin-root `references/behavioral-frameworks.md` and `references/research-type-detection.md`. No YAML handoff schema between skills, so chaining relies on **filename convention**: producers write `research-brief-[topic].md` / `research-guide-[topic].md` / `research-analysis-[topic].md` and stamp a `Research Type:` field into the artifact; consumers discover the input by that glob (newest first) and trust the stamped type rather than re-detecting. Keep those filename patterns and the type stamp stable — they are the de-facto contract. Skills are callable standalone or in sequence.
+Contract: the `research/` folder layout and the analysis section numbers (synthesize-research maps dimensions to them). Change one, change the other.
+
+## sales-call-analysis architecture
+
+Two skills and one agent. The marketplace's model of a simple, effective plugin — no references, each SKILL.md under 50 lines.
+
+1. `analyze-sales-call` — groups transcripts (default `transcripts/`) by client, confirms "one Opus sub-agent per client" and "merge each client's calls" with the user, then spawns one `sales-call-analysis:call-analyst` per client in one message. The skill's **Analysis** section (10 numbered sections: pains, outcomes, objections, decision criteria each followed by verbatim quotes; what it takes to convert; hook messaging) is the spec the agent follows. Writes `analyses/<client>.md`.
+2. `aggregate-call-analyses` — one sub-agent per dimension builds a category → item table with companies, quotes, and counts; assembles `synthesis/YYYY-MM-DD-cross-client-analysis.md`.
+
+Contract: the aggregate skill maps dimensions to the analysis section numbers (1–8). Change one, change the other. Agents are namespaced `<plugin>:<agent>` when spawned.
 
 ## plg-growth architecture
 
@@ -180,23 +182,6 @@ Five skills forming a four-stage pipeline for analytics event tracking. The orch
 
 Key design decisions: events must trace to analytical use cases; parameterization test (one event with properties vs. multiple events) is the primary design tool; platform constraints are validated during event definition, not just at formatting time; naming conventions are detected from existing tracking and matched, not imposed. Vendor limits live in ONE place — the shared plugin-root `references/platform-constraints.md` (single source of truth; carries a "verify against current vendor docs" hedge because these change). `event-definition` and `tracking-plan-review` each offer a quick mode for small/ad-hoc scope. No YAML handoff schemas between skills — artifacts are markdown files the next skill reads directly.
 
-## feature-flow architecture
-
-The one engineering-delivery plugin (the others are product-strategy). Four skills orchestrated by `/ship`, which sequences a feature from a rough description to an open PR:
-
-1. `ship` — the orchestrator and `/ship` entry point. Stages: branch/isolation → design (calls `storm`) → plan (strong model) → **approval gate** → implement → verify (calls `verify`) → review/simplify → PR → finish. Reuses native capabilities (plan approval, `/code-review`, `/simplify`, `commit-commands`) rather than reimplementing them.
-2. `storm` — Stage-1 design: brainstorm spine + a compact product lens (situation, target behaviour, don't-know/don't-want/can't barriers, edge cases). Micro and big modes. Reads a `.sitbeh/` dir as the product lens if present.
-3. `verify` — read-only evidence-based gate. Runs the right subset (typecheck / lint / targeted tests / arch-checks / build) by what changed and pastes real output. Diagnoses nothing itself; a failure hands off to `debug`.
-4. `debug` — root-cause debugging (Iron Law: no fix without confirmed intended behaviour AND root cause). Invoked by `ship` when verify fails; also standalone. Ships supporting technique files (`root-cause-tracing.md`, `defense-in-depth.md`, `condition-based-waiting.*`, `find-polluter.sh`) under `skills/debug/`.
-
-Distinctive design vs. the other plugins:
-
-- **References live at the plugin root** (`references/`, `config/`, `scripts/`), not under each skill — because `ship`, `verify`, and `storm` all read the same `stop-conditions.md`, `test-policy.md`, and `squash-safe-finish.md`. Skills reference them via `${CLAUDE_PLUGIN_ROOT}/references/...`.
-- **Generic spine, per-repo config**: no project specifics are hardcoded. Behaviour (verify commands, model tiers, test policy, stop-conditions, PR settings) comes from a `.claude/feature-flow.local.md` the target repo owns (gitignored there). `config/feature-flow.config.example.md` is the template `/ship` offers to copy on first run. When editing the plugin, keep example config keys, the `ship` Stage-0 parser, and the `verify`/`stop-conditions`/`test-policy` references in sync — they are the contract.
-- **Autonomy is gated by stop-conditions**: `auto` mode runs implement→PR without pausing except on a stop-condition (`references/stop-conditions.md`), which are always *added to*, never replaced by, the repo's list. The plan-approval gate (Stage 4) is the one mandatory checkpoint in both modes.
-- **Subagent-driven implementation (no Workflow tool)**: Stage 5 hands all writing to implementer subagents via the `Task` tool — parallel Task calls (multiple in one message) for independent disjoint-file tasks, one subagent for coupled tasks — to keep the orchestrator's context clean for gating and debugging. Inline editing is reserved for the rare truly-trivial change; when in doubt, dispatch a subagent. There is deliberately **no dependency on the `Workflow` tool** (it over-spawns) — do not reintroduce it.
-- **External dependencies** (unlike the strategy plugins, which are self-contained prose): `git` + `gh` for the PR/finish stages (both degrade gracefully if `gh` is absent — push + print a compare URL). Verify's fallback defaults assume a Node/npm/Jest toolchain and are guarded so non-Node repos are detected or the user is asked, rather than running `npm` blindly.
-
 ## design-system-master architecture
 
 An orchestrator + three capability skills that all read, write, or refactor a single canonical artifact — a **`DESIGN.md`** (the token-referencing `getdesign.md` format: YAML frontmatter of `colors`/`typography`/`rounded`/`spacing`/`components` with `{group.token}` refs, plus prose sections). The three capabilities map to the user's three asks:
@@ -208,7 +193,7 @@ An orchestrator + three capability skills that all read, write, or refactor a si
 
 Distinctive design:
 
-- **References live at the plugin root** (`references/`), not per-skill — all three capabilities share them (à la feature-flow / plg-growth). Skills point to them via `${CLAUDE_PLUGIN_ROOT}/references/...`. The set: `design-md-format.md`, `archetypes.md`, `patterns-{color,typography,space-shape-elevation,components-theming}.md`, `review-rubric.md`, `expert-panel.md`, `accessibility.md`, `codebase-bridge.md`, plus `exemplars/` (5 curated real specs). When moving/deleting a reference, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms and fix every pointer.
+- **References live at the plugin root** (`references/`), not per-skill — all three capabilities share them (à la plg-growth). Skills point to them via `${CLAUDE_PLUGIN_ROOT}/references/...`. The set: `design-md-format.md`, `archetypes.md`, `patterns-{color,typography,space-shape-elevation,components-theming}.md`, `review-rubric.md`, `expert-panel.md`, `accessibility.md`, `codebase-bridge.md`, plus `exemplars/` (5 curated real specs). When moving/deleting a reference, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms and fix every pointer.
 - **The anti-overfit invariant** — the load-bearing idea. Every skill classifies the product **archetype** first (`archetypes.md`) and judges complexity as **essential** (domain-required — keep) vs **accidental** (redundant/one-off/undocumented — remove). This is what stops the plugin from naively "simplifying" legitimate complexity (dual-coded green/red, dual font stacks, multi-surface theming, semantic ramps). `archetypes.md` is the most load-bearing reference; keep the essential-vs-accidental guide and the complexity budgets intact when editing.
 - **Grounding, not shipped data** — `references/` and `exemplars/` are distilled from the `design-md-corpus/` (74 specs, untracked, repo root). Do not ship the full corpus in the plugin. The corpus specs are machine-reconstructed marketing-surface extractions with **no numeric contrast ratios** — so accessibility (real contrast math in `accessibility.md`) is the tool's own contribution, never something to claim the corpus already did.
 - **Self-contained prose** (like the strategy plugins): no external runtime deps. It references an optional upstream linter (`npx @google/design.md lint`) and, when applying to a codebase, reads/writes real files — but degrades to prose guidance if neither is present.
@@ -222,7 +207,7 @@ Pipeline (in `skills/designing-for-behaviour/SKILL.md`): intake (codebase or PRD
 Distinctive design:
 
 - **Six books → four de-duplicated lenses.** The six source books (Atomic Habits, Tiny Habits, Hooked, Badass, Thinking Fast and Slow, Perceptual Control Theory) each repeated the same surface sections (behaviour-definition, adoption, engagement, metrics, ethics). Those are factored out **once** into cross-cutting refs; the three habit books (~70% overlap) merge into one loop lens. The four lenses are: `behavioural-loop-analyst` (Atomic/Tiny/Hooked), `cognitive-ease-analyst` (Kahneman), `capability-results-analyst` (Badass), `control-autonomy-analyst` (PCT + anti-manipulation). When editing a lens, keep it in its lane — the `foundations.md` "what each lens owns / not your lens" carve-up is what prevents the redundant 6× analysis the plugin exists to avoid.
-- **References at the plugin root** (à la feature-flow / plg-growth), shared by the skill AND the agents via `${CLAUDE_PLUGIN_ROOT}/references/...`: `foundations.md` (defs + intake), `scoring-rubric.md` (unified 0/1/2/N-A scale), `lens-{behavioural-loop,cognitive-ease,capability-results,control-autonomy}.md`, `ethics-and-dark-patterns.md`, `coherence-and-anti-bloat.md`, `report-template.md`. Agents stay thin and read their one lens ref at runtime. When moving/deleting a ref, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms.
+- **References at the plugin root** (à la plg-growth), shared by the skill AND the agents via `${CLAUDE_PLUGIN_ROOT}/references/...`: `foundations.md` (defs + intake), `scoring-rubric.md` (unified 0/1/2/N-A scale), `lens-{behavioural-loop,cognitive-ease,capability-results,control-autonomy}.md`, `ethics-and-dark-patterns.md`, `coherence-and-anti-bloat.md`, `report-template.md`. Agents stay thin and read their one lens ref at runtime. When moving/deleting a ref, grep the whole plugin for both `references/…` and `${CLAUDE_PLUGIN_ROOT}/…` forms.
 - **The anti-bloat coherence review is the load-bearing idea** (`coherence-and-anti-bloat.md`) — the editorial pass that turns four lenses' worth of good-but-additive recommendations into the smallest integrated set, enforces a complexity budget calibrated to the archetype, prefers embedding over adding, runs a subtraction pass, and emits an explicit "deliberately NOT adding" list. Without it a behavioural checklist makes products worse. Keep it, and the N/A scoring discipline that feeds it, intact.
 - **Anti-slop + ethics by contract.** Every score/gap/rec must carry a concrete anchor (screen/flow/`file:line`/quoted copy/PRD section); the ethics gate (`ethics-and-dark-patterns.md`) reframes or cuts any manipulative recommendation, and autonomy wins conflicts. Self-contained prose, read-only agents, no external runtime deps.
 
@@ -240,6 +225,10 @@ Pipeline in `skills/user-story-review/SKILL.md`: find input (arg → newest `PRD
 - References are **per-skill** (`skills/user-story-review/references/`), not plugin-root — correct here because there is only one skill (à la cro-engine). If a second skill lands and shares them, move them to the plugin root and switch pointers to `${CLAUDE_PLUGIN_ROOT}/references/…`.
 - Grounding: *Fifty Quick Ideas to Improve Your User Stories* (Adzic/Evans/Korac). Distilled into the rubric and splitting patterns; the book's chapter list and per-finding chapter citations were **deliberately cut** (they consumed output space and helped no reader). Don't re-add a traceability file or chapter numbers.
 - Chains off `prd-workflow` by **filename convention** — it auto-discovers the `PRD-[feature-name].md` that `prd-draft` writes, as the last gate before engineering. Keep that glob working if the PRD filename convention changes.
+
+## Removed plugins
+
+`feature-flow` (the `/ship` engineering-delivery workflow) was removed: `prd-workflow` + the superpowers plugin does the job better. Don't resurrect it.
 
 ## Distribution
 

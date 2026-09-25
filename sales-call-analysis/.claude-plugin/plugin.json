@@ -1,0 +1,7 @@
+{
+  "name": "sales-call-analysis",
+  "version": "1.1.0",
+  "description": "Turn a sales call transcript into pains, outcomes, objections, decision criteria (each with verbatim quotes), what it takes to convert, and hook messaging.",
+  "author": { "name": "Konstantin Valiotti", "email": "valiotti.konst@gmail.com" },
+  "keywords": ["sales", "discovery", "transcript", "voice-of-customer", "product-marketing"]
+}

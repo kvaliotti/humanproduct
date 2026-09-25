@@ -1,140 +1,18 @@
 # strategic-research
 
-A five-skill Claude Code / Cowork plugin that turns a product, category, or industry name into a full strategic picture — ending in a self-contained HTML report a CPO can read in one sitting.
-
-## The pipeline
-
-```
-┌─────────────────────────┐
-│ 1. industry-process-map │  What do end users actually do? (process tree + matrix)
-└────────────┬────────────┘
-             ▼  YAML handoff
-┌───────────────────────────────┐
-│ 2. audience-segment-research  │  Who are they? Segments, stakeholders, tensions
-└──────────────┬────────────────┘
-               ▼  YAML handoff
-┌─────────────────────────────────┐
-│ 3. willingness-to-pay-research  │  What do they pay for, why, and how do they know it's working?
-└───────────────┬─────────────────┘
-                ▼  YAML handoff
-┌──────────────────────────────┐
-│ 4. competitor-evaluation     │  Who else plays, how, and what's their moat?
-└──────────────┬───────────────┘
-               ▼  YAML handoff (of all four)
-┌────────────────────────────────────┐
-│ 5. strategic-synthesis-report      │  Executive summary + per-section analysis + cross-skill insights
-│    → strategic-research/05-synthesis-report.html │  Self-contained HTML with tables, heatmaps, radar charts
-└────────────────────────────────────┘
-```
-
-Every skill has a markdown body artifact (readable standalone) and a YAML handoff block at the end (machine-parseable). The final skill consumes all four YAML handoffs and renders the HTML report.
-
-## Book spine
-
-Each skill is grounded in specific books, integrated rather than cited:
-
-| Skill | Book spine |
-|---|---|
-| industry-process-map | Christensen (JTBD); MECE discipline (Minto) |
-| audience-segment-research | Dunford (Obviously Awesome); The Mom Test (Fitzpatrick); Thinking in Systems |
-| willingness-to-pay-research | Monetizing Innovation (Ramanujam & Tacke); Kano; Bain 30 Elements of Value; Ulwick (ODI); EVC (Anderson-Narus) |
-| competitor-evaluation | 7 Powers (Helmer); Blue Ocean Strategy; Dunford; Christensen; The Mom Test |
-| strategic-synthesis-report | Minto Pyramid; Working Backwards (for the recommendation shape) |
-
-## Usage
-
-### Full pipeline
+Research a market and get a recommendation you can read in five minutes. Five steps, each a short markdown file with sourced facts, plain words, and a **What we don't know** list.
 
 ```
 /strategic-research SplitMetrics
+/strategic-research "mobile ad optimization" --from=4
 ```
 
-Runs all five skills in sequence, ending with the HTML report.
+| Step | Skill | Writes to `strategic-research/` |
+|---|---|---|
+| 1 | `industry-process-map`: the steps people go through and how each gets done today | `01-industry-process-map.md` |
+| 2 | `audience-segment-research`: segments, how to spot them, who to go after first | `02-audience-segments.md` |
+| 3 | `willingness-to-pay-research`: what they pay today and a price range to test, with the arithmetic | `03-willingness-to-pay.md` |
+| 4 | `competitor-evaluation`: who else solves it, why people pick or leave them, the gaps | `04-competitor-evaluation.md` |
+| 5 | `strategic-synthesis-report`: one page on where to play, how to win, risks, next steps | `05-summary.md` |
 
-### Resume from a step
-
-```
-/strategic-research "Mobile ad optimization" --from=step-4
-```
-
-Resumes from step 4, assuming steps 1–3 already produced artifacts.
-
-### Individual skills
-
-Each skill is callable independently:
-
-- `industry-process-map` — when you need the space mapped but not yet the users
-- `audience-segment-research` — consumes a process map handoff if present, else bootstraps
-- `willingness-to-pay-research` — consumes segments; produces per-segment value/drivers/proof-signals
-- `competitor-evaluation` — consumes all three upstream handoffs; produces 7 Powers grid and strategy canvases
-- `strategic-synthesis-report` — consumes all four; produces the HTML artifact
-
-## Design principles (plugin-wide)
-
-1. **Verbs, not nouns, everywhere.** Axis labels, segment names, Leader outcomes — all are user verbs, not vendor categories.
-2. **Behavior beats stated preference.** Every claim is tagged behavioral or stated; behavioral weights ~3× higher.
-3. **Tensions held, not resolved.** Contradictions live in a dedicated log. Premature resolution is a feature loss.
-4. **Singletons preserved.** Per-segment and global outlier sections. 1–2 data points can foreshadow a nascent pattern.
-5. **Confidence as a percentage.** No hedge words. Every claim carries a %.
-6. **YAML handoffs are the contract.** Breaking the schema breaks the pipeline. Schemas live under `references/handoff-schema.md` in each skill.
-
-## Structure
-
-```
-strategic-research/
-├── .claude-plugin/
-│   └── plugin.json
-├── README.md
-├── commands/
-│   └── strategic-research.md         ← /strategic-research orchestrator
-├── references/                       ← shared across all skills
-│   ├── common-conventions.md         ← output paths, filenames, writing style, redirects
-│   └── tension-taxonomy.md           ← the 5-class tension taxonomy (+ competitor variant)
-└── skills/
-    ├── industry-process-map/
-    │   ├── SKILL.md
-    │   ├── assets/
-    │   └── references/
-    ├── audience-segment-research/
-    ├── willingness-to-pay-research/
-    ├── competitor-evaluation/
-    └── strategic-synthesis-report/
-        ├── SKILL.md
-        ├── assets/
-        │   ├── html-template.html    ← single-file HTML scaffold
-        │   └── output-template.md    ← companion 1-page markdown
-        └── references/
-            ├── html-template-guide.md
-            ├── synthesis-patterns.md  ← the cross-skill joins that matter
-            └── visualization-catalog.md
-```
-
-## Outputs
-
-The pipeline writes to a `strategic-research/` subfolder of the current working directory, under fixed step-numbered names:
-
-- `strategic-research/01-industry-process-map.md`
-- `strategic-research/02-audience-segments.md`
-- `strategic-research/03-willingness-to-pay.md`
-- `strategic-research/04-competitor-evaluation.md`
-- `strategic-research/05-synthesis-report.html`  ← the final deliverable
-- `strategic-research/05-synthesis-report.md`    ← 1-page companion summary
-
-## When to use this plugin
-
-- Entering a new product category or industry and need the whole picture
-- Evaluating a new market for an existing product
-- Preparing a strategic bet memo or investment thesis
-- Refreshing strategic context before a planning cycle
-- Replacing a Gartner quadrant briefing with something grounded in buyer behavior
-
-## When NOT to use this plugin
-
-- You only need one of the outputs — call the individual skill
-- You already have the research and just need a PRD → use a PRD / spec-writing tool
-- You need positioning work → use a dedicated positioning skill or workshop (feed it the skill #2 + skill #3 handoffs)
-- You need a sprint plan or roadmap → use a roadmap / sprint-planning tool
-
-## License
-
-MIT.
+Each skill also works on its own and reads whichever earlier files exist. All of them follow [`references/plain-writing.md`](references/plain-writing.md): short sentences, real names and numbers, a source for every fact, no made-up scores, at most two pages per file.

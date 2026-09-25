@@ -3,6 +3,9 @@
   "owner": {
     "name": "Konstantin-Valiotti"
   },
+  "metadata": {
+    "description": "Claude Code plugins for product work: PRDs, user and market research, sales-call analysis, positioning, PLG, analytics tracking, CRO, design systems, and behavioural design."
+  },
   "plugins": [
     {
       "name": "prd-workflow",
@@ -13,8 +16,8 @@
     {
       "name": "strategic-research",
       "source": "./strategic-research",
-      "description": "Five-skill strategic research pipeline: industry process map → audience segments → willingness-to-pay → competitor evaluation → self-contained HTML synthesis report. Run end-to-end with /strategic-research or invoke any skill standalone.",
-      "version": "1.1.0"
+      "description": "Research a market in plain language: map what people do, find the segments, estimate what they'd pay, size up competitors, and end with a one-page recommendation. Every fact is sourced; nothing is scored by guesswork. Run end-to-end with /strategic-research or call any step standalone.",
+      "version": "2.0.0"
     },
     {
       "name": "pmm-define-and-review-positioning",
@@ -25,8 +28,14 @@
     {
       "name": "user-research",
       "source": "./user-research",
-      "description": "End-to-end user research workflow: build and evaluate research briefs, create and evaluate interview guides, analyze research data, and review research analysis. Supports both general (discovery, validation, exploratory) and behavioral (COM-B, B=MAP) research methodologies.",
-      "version": "0.3.0"
+      "description": "Plan user interviews, analyze each participant's transcript with one sub-agent per participant (what they actually did, pains, goals, barriers, each with verbatim quotes), then synthesize answers to your research questions across participants.",
+      "version": "1.0.0"
+    },
+    {
+      "name": "sales-call-analysis",
+      "source": "./sales-call-analysis",
+      "description": "Turn sales call transcripts into pains, outcomes, objections and decision criteria (each with verbatim quotes), what it would take to convert each prospect, and hook messaging. One sub-agent per client, then cross-client roll-up tables.",
+      "version": "1.1.0"
     },
     {
       "name": "plg-growth",
@@ -38,12 +47,6 @@
       "name": "event-tracking",
       "source": "./event-tracking",
       "description": "Define, structure, and review analytics event tracking plans for any product. Four-stage pipeline: analytical use cases → event definition → tracking plan review → platform-specific formatting. Covers naming conventions, property design, user properties, firing conditions, and platform compliance for Amplitude, Mixpanel, PostHog, Segment, and GA4.",
-      "version": "0.2.0"
-    },
-    {
-      "name": "feature-flow",
-      "source": "./feature-flow",
-      "description": "End-to-end feature delivery workflow for Claude Code: /ship takes a rough feature description through design → plan → approval gate → implement → verify → review/simplify → PR. Autonomous after plan approval or step-through, with subagent-driven, model-tiered implementers. A generic spine — per-repo behaviour (verify commands, test policy, stop-conditions, PR settings) is tuned via a local config file.",
       "version": "0.2.0"
     },
     {

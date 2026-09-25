@@ -1,6 +1,6 @@
 # Human-Led Product Claude Plugins
 
-A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, scoping new markets into boardroom-ready strategy, shipping features from description to PR, and reviewing, optimising, or building design systems, all grounded in real user behaviour.
+A Claude Code plugin marketplace for product work — turning messy input into engineering-ready specs, researching markets and users, pulling voice-of-customer out of sales calls, and reviewing, optimising, or building design systems, all grounded in real user behaviour.
 
 ## Install the marketplace
 
@@ -17,9 +17,9 @@ Then browse and install plugins:
 /plugin install strategic-research@human-led
 /plugin install pmm-define-and-review-positioning@human-led
 /plugin install user-research@human-led
+/plugin install sales-call-analysis@human-led
 /plugin install plg-growth@human-led
 /plugin install event-tracking@human-led
-/plugin install feature-flow@human-led
 /plugin install cro-engine@human-led
 /plugin install design-system-master@human-led
 /plugin install designing-for-behaviour@human-led
@@ -37,21 +37,21 @@ Three skills:
 - **prd-evaluate** — gap analysis across 12 categories
 - **sit-beh** — situation/behaviour framework with product-led mechanisms
 
+To build what the PRD describes, pair it with [superpowers](https://github.com/obra/superpowers) (brainstorming → plan → subagent-driven implementation).
+
 See [prd-workflow/README.md](./prd-workflow/README.md) for details.
 
 ### strategic-research
 
-Five-skill strategic research pipeline that turns a product, category, or industry name into a full strategic picture — ending in a self-contained HTML report a CPO can read in one sitting.
+Research a market and get a recommendation you can read in five minutes. Five steps, each a short markdown file with sourced facts, plain words, and a list of what we still don't know.
 
-Run the whole pipeline with `/strategic-research <anchor>`, or call any skill standalone:
+Run the whole pipeline with `/strategic-research <product, category, or industry>` (resume with `--from=N`), or call any step on its own:
 
-1. **industry-process-map** — what end users actually do (process tree + matrix)
-2. **audience-segment-research** — segments, stakeholders, tensions
-3. **willingness-to-pay-research** — per-segment value, drivers, proof signals
-4. **competitor-evaluation** — 7 Powers grid and strategy canvases
-5. **strategic-synthesis-report** — cross-skill synthesis as a self-contained HTML report
-
-Skills chain via YAML handoffs, so they compose cleanly and you can resume the pipeline mid-way with `--from=step-N`.
+1. **industry-process-map** — the steps people go through and how each gets done today
+2. **audience-segment-research** — segments, how to spot them, who to go after first
+3. **willingness-to-pay-research** — what they pay today and a price range to test, with the arithmetic shown
+4. **competitor-evaluation** — who else solves it, why people pick or leave them, the gaps
+5. **strategic-synthesis-report** — one page: where to play, how to win, risks, next steps
 
 See [strategic-research/README.md](./strategic-research/README.md) for details.
 
@@ -71,17 +71,24 @@ See [pmm-define-and-review-positioning/README.md](./pmm-define-and-review-positi
 
 ### user-research
 
-End-to-end user research workflow — from scoping what to learn, through fieldwork prep, to analysis and review. Supports both general research (discovery, validation, exploratory) and behavioral research (COM-B, B=MAP) methodologies.
+Plan interviews, analyze each participant, then roll everyone up into answers. Every finding carries verbatim quotes and a count of who said it.
 
-Six skills in three paired build/evaluate phases:
-- **build-research-brief** — structured research brief from a business problem
-- **evaluate-research-brief** — stress-test the brief before fieldwork
-- **build-research-guide** — convert brief into interview guide with probes and timing
-- **evaluate-research-guide** — validate guide quality and Mom Test compliance
-- **analyze-research** — process transcripts into coded findings and recommendations
-- **review-research-analysis** — evaluate analysis rigor and evidence before decisions
+Three skills:
+- **plan-research** — the decision the research informs, riskiest assumptions, who to talk to, and an interview guide that asks about past behaviour
+- **analyze-interviews** — one Opus sub-agent per participant: what they actually did, pains, goals, barriers, each with quotes
+- **synthesize-research** — answers to the research questions, assumptions marked confirmed / killed / open, and theme → finding tables
 
 See [user-research/README.md](./user-research/README.md) for details.
+
+### sales-call-analysis
+
+Turn sales call transcripts into pains, outcomes, objections and decision criteria, each with verbatim quotes, plus what it would take to convert each prospect and which hooks would land with them. Then roll all clients up into cross-client tables.
+
+Two skills:
+- **analyze-sales-call** — one Opus sub-agent per client, with each client's transcripts merged into one analysis
+- **aggregate-call-analyses** — category → item tables for pains, outcomes, objections and decision criteria, with companies, quotes and counts
+
+See [sales-call-analysis/README.md](./sales-call-analysis/README.md) for details.
 
 ### plg-growth
 
@@ -124,26 +131,6 @@ Five skills:
 
 See [event-tracking/README.md](./event-tracking/README.md) for details.
 
-### feature-flow
-
-The one engineering-delivery plugin in the set. An end-to-end feature workflow — one command takes a rough description to an open PR, sequencing the pieces you already have (plan approval, subagents, `/code-review`, `/simplify`, commit/PR) behind a lean, consistent spine.
-
-```
-/ship <feature description> [--step] [--auto] [--micro|--big]
-```
-
-Four skills:
-- **ship** — orchestrator: branch → design → plan → ⛱ approval gate → implement → verify → review/simplify → PR
-- **storm** — Stage-1 design: brainstorm spine + a compact product lens (situation, behaviour, barriers, edge cases)
-- **verify** — evidence-based gate that runs the right subset of checks by what changed and pastes real output
-- **debug** — root-cause debugging: confirm intended behaviour, find the root cause, then fix at the source
-
-Autonomous after plan approval by default (halting only on a stop-condition), or `--step` to pause at each stage. The spine is generic; per-repo behaviour (verify commands, test policy, stop-conditions, PR settings) comes from a `.claude/feature-flow.local.md` config the plugin offers to create on first run.
-
-Requires: `git` and the GitHub CLI (`gh`, authenticated) for the PR stage. Verify commands default to a Node/npm toolchain if you don't provide a config — set your own in `.claude/feature-flow.local.md` for non-Node projects.
-
-See [feature-flow/README.md](./feature-flow/README.md) for details.
-
 ### cro-engine
 
 A conversion-rate-optimization reviewer — audits and improves landing pages, signup flows, paywalls, popups, onboarding, and forms against a library of CRO best-practice patterns and an expert-panel review gate.
@@ -166,7 +153,7 @@ Run the router with `/design-system-master`, or call any skill standalone. See [
 
 A behavioural-design reviewer — point it at a codebase or at an idea/PRD and it answers: how well does this drive behaviour, adoption, and engagement, where are the gaps, and what integrated set of fixes strengthens one coherent core experience rather than bloating it.
 
-An orchestrator skill driving four read-only analyst agents in parallel (the only agents-based plugin here):
+An orchestrator skill driving four read-only analyst agents in parallel:
 - **behavioural-loop-analyst** — trigger → action → reward → investment (Atomic Habits, Tiny Habits, Hooked)
 - **cognitive-ease-analyst** — System 1/2, friction, framing, defaults, peak-end (Thinking, Fast and Slow)
 - **capability-results-analyst** — does the user get more capable and get results they care about (Badass)
@@ -198,24 +185,25 @@ prd-workflow/                     # plugin
 strategic-research/               # plugin
   .claude-plugin/plugin.json
   commands/strategic-research.md  # /strategic-research orchestrator
-  skills/
+  skills/                         # 5 steps, each writes one markdown file
+  references/plain-writing.md     # shared writing rules
 pmm-define-and-review-positioning/ # plugin
   .claude-plugin/plugin.json
   skills/
 user-research/                    # plugin
   .claude-plugin/plugin.json
-  skills/
+  skills/                         # plan-research, analyze-interviews, synthesize-research
+  agents/interview-analyst.md     # one per participant
+sales-call-analysis/              # plugin
+  .claude-plugin/plugin.json
+  skills/                         # analyze-sales-call, aggregate-call-analyses
+  agents/call-analyst.md          # one per client
 plg-growth/                       # plugin
   .claude-plugin/plugin.json
   skills/
 event-tracking/                   # plugin
   .claude-plugin/plugin.json
   skills/
-feature-flow/                     # plugin
-  .claude-plugin/plugin.json
-  skills/                         # ship, storm, verify, debug
-  references/                     # stop-conditions, test-policy, squash-safe-finish
-  config/                         # feature-flow.config.example.md
 cro-engine/                       # plugin
   .claude-plugin/plugin.json
   skills/cro-engine/              # SKILL.md + CRO pattern references
