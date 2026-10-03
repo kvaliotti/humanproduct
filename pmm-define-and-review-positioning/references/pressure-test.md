@@ -14,11 +14,16 @@ Canonical question definitions, shared by `positioning-workshop` (quick applicat
 | 8 | **Sharpness test** | Can a new hire explain the positioning in 60 seconds after reading it once? | Yes | If it requires context, history, or caveats to explain, it's not sharp enough |
 | 9 | **Cross-functional alignment test** | Would sales, marketing, product, and CS all describe the product the same way using this positioning? | Yes | If each team tells a different story, positioning hasn't been properly cascaded |
 
+## How to Use in a Workshop
+
+1. Run each test in order against the draft canvas and narrative.
+2. For each failure, name the weak component.
+3. Loop back to that step (usually Step 4, 5, or 8), patch it, and re-run the failed tests.
+
 ## Most Common Failures
 
 Most positioning fails tests 1 (substitution), 4 (adjectives), and 7 (tagline dependency). These are the most common and easiest to fix.
 
 ## Where to Go for More Depth
 
-- **Quick application during a workshop:** `${CLAUDE_PLUGIN_ROOT}/skills/positioning-workshop/references/pressure-tests.md`
 - **Full 3-tier scoring rubric with fix directions (for audits):** `${CLAUDE_PLUGIN_ROOT}/skills/positioning-review/references/pressure-test-scoring.md`

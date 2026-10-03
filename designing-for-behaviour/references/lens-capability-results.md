@@ -1,71 +1,56 @@
 # Lens: Capability & User Results
 
-**Distilled from:** *Badass: Making Users Awesome* (Kathy Sierra). This is the counterweight lens: while the others ask "does the user *act*," this one asks "does the user get *better* — and can they tell?" It's the strongest defence against empty engagement (activity that never becomes capability) and a primary input to the anti-bloat review (its cognitive-resource economy is exactly what feature bloat destroys).
+**Source:** *Badass: Making Users Awesome* (Kathy Sierra). The counterweight lens: the others ask "does the user act?", this one asks "does the user get better, and can they tell?" It is the main defence against empty engagement and a key input to the anti-bloat review.
 
-## What this lens sees
+Users don't want to be great at your product. They want to be great at the thing it helps them do. The test: **"Because of this, the user can now ______."** If the honest answer is "engage with our brand", the experience is hollow however high the usage. Sierra's red flag: **the product is impressive, but the user is not.**
 
-Users don't want to be great at *using your product*; they want to be great at the **thing your product helps them do**. Sustainable behaviour, adoption, and word-of-mouth come from making the *user* awesome, not the *product* impressive. The test: *"What can the user now do, become, show, or achieve because of this?"* If the honest answer is "engage with our brand," the experience is hollow no matter how high the usage metrics.
+## 1. User results over product admiration *(engagement, adoption)*
 
-Sierra's own warning is the red flag to hunt for: **the product is impressive, but the user is not.**
+- Is the experience built around something the user can do, show, or achieve, rather than the product looking clever?
+- Does it produce results users want to talk about, visible enough that others notice without being told?
 
-## 1. User results over product admiration  *(engagement, adoption)*
+## 2. Compelling context *(adoption, engagement)*
 
-- Is the experience designed around a **user result** — something the user can do, show, or achieve — rather than around the product looking clever?
-- Can the team complete: *"Because of this, the user can now ______"* with a real capability, not a feature used?
-- Does the product create **honest word-of-mouth** by producing results users *want* to talk about — and "word of obvious," where the result is visible enough that others notice without the user explaining?
-- Would the product still create value if the user never praised the brand but became visibly better at the thing they care about?
+- Does the product help with the bigger thing the user cares about (great photos, good decisions), not just tool mastery?
+- Does messaging stay on that context after signup, or switch from "you'll achieve X" to "configure the tool"?
+- **After the app closes:** does the user leave with something they can show or apply in front of their own people (boss, clients, peers)?
 
-## 2. Compelling context & post-UX UX  *(adoption, engagement)*
+## 3. The progress curve *(adoption, behaviour)*
 
-- Does the product distinguish the **tool** from the larger context the user actually cares about, and help with the context — not just tool mastery? (Users of a camera want great *photos*; users of an analytics tool want *good decisions*.)
-- Do onboarding, messaging, and support stay connected to that compelling context *after* signup — or does it switch from "you'll achieve X" to "read the FAQ / configure the tool"?
-- **Post-UX UX:** what happens *after* the user closes the app? Does the experience produce something the user can show, apply, discuss, or benefit from elsewhere — making them more capable/credible/interesting in front of *their* people (peers, boss, clients, audience)? The best user stories are "look what *I* can do," not "look what this product does."
+Place the user on the curve and check the product moves them along it:
 
-## 3. The progress curve — from novice to capable  *(adoption, behaviour)*
+- **Suck zone** — the user feels slow or incapable. Shortened where possible, normalised where not ("this part is hard for everyone")?
+- **First "I can do this"** — how fast does the user get there?
+- **Stuck zone** — retention looks healthy but the user stopped improving, coasting on a comfortable subset. Does the product notice and nudge, or bank the plateau as "engaged"?
+- **Genuinely capable** — does the product get them there without demanding expert mastery first?
 
-Map where users sit on the curve from first exposure to real competence, and whether the product moves them "up and to the right":
+## 4. Building skill *(behaviour)*
 
-- **The Suck Zone** — where users feel incapable, confused, slow, or embarrassed. Is it shortened where possible, and *normalized* ("it's not just you — this part is hard for everyone") where it can't be?
-- **The Suck Threshold** — the point where the user can finally do something basic. Does the product get them across it fast, ideally with an early "I can do this" that feels like a small superpower?
-- **The Stuck Zone / AUTO mode** — retention looks healthy but the user has *stopped improving*, coasting on a comfortable-but-limiting subset. Does the product detect this and nudge past it, or quietly bank the plateau as "engaged"?
-- **The Badass Threshold** — where the user feels genuinely capable, not merely functional. Does the product get them there without demanding world-class mastery first?
+- Does the product help users **do** better, not just **know** more? Tutorials motivate; they don't build skill.
+- Where skill matters, is there real practice: one sub-skill at a time, just past current ability, with clear success criteria and feedback close to the attempt?
+- Does it expose users to many good examples so they build judgement, not just rules?
 
-## 4. Capability building & deliberate practice  *(behaviour)*
+## 5. What makes users stop *(behaviour, adoption)*
 
-- Does the product help users **do better**, not merely **know more**? (Knowledge ≠ performance; tutorials and content are for motivation and discovery, not skill.)
-- Does it move specific skills from *can't do* → *can do with effort* → *reliable/automatic*, rather than leaving a pile of half-learned skills stuck at "with effort"?
-- Where skill matters, is there real **practice** — fine-grained tasks, one sub-skill at a time, aimed just beyond current ability, with **clear success criteria and feedback close to the attempt**? Does the product avoid reinforcing beginner mistakes through repeated unguided performance?
+Sierra's reframe: don't ask "how do we motivate users more?" Ask "what makes them stop?" Blocked motivation looks like low motivation but is fixed differently.
 
-## 5. Perceptual exposure & higher resolution  *(engagement)*
+- Where do users feel confused or stupid, or unsure whether the difficulty is normal?
+- Is the gap between the promise and early reality anticipated and closed?
+- Are support tickets, search queries, and onboarding drop-offs treated as product signals, not just support volume?
 
-- Does the product expose users to **many high-quality examples** so they build taste, pattern recognition, and "feel" — not just explicit rules?
-- Does using it help users *perceive more* — notice distinctions beginners miss, gain vocabulary/judgment, enter conversations that were previously inaccessible? Higher resolution in the domain is intrinsically engaging and a real capability gain.
+## 6. Meaningful vs. empty engagement *(engagement)*
 
-## 6. Derailers & blocks — what makes users STOP  *(behaviour, adoption)*
+- Is there a visible path from beginner to advanced, with milestones based on what users can **do**, not what they watched or clicked?
+- Are high-payoff capabilities available early, not saved for the end?
+- Is challenge matched to ability as it grows?
+- Is engagement absorption in real progress, or activity propped up by badges, streaks, and points?
 
-Sierra's reframe: stop asking "how do we motivate users more?" and ask **"what makes users stop?"** Blocked motivation looks identical to low motivation but is fixed differently.
+## 7. Attention drain *(behaviour, engagement)* — feeds the anti-bloat review
 
-- Has the team identified the specific **derailers** — the moments users feel confused, stupid, or unsure whether the difficulty is normal, and start to blame themselves or the product?
-- The **Gap of Suck** (early reality is harder than expected) and the **Gap of Disconnect** (promised context vs. tool-focused reality) — are they anticipated and closed?
-- Does the product **compensate for not being there** when the user struggles — telling them a struggle is typical/temporary, and what happens if they keep going ("it's not just you")?
-- Are real derailer signals (support tickets, forum threads, search queries, onboarding drop-offs, high-friction issues) treated as **product-experience signals**, not just support volume?
+Attention, memory, and willpower should be spent on the user's goal, not on product mechanics.
 
-## 7. Intrinsic engagement & progress path  *(engagement)*
+- Is there feature bloat draining attention? Is each feature judged by whether it builds capability or only adds load?
+- Are advanced options deferred until the user is ready, with trusted defaults for everyone else?
+- **Upgrades and redesigns:** do they throw competent users back into the suck zone? Is hard-won ability preserved and old mapped to new?
 
-- Is there a **visible path** from beginner to advanced, based on what users can *do* (not what they've watched/read), with milestones that reflect **real capability, not arbitrary activity**?
-- Are high-payoff "superpowers" available **early** rather than saved for the end of the journey?
-- Does the product create **flow** — challenge balanced with current ability, adjusted as ability grows — so it's neither boring nor frustrating?
-- Is engagement **meaningful absorption in progress**, or activity propped up by extrinsic badges/streaks/points? Extrinsic rewards must not replace or undermine intrinsic progress (cross-check control-autonomy + ethics).
-
-## 8. Cognitive-resource economy  *(behaviour, engagement)* — *feeds the anti-bloat review*
-
-Attention, memory, patience, and willpower are scarce and should be spent on the **compelling context, not product mechanics**:
-
-- Does the product put knowledge **in the world** (labels, defaults, examples, cheat sheets) instead of making users remember it? Does it make the right action obvious and the wrong action hard?
-- Does it close "microleaks" of doubt — *did it save? did it send? can I undo?* — with clear confirmation and recovery?
-- Does it avoid **feature bloat that drains attention**? Is each feature judged by whether it builds user capability or merely adds cognitive load? Are advanced options deferred/hidden until the user is ready, with trusted defaults for everyone else?
-- **On upgrades/redesigns:** does the product avoid throwing competent users back into the Suck Zone — preserving hard-won ability, mapping old→new, restoring competence before asking them to appreciate new power?
-
-## Not your lens
-
-The trigger→action→reward→investment mechanics → **behavioural-loop**. Decision-point ergonomics and biases → **cognitive-ease**. Autonomy, conflict, and manipulation → **control-autonomy** + ethics gate. Note cross-lens observations in a line; don't score them here.
+Report any existing bloat or attention drain explicitly. The orchestrator's subtraction pass needs it.

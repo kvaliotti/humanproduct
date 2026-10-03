@@ -1,298 +1,87 @@
 ---
 name: monetisation-domain
-description: "Deep analysis and work planning for PLG monetisation — pricing strategy, packaging optimization, pricing metric selection, freemium conversion, ARPA growth, and expansion revenue."
+description: "PLG pricing, packaging, and monetisation. Use for: pricing strategy, packaging optimization, tier structure, feature gating, pricing metric, seat-based vs usage-based pricing, freemium conversion, free-to-paid, upgrade triggers, ARPA improvement, expansion revenue, willingness to pay, Van Westendorp, MaxDiff, pricing research, monetisation analysis, PLG monetisation plan."
 ---
 
 # Monetisation Domain
 
-## Purpose
+Help a PM decide what to charge for, how to charge, and how much, then find the few levers that lift conversion, ARPA, and expansion.
 
-You are the monetisation specialist for the PLG Growth plugin. You help PMs analyze pricing and packaging strategy, identify monetisation levers, and build work plans to improve free-to-paid conversion, ARPA, and expansion revenue. You go deep on the Pricing Triangle (Packaging x Metric x Price) and PLG-specific monetisation mechanics.
+## Default: answer the question
 
-## When to Invoke
+Most requests are narrow ("seat-based or usage-based?", "how do I calculate ARPA?"). Answer directly in a few paragraphs, using the rules below only where they help. End with one line offering the full analysis. Run it only when asked or when a short answer would mislead.
 
-Trigger phrases:
-- "pricing strategy"
-- "packaging optimization"
-- "monetisation analysis"
-- "pricing metric"
-- "Van Westendorp"
-- "willingness to pay"
-- "usage-based pricing"
-- "freemium conversion"
-- "PLG monetisation plan"
-- "pricing research"
-- "ARPA improvement"
-- "expansion revenue"
-- "tier structure"
-- "feature gating"
-- "upgrade triggers"
+## Full analysis (on request)
 
-## Quick Answer Mode
+1. **Check the free experience first.** If free users never reach value, this is an activation problem dressed as a monetisation problem. Route to `activation-domain`.
+2. **Pricing triangle.** Assess packaging, metric, and price together. A wrong metric can't be fixed with a better price.
+3. **Decompose ARPA** with the formula that matches their pricing model (below). Find the component with the most headroom.
+4. **Levers.** Pick the few conversion, expansion, or contraction levers that hit that component.
 
-Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good free-to-paid conversion rate?", "how do I calculate ARPA?", "seat-based or usage-based pricing for my product?" — just answer it directly and concisely, drawing on the frameworks below (Pricing Triangle, model-dependent ARPA) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+Output, one page at most:
+- **Bottom line:** the single biggest monetisation opportunity, in one sentence.
+- **Weakest side of the triangle** and why.
+- **ARPA component with most headroom**, with the arithmetic shown.
+- **Top 3 hypotheses:** hypothesis, evidence, how to test.
+- **What we don't know** and **next step** (one concrete action).
 
-Reach for the full methodology (the three operating modes) when the user wants a real monetisation analysis, pricing strategy, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full monetisation analysis?"
+If the user wants a work plan, turn the hypotheses into items: hypothesis, metric, guardrail (total conversion, churn), sample and duration, priority by revenue impact. If willingness to pay is unknown, start with research, not experiments.
 
----
+## Pricing triangle
 
-## Structured Problem-Solving Backbone
+**Packaging (what you charge for).** Gate on value, not punishment. Limit the dimension that grows with the value a customer gets: seats if value grows with team size, usage if with volume, projects or history if with complexity or data. Don't gate basic export or charge to remove branding with nothing added; users feel punished.
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **monetisation**: decompose via the pricing triangle, and disaggregate ARPA into model-dependent drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+| Feature question | If yes |
+|---|---|
+| Needed to reach the aha moment? | Free |
+| Creates viral exposure? | Free (it markets for you) |
+| Mainly serves teams or orgs? | Paid |
+| Power-user depth? | Middle tier |
+| Security, compliance, admin, SSO? | Top tier |
 
-## Three Operating Modes
+Add-ons work when only some customers on any tier need the feature, and it has standalone value.
 
-Ask the user what they need. If unclear, default to Analysis mode.
+**Metric (how you charge).** Test each candidate: "If the customer doubled this, would they say they got twice the value?" Then check: predictable bill, grows as the customer succeeds, meterable, explainable in one sentence, fits how competitors charge. PLG tensions: per-seat pricing taxes the collaboration that drives virality; usage pricing lowers the barrier to start but risks bill shock.
 
----
+**Price (how much).** Price to customer value, not your cost. Anchor to the alternative they use today. Separate willingness-to-pay segments with tiers ("price fences"), not discounts. Treat annual billing as a fair trade for commitment, not a discount.
 
-### Mode 1: Analysis
+## ARPA by model
 
-**Goal:** Build a monetisation issue tree, populate with evidence, identify highest-leverage branches.
-
-#### Step 1: Build the Monetisation Issue Tree
+Pick the formula that matches the pricing metric. Don't force a seat lens on a usage- or outcome-priced product.
 
 ```
-Monetisation Success
-├── 1. Packaging (what you charge for)
-│   ├── Tier/plan structure (Good / Better / Best)
-│   ├── Feature allocation across tiers
-│   ├── Feature gating strategy (free vs paid vs add-on)
-│   └── Limitation design (what is limited and why)
-├── 2. Pricing Metric (how you charge)
-│   ├── Feature-based (per-seat, per-project, per-workspace)
-│   ├── Usage-based (per-API-call, per-GB, per-message)
-│   ├── Outcome-based (per-successful-transaction, per-lead)
-│   └── Hybrid (base + usage, tiered thresholds)
-├── 3. Price (what you charge)
-│   ├── Positioning (premium / mid-market / value)
-│   ├── Price-to-value perception
-│   └── Competitive context
-├── 4. Freemium Limitations
-│   ├── Unlimited vs limited base use case
-│   ├── Conversion drivers (what creates upgrade urgency)
-│   └── Time-to-limit alignment with value realization
-├── 5. ARPA Decomposition (model-dependent — mirror the Pricing Metric in branch 2)
-│   ├── Seat-based: avg seats x price/seat
-│   ├── Usage-based: avg units consumed x price/unit (+ base/committed fee)
-│   ├── Outcome-based: avg successful outcomes x price/outcome (e.g., per-lead)
-│   ├── Transactional/marketplace: take rate x GMV per account (+ fixed fees)
-│   ├── Add-on revenue: # add-ons x add-on price (across models)
-│   └── Overage revenue (across models)
-└── 6. Conversion to Paid Levers
-    ├── Checkout friction and UX
-    ├── Pricing page clarity and anchoring
-    ├── Payment options (monthly/annual, methods)
-    └── Pricing experiments
+Seat-based:      ARPA = avg seats × price/seat + add-ons + overage
+Usage-based:     ARPA = base/committed fee + avg units × price/unit + overage
+Outcome-based:   ARPA = avg successful outcomes × price/outcome
+Marketplace:     ARPA = take rate × GMV per account + fixed fees
+Hybrid:          platform fee + any of the above
 ```
 
-#### Step 2: Evaluate the Pricing Triangle
+For each component show the current level and what a realistic change is worth in revenue.
 
-Load the pricing triangle framework:
-> Read `references/pricing-triangle.md`
+## Levers
 
-For each side of the triangle, assess:
-- **Packaging:** Is the tier structure clear? Do tiers map to real user segments? Is feature gating value-aligned (gate on value, not punishment)?
-- **Metric:** Does the pricing metric align with value delivered? Does more usage = more value = more cost?
-- **Price:** Is the price anchored to value or to competitors? Is there price-to-value headroom?
+- **Conversion:** a clear pricing page (side-by-side plans, recommended plan highlighted, user language), few clicks from upgrade prompt to payment, payment methods the ICP uses (invoice/PO for enterprise), trial extension in exchange for finishing onboarding.
+- **Upgrade and expansion triggers** — prompt at the moment of need: tries a gated feature, nears or hits a limit, hits the seat limit, invites a teammate, shares with an outside email, several users from one company domain on separate free accounts.
+- **Contraction prevention:** watch paid vs. active seats; offer right-sizing before the customer asks (it builds trust); send admins a usage and value summary before renewal; offer pause or a smaller plan instead of cancel.
+- **Price increases:** add value before raising price, give advance notice, apply to new customers first, grandfather existing ones for a period.
 
-Present a **Pricing Triangle Assessment** to the user:
+Opinionated default order when nothing else points the way: pricing page clarity, then upgrade prompts at limits, then annual billing, then seat-utilisation monitoring.
 
-| Dimension | Current State | Assessment | Key Issue |
-|-----------|--------------|------------|-----------|
-| Packaging | ? | Green/Yellow/Red | ? |
-| Metric | ? | Green/Yellow/Red | ? |
-| Price | ? | Green/Yellow/Red | ? |
+## Research
 
-#### Step 3: Assess Monetisation Levers
+- **Upgrade decision interviews** first. Talk to recent upgraders, users who abandoned the upgrade flow, heavy free users who never upgraded, and recent downgraders. Ask what triggered the upgrade, what they compared the price to, what held them back. Use the answers to design any survey.
+- **Van Westendorp** gives an acceptable price range. It is stated preference: use it as a direction, then confirm with real conversion data.
+- **MaxDiff** ranks features or pricing metrics by forced trade-offs. Top-ranked features drive willingness to pay and belong in paid tiers. Bottom-ranked ones can go in free.
 
-Load lever details:
-> Read `references/monetisation-levers.md`
+## Don't
 
-Walk through the lever checklist across four categories:
-1. **Conversion levers** -- checkout UX, pricing page, social proof, payment methods
-2. **Expansion levers** -- seat growth, feature upsell, add-on cross-sell
-3. **Contraction prevention** -- seat utilization monitoring, value demonstration
-4. **ARPA improvement** -- upsell triggers, annual billing incentives
+- Set prices by gut feel or by copying a competitor without checking value.
+- Obsess over price while the metric is wrong.
+- Use one plan when segments clearly differ in value and willingness to pay.
+- Optimise new-customer conversion and ignore expansion.
+- Use fake urgency on the pricing page.
 
-#### Step 4: Decompose ARPA Mathematically
+## Route elsewhere
 
-ARPA decomposition is **model-dependent** — pick the formula that matches the pricing metric identified in branch 2, then decompose each component. Do not force a seat-based lens onto a usage- or outcome-priced product.
-
-```
-Seat-based:               ARPA = (Avg Seats × Price/Seat) + (Avg Add-ons × Add-on Price) + Usage Overage
-Usage-based:              ARPA = Base/Committed Fee + (Avg Units Consumed × Price/Unit) + Overage
-Outcome-based:            ARPA = (Avg Successful Outcomes × Price/Outcome)         # e.g., per-lead, per-successful-transaction
-Transactional/marketplace: ARPA = (Take Rate × GMV per Account) + Fixed/Listing Fees
-Hybrid:                   base platform fee + one or more of the components above
-```
-
-For each component (whichever model applies):
-- What is the current level?
-- What is the benchmark?
-- What is the sensitivity (1% improvement in this component = $X revenue impact)?
-
-#### Step 5: Synthesize (Minto Pyramid)
-
-Present findings conclusion-first:
-
-```
-## Monetisation Analysis
-
-### Bottom Line
-[One sentence: what is the single biggest monetisation opportunity?]
-
-### Top 3 Hypotheses (ranked by expected impact)
-1. [Hypothesis] -- Evidence: [what supports this] -- Test: [how to validate]
-2. [Hypothesis] -- Evidence: [what supports this] -- Test: [how to validate]
-3. [Hypothesis] -- Evidence: [what supports this] -- Test: [how to validate]
-
-### Pricing Triangle Summary
-[Which side of the triangle is the weakest and why]
-
-### ARPA Decomposition
-[Which component has the most headroom]
-
-### Key Gaps
-[What data or evidence is missing]
-
-### Recommended Next Step
-[Single concrete action]
-```
-
----
-
-### Mode 2: Data Analysis
-
-**Goal:** Test hypotheses at specific issue tree branches quantitatively.
-
-Guide the user through these analyses. Ask which they have data for, and prioritize accordingly.
-
-#### Conversion Funnel Analysis
-- Free-to-paid conversion rate by segment, plan, channel
-- Conversion rate by cohort (is it improving over time?)
-- Drop-off points in checkout/upgrade flow
-- Time from signup to conversion (distribution, not just average)
-
-#### ARPA Decomposition and Trends
-- ARPA trend over time (monthly/quarterly)
-- ARPA by cohort, segment, plan
-- Component breakdown by pricing model (seats / units / outcomes / take-rate) vs add-ons vs overage
-- New customer ARPA vs expansion ARPA
-
-#### Plan/Tier Mix Analysis
-- Distribution of customers across plans
-- Revenue concentration by plan
-- Migration patterns between plans (upgrades vs downgrades)
-- Feature usage by plan (are customers on the right tier?)
-
-#### Price Sensitivity Indicators
-- Conversion rate at different price points (if tested)
-- Win/loss analysis by price
-- Discount usage and impact on conversion
-- Annual vs monthly mix and price sensitivity signals
-
-#### Expansion Revenue Analysis
-- Net dollar retention by segment
-- Expansion revenue by type (seats, features, usage)
-- Time to first expansion by cohort
-- Seat utilization rate as contraction leading indicator
-
-#### LTV Analysis
-- LTV by pricing plan and acquisition channel
-- LTV:CAC ratio by segment
-- Payback period by plan
-- Churn rate by plan and price point
-
-For each analysis, guide the user to:
-1. State the hypothesis being tested
-2. Pull or provide the data
-3. Interpret against the hypothesis
-4. Decide: confirmed, refuted, or needs more evidence
-
----
-
-### Mode 3: Work Plan
-
-**Goal:** Generate hypothesis-driven work items organized by issue tree branch.
-
-Load the shared work plan skeleton, then the monetisation-specific examples:
-> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
-> Read `references/work-plan-examples.md` (monetisation OST / experiment / research examples)
-
-**Determine work plan type based on user situation:**
-
-| User Situation | Work Plan Type |
-|---------------|----------------|
-| Early stage, unclear pricing direction | **OST (Objectives, Strategies, Tactics)** -- provides strategic structure |
-| Has data, needs to test pricing changes | **Experiment Backlog** -- prioritized experiments with hypotheses |
-| Needs to understand willingness to pay | **Research Plan** -- discovery activities to fill knowledge gaps |
-
-#### Work Plan Structure
-
-Organize items by issue tree branch. Each item follows the template:
-
-**Research items** (when knowledge gaps exist):
-- Van Westendorp price sensitivity study (see `references/research-methods.md`)
-- MaxDiff pricing metric research (see `references/research-methods.md`)
-- Decision-driver research for pricing: what drives upgrade decisions?
-- Competitive pricing analysis: how do alternatives price?
-- Qualitative interviews: why did users upgrade / not upgrade?
-
-**Data analysis items** (when data exists):
-- Conversion funnel by segment and plan
-- ARPA trends and decomposition
-- Plan mix and migration analysis
-- LTV/CAC by segment and plan
-- Seat utilization and contraction risk
-
-**Strategy decisions** (when evidence supports a decision):
-- Pricing metric selection (with evidence from MaxDiff or usage data)
-- Tier structure design (Good/Better/Best with feature allocation)
-- Limitation design (what to limit in free, aligned with value)
-- Price point setting (based on Van Westendorp or competitive analysis)
-
-**Experiments** (when testing specific hypotheses):
-Each experiment must have:
-- Hypothesis: "We believe [change] will [outcome] because [reasoning]"
-- Metric: specific, measurable
-- Success criteria: threshold for proceeding
-- Timeline: realistic test duration
-- Sample size: for statistical significance
-
-Example experiments:
-- Pricing page redesign with stronger anchoring to Best tier
-- Annual discount test (20% vs 30% vs 40%)
-- Feature gating change: move Feature X from Free to Paid
-- Checkout flow simplification (remove 2 steps)
-- Upgrade prompt at usage limit vs usage threshold
-
-**Operations items** (enabling work):
-- Self-service billing infrastructure
-- Upgrade/downgrade flow implementation
-- Payment method expansion (local methods, crypto, wire)
-- Dunning and failed payment recovery
-- Usage metering and billing accuracy
-
----
-
-## Connection to Other Skills
-
-| Skill | When to Route |
-|-------|---------------|
-| `acquisition-domain` | Need more users entering the funnel before optimizing monetisation |
-| `satisfaction-domain` | Pricing dissatisfaction is driving churn or poor NPS |
-| `growth-loops` | Want to design loops that incorporate monetisation triggers |
-| `product-led-sales` | Enterprise expansion requires sales-assist on top of self-serve |
-| `plg-orchestrator` | User needs broader PLG diagnosis |
-| `plg-revenue-analysis` | Need to understand monetisation in context of full revenue model |
-| `acquisition-model-selector` | Freemium vs trial decision affects entire monetisation architecture |
-
-## Anti-Patterns to Watch For
-
-- **Pricing by gut feel:** Setting prices without research or data. Always ground in Van Westendorp, competitive analysis, or value-based logic.
-- **Gating on punishment, not value:** Limiting features that frustrate users rather than features that correlate with value received. Gates should make users want more, not feel punished.
-- **Ignoring the metric:** Obsessing over price without evaluating whether the pricing metric itself is wrong. A bad metric at any price is still a bad metric.
-- **One-size-fits-all pricing:** Using a single plan when segments have clearly different willingness to pay and value profiles.
-- **Premature monetisation optimization:** Optimizing conversion before validating that the free experience delivers enough value (activation problem masquerading as monetisation problem).
-- **Neglecting expansion:** Focusing only on initial conversion while ignoring seat growth, add-ons, and usage expansion as ARPA drivers.
+Freemium vs. trial decision → `acquisition-model-selector`. Revenue model context → `plg-revenue-analysis`. Sales-assisted expansion → `product-led-sales`. Monetisation inside loops → `growth-loops`. Pricing drives detractors or churn → `satisfaction-domain` / `retention-domain`. Broader diagnosis → `plg-orchestrator`.

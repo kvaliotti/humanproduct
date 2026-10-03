@@ -167,7 +167,7 @@ Produce the final deliverables:
 - 3 things the team should STOP saying (commoditized, generic, or actively harmful)
 - 3 things the team should START saying (unique, provable, resonant)
 
-**5. Pressure test results** — run the 9-question checklist from `references/pressure-tests.md` against the positioning. Flag any failures and suggest patches.
+**5. Pressure test results** — run the 9-question checklist from `${CLAUDE_PLUGIN_ROOT}/references/pressure-test.md` against the positioning. Flag any failures and suggest patches.
 
 ## Style Rules
 

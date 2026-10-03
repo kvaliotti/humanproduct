@@ -128,7 +128,7 @@ A value themes table:
 |-------|-----------|---------|---------------|-------|
 | ... | ... | ... | ... | ... |
 
-Plus a YAML handoff block for downstream skills:
+When running as part of `positioning-orchestrator`, also emit this YAML handoff block (skip it when run standalone):
 
 ```yaml
 competitive_alternatives:

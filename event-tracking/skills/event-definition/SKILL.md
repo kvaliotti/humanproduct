@@ -1,260 +1,96 @@
 ---
 name: event-definition
 description: >
-  Turn ALREADY-DEFINED analytical use cases into concrete event specifications:
-  names, properties, firing conditions, and user property updates. Use when the
-  user has run (or has the output of) the analytics-use-cases skill and says
-  "now define the events", "turn these use cases into events", "convert these
-  use cases to event specs", "build the event taxonomy from this", "name the
-  events for this measurement plan", "event properties for these use cases", or
-  hands over a stakeholder-question/dashboard-spec document and asks for the
-  events that satisfy it. Do NOT treat generic "define events for [feature]" or
-  "set up tracking for [feature]" requests with no use cases yet as a match for
-  this skill — those belong to tracking-orchestrator / analytics-use-cases so
-  the resulting tracking traces back to a documented analytical purpose.
+  Turn analytical use cases into concrete event specs (names, properties, firing
+  conditions, user and group property updates), and optionally format them for
+  Amplitude, Mixpanel, PostHog, Segment, or GA4 with payloads and SDK snippets.
+  Use when use cases already exist and the user says "now define the events",
+  "turn these use cases into events", "build the event taxonomy", "name the
+  events", "event properties for these use cases", "create an event spec",
+  "tracking spec", or hands over a measurement plan or dashboard spec. Also use
+  for "format for Amplitude", "export for PostHog", "format events for GA4",
+  "Segment spec", "generate payloads", "implementation-ready spec", or "export
+  the tracking plan". If there are no use cases yet, start with
+  analytics-use-cases instead.
+argument-hint: "[use-cases file or feature] [platform]"
 ---
 
 # Event Definition
 
-Turn analytical use cases (or a feature description) into concrete event specifications with names, properties, firing conditions, and user property updates.
+Turn use cases into event specs an engineer can implement identically to any other engineer. Read `${CLAUDE_PLUGIN_ROOT}/references/decision-framework.md` before step 3.
 
-## What Events Are (and Aren't)
+## Before you start
 
-Events are windows into behavior — they help us understand what is happening. They are not feature documentation and they are not self-important. Two types of behavior matter:
+1. **Use cases.** Look for `tracking/use-cases-*.md` or use cases in the conversation. If there are none, say that events without use cases become tracking nobody queries, and offer to run `analytics-use-cases` first (fast when a PRD exists). If the user insists on skipping, derive a short visible list of use cases from what they gave you and tag every event with the one it came from.
+2. **Current state and convention.** Follow `${CLAUDE_PLUGIN_ROOT}/references/naming-conventions.md`: find existing events, detect the convention, confirm it with the user. Match it. Use the default only when nothing exists.
+3. **Target platform(s).** Their limits are in `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`.
 
-1. **User behavior**: Actions the user takes (creates a task, opens a page, clicks a button)
-2. **System behavior that affects the user**: Actions the system takes on behalf of or in response to the user (AI creates tasks from a meeting, a notification is sent, a subscription auto-renews, a background job generates a report)
-
-Both types are analytically important. A "Task Created" event means something very different when the user typed it vs. when AI generated it from a meeting — even though the database result is identical. The actor (user vs. system) and the trigger (manual vs. automated) are almost always essential properties because the behavioral meaning is completely different.
-
-**What events can't track:**
-- **Continuous states**: Events capture moments, not durations. "User is confused" isn't an event. "User viewed help page 4 times in 2 minutes" is a sequence of events that might indicate confusion — but the interpretation happens in analysis, not in the event itself.
-- **Absence of action**: A user NOT doing something is often more analytically important than doing it — but events don't fire for things that didn't happen. Absence analysis (e.g., "signed up but never created a task") requires comparing event populations, not a single event.
-- **Gradual changes**: Sentiment, satisfaction, and skill development don't produce discrete moments. Events can capture proxy signals (support ticket opened, feature used for the first time, setting changed) but not the underlying shift.
-
-Keep these limitations in mind when mapping use cases to events. Some analytical questions are better answered by session recordings, surveys, or derived metrics than by adding more events.
-
-## Inputs Required
-
-Before defining events, ensure you have:
-
-1. **Naming convention** — detected from existing events, provided by the user, or defaulting to: Area - Subarea (optional) - Verb in Past Tense with Modifiers. Read `references/naming-conventions.md` for full details.
-2. **Target platform(s)** — determines constraints on names, properties, and formats. Read `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for limits.
-3. **Analytical use cases** (required) — the output from the analytics-use-cases skill: stakeholder questions, analysis types, and conceptual event requirements. See "Gate Check" below if this doesn't exist yet.
-4. **Existing events** (if any) — to avoid duplication and ensure consistency.
-
-## Gate Check: Use Cases Required
-
-This skill's core guardrail — "every event must serve at least one use case" — cannot be enforced without a use cases document. Before defining any events, check what's actually in hand:
-
-- **Use cases document provided, or analytics-use-cases was just run** — proceed to Step 1.
-- **User jumped straight here** (says "define events for [feature]," "just build the tracking spec," or hands over only a PRD/feature description with no use cases) — do not silently derive use cases inline and proceed. Instead:
-  1. Acknowledge the request.
-  2. Explain briefly: events without documented use cases tend to become tracking nobody ever queries, and this skill can't apply its "every event needs a use case" check without them.
-  3. Offer the fast-track: run the analytics-use-cases skill now — it's fast (~5 minutes) when a PRD or feature description already exists — then come back here.
-  4. If the user still insists on skipping straight to events, proceed, but first derive an explicit, visible (if compressed) set of use cases from the PRD/feature description, and tag every resulting event with the use case it was inferred from so gaps are visible rather than hidden inside "just define the events."
-- **Ambiguous** (e.g., a bare "define events for X" with no prior use-case work visible in the conversation) — ask whether use cases already exist before proceeding. Default assumption is that they don't, so route to analytics-use-cases first.
+Scope: for a new product with no tracking, define lifecycle events (sign up, activation, core action, billing) first, then feature events. For an existing product, propose additions and changes, never a full rewrite unless asked.
 
 ## Process
 
-### Step 1: Map User Flows
+1. **Map the flows.** List user-initiated and system-initiated flows step by step, with outcomes, error paths, and whether the user sees system actions. Each step is a candidate event, not a required one; apply the dashboard test.
+2. **Choose spec depth.** Full spec by default: production plans, anything handed to engineering, anything touching revenue, compliance, or PII. Quick spec for a single add-on event, a prototype, an internal tool, or when the user asks. Quick changes the write-up, not the thinking. Any revenue, compliance, or PII event gets the full spec anyway.
+3. **Apply the decisions** in `decision-framework.md`: the parameterization test for every similar pair, an `actor` property wherever user and system can both act, the batch approach (present the A–D trade-off against their questions and let them choose), and user vs event vs group properties.
+4. **Decide where each event fires.**
+   - Server: purchases, subscription and permission changes, account creation, anything triggered by a backend job, webhook, or AI task, anything that must be tamper-proof. Ad blockers drop a share of client-side web events; if exact counts matter, fire server-side.
+   - Client: UI interactions and client-only context (viewport, scroll, element, client-side flag variant).
+   - Both: client context plus a confirmed outcome. Link the two with a shared ID.
+5. **Check autocapture** (PostHog autocapture, Amplitude default tracking, GA4 enhanced measurement). If autocapture already has the properties the question needs, reuse it instead of adding a custom event. If it lacks business context, define the custom event and note the double-count risk.
+6. **Validate against platform limits.** Flag every violation with a fix.
+7. **Cross-reference existing events.** Mark "use existing [event]", "extend [event] with [property]", or "makes [event] redundant". Changing an existing event follows "Changing existing events" in the decision framework.
 
-If not already provided, outline the key flows for the feature. Include both user-initiated and system-initiated flows:
+## Spec formats
 
-**User-initiated flow:**
+Full:
 ```
-Flow: [Flow name]
-Actor: User
-Steps:
-1. User [action] → [system response]
-2. User [action] → [system response]
-3. ...
-Outcome: [What the user achieved]
-Alternative paths: [Error states, edge cases, branching paths]
-```
-
-**System-initiated flow:**
-```
-Flow: [Flow name]
-Actor: System (triggered by: [what triggers it — schedule, webhook, AI, background job, external event])
-Steps:
-1. System [action] → [result for user]
-2. System [action] → [result for user]
-3. ...
-Outcome: [What the user now has or sees]
-User visibility: [Does the user see this happen? Is it silent? Is there a notification?]
-```
-
-System-initiated flows are easy to overlook but often represent the product's core value (AI doing work for you, automated reports, smart notifications). Track these with the same rigor as user actions — they tell you whether the system is actually delivering value.
-
-Each step in a flow is a candidate for an event. But not every step needs an event — apply the dashboard test from `references/decision-framework.md`.
-
-### Step 2: Define Events
-
-Choose a spec depth before writing event blocks:
-
-- **Full spec (default)** — use for production tracking plans, anything handed to engineering, anything touching revenue/compliance/PII, or whenever more than a handful of events are in play.
-- **Quick spec** — use for small or ad-hoc needs: a single event add-on, a prototype, an internal tool, or when the user explicitly asks for "just the basics"/"quick version". See the Quick Spec format below Step 2's full template. Default to full; only drop to quick when scope is clearly small or the user asks.
-
-For each event, produce a specification block:
-
-```
-EVENT: [Event Name — following the naming convention]
-AREA: [Product area]
-DESCRIPTION: [One sentence: what happened and why it matters analytically]
-FIRES WHEN: [Precise trigger condition. Be specific: "User clicks Save button on the edit form AND the save succeeds" not "User saves"]
-FIRES WHERE: [client | server | both — see guidance below]
-DOES NOT FIRE WHEN: [Exclusions if ambiguous — e.g., "Does not fire on auto-save, only manual save"]
-
-PROPERTIES:
-| Property | Type | Required | Values | Description |
-|---|---|---|---|---|
-| [name] | string/number/boolean/datetime | Yes/No | [enum values or format] | [What this property captures] |
-
-USER PROPERTIES UPDATED:
-| Property | Update Method | Value | Description |
-|---|---|---|---|
-| [name] | set / set_once / increment | [value or formula] | [Why this updates] |
-
-GROUP PROPERTIES UPDATED: (if B2B)
-| Property | Update Method | Value | Description |
-|---|---|---|---|
-
-USE CASES SERVED: [List which analytical questions this event answers — trace back to use cases]
-PLATFORM NOTES: [Any platform-specific constraints or transformations needed]
-PII: [Yes/No — if yes, which properties are PII]
+EVENT: [name per convention]
+DESCRIPTION: [what happened and why it matters analytically]
+FIRES WHEN: [precise trigger, e.g. "Save clicked on edit form AND save succeeds"]
+DOES NOT FIRE WHEN: [exclusions, e.g. auto-save]
+FIRES WHERE: client | server | both
+PROPERTIES: | Property | Type | Required | Values | PII |
+USER/GROUP PROPERTIES UPDATED: | Property | set / set_once / increment | Value |
+USE CASE: [the question it answers]
 STATUS: proposed
 ```
 
-**Quick Spec format** (small/ad-hoc scope only): a condensed block per event —
-
+Quick:
 ```
-EVENT: [Event Name — following the naming convention]
-FIRES WHEN: [Precise trigger condition]
-KEY PROPERTIES: [property (type): description, ...]
-USE CASE: [Which analytical question this answers]
+EVENT: [name]
+FIRES WHEN: [precise trigger]
+KEY PROPERTIES: [property (type): meaning, flag PII inline]
+USE CASE: [the question it answers]
 ```
-
-Quick spec omits FIRES WHERE, DOES NOT FIRE WHEN, the user/group property tables, PII, and STATUS as explicit fields — it does not omit the thinking behind them. Still decide client-vs-server firing (Step 2b) and flag PII inline in KEY PROPERTIES if any property is personally identifiable; just don't force the full table structure for a handful of low-stakes events. If an event turns out to touch revenue, compliance, or PII, write that one event with the full spec even in an otherwise-quick pass. Steps 3-8 (parameterization test, batch handling, user properties, constraint validation, cross-referencing, sample payloads) still apply regardless of spec depth — quick mode only changes the write-up format, not the analysis.
-
-### Step 2b: Determine Firing Location (Client vs. Server)
-
-For each event, decide where it fires:
-
-**Fire server-side when:**
-- The event represents a business-critical action: purchases, subscription changes, account creation, permission changes
-- Data reliability matters more than speed — client-side events on web get blocked by ad blockers (15-30% data loss typical)
-- The event is triggered by a backend process: webhook receipt, scheduled job, background AI task, payment processor callback
-- The event needs to be tamper-proof (e.g., revenue events, compliance-related actions)
-
-**Fire client-side when:**
-- The event captures UI interaction: button clicks, page views, form interactions, navigation
-- The event needs client-only context: viewport size, scroll depth, client-side feature flag variant, element position
-- Speed matters more than completeness (e.g., real-time engagement tracking where 15-30% loss is acceptable)
-
-**Fire both when:**
-- You need client context (which page, which element) AND server reliability (order completion). Fire a client-side event for the user interaction, fire a server-side event for the confirmed outcome. Link them with a shared ID property.
-
-### Step 2c: Check for Autocapture Overlap
-
-If the target platform has autocapture (PostHog, Amplitude, GA4 enhanced measurement):
-
-1. Check if autocapture already captures this interaction. PostHog autocaptures clicks, pageviews, and form submissions. GA4 enhanced measurement tracks scrolls, outbound clicks, site search, video engagement, file downloads.
-2. If autocapture covers it, ask: does the autocaptured event have sufficient properties for the analytical question? Autocaptured events have generic properties (element text, URL) but lack business-context properties (task type, plan tier, source view).
-3. If autocapture has the data you need, don't duplicate with a custom event. Reference the autocaptured event in the tracking plan and note any required Actions/composite event configuration.
-4. If autocapture lacks needed properties, define a custom event. Note in the spec that autocapture should be considered for suppression on this specific element to avoid double-counting, or that analysis should filter out one of the two.
-
-### Step 3: Apply Decision Framework
-
-For every event, run the parameterization test from `references/decision-framework.md`:
-
-1. **Same action?** — Check if another event already captures the same action in a different context
-2. **Same result?** — Check if the outcome is identical regardless of context
-3. **Can segment?** — Verify the target platform can filter/break down by the distinguishing property
-4. **Clear to analyst?** — Ensure the property name and values are self-explanatory
-
-If the answer to all four is "yes," merge into one event with a property. Present the merge decision to the user with reasoning.
-
-### Step 4: Handle Batch/Bulk Actions
-
-When an action can produce multiple results (e.g., AI creates 5 tasks from a meeting):
-
-Read the batch/count section in `references/decision-framework.md` for four approaches (A through D) with trade-offs.
-
-There is no universal default — the right approach depends on the analytical questions:
-- If the primary analyses are funnels or engagement flows, individual item events will inflate step counts. Lean toward Approach C (both a batch event and per-item events, linked by batch_id, with composite events to merge them in the analytics tool).
-- If the primary analyses are item-level counting and segmentation, Approach D (one event per item with batch metadata) gives maximum flexibility.
-- If the analytics tool doesn't support composite events (GA4, Segment-only), Approach D is the safest single-approach option.
-
-Present the trade-off to the user with their specific analytical questions in mind, and let them choose.
-
-### Step 5: Define User Properties
-
-Review all events and determine if any should update user properties. Read `references/decision-framework.md` (User Properties vs Event Properties section) and `references/property-patterns.md` for guidance.
-
-Common triggers for user properties:
-- First-time actions → set_once (e.g., first_task_created_at)
-- Cumulative counters → increment (e.g., total_tasks_created)
-- State changes → set (e.g., plan, role, onboarding_completed)
-- Lifecycle milestones → set_once (e.g., activation_date)
-
-### Step 6: Validate Against Constraints
-
-Check every event and property against the target platform's constraints from `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`:
-
-- Event name length and format
-- Number of event types (will this push us over the limit?)
-- Properties per event
-- Property name/value lengths
-- Supported data types
-- Reserved names
-
-Flag violations and propose fixes.
-
-### Step 7: Cross-Reference Existing Events
-
-If existing events are available:
-- Identify events that already cover a use case → annotate "use existing event [name]" instead of defining a new one
-- Identify existing events that need new properties → annotate "extend [event name] with property [name]"
-- Identify existing events that the new feature's flow should reference (e.g., a generic "Page Viewed" event)
-- Flag existing events that may become redundant with the new tracking
-
-### Step 8: Generate Sample Payloads
-
-For each event, generate a sample JSON payload for the target platform. Use the formats from `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`.
-
-If multiple platforms are targeted, generate one payload per platform.
-
-## Output Format
-
-The final tracking plan should include:
-
-1. **Summary**: Total events defined, total user properties, total group properties, naming convention used
-2. **Event Specifications**: Full or Quick spec block for each event, per the depth chosen in Step 2
-3. **User Property Specifications**: All user properties with update methods
-4. **Group Property Specifications**: All group properties (if B2B)
-5. **Event Flow Diagrams**: For each user flow, annotate which events fire at which step
-6. **Merge Decisions Log**: Where events were parameterized instead of multiplied, with reasoning
-7. **Platform Constraint Violations**: Any flags from Step 6
-8. **Existing Event References**: Events reused or extended from the existing tracking
-9. **Sample Payloads**: JSON payloads per event per platform
-
-## Implementation Guidance
-
-When the product has no existing tracking coverage, also generate:
-
-1. **Implementation Priority**: Order events by P0/P1/P2 priority
-2. **SDK Setup Instructions**: Which SDK(s) to install, initialization code
-3. **Where to Instrument**: For each event, the code location / component / API endpoint where the tracking call should be placed
-4. **Testing Checklist**: How to verify each event fires correctly with correct properties
-5. **QA Validation Steps**: How to validate in the analytics tool that events appear correctly
 
 ## Guardrails
 
-The number of events should match what's needed to answer the analytical questions — no more, no less. Some features need 3 events; some large features that function as small products need 30+. The count is not the guardrail. These three tests are:
+- **Every event serves at least one use case.** If not, flag "no analytical purpose identified" and recommend deferring it.
+- **Every property is queryable.** It must appear in a filter, breakdown, or aggregation. No "just in case" properties.
+- **Firing conditions are unambiguous.** Spell out what "completes" means: click, API success, or animation end.
+- Event count is not the guardrail. If events pass these three tests, they belong, however many there are.
 
-- **Every event must serve at least one use case.** This is the primary filter. If an event doesn't trace back to a specific analytical question, dashboard, chart, or alert, flag it as "no analytical purpose identified" and recommend deferral. Don't track it just because something happened — track it because someone will query it.
-- **Every property must be queryable.** Don't add properties "just in case." Every property should appear in at least one filter, breakdown, or aggregation. If nobody will ever segment or filter by a property, it's noise.
-- **Firing conditions must be unambiguous.** An engineer reading the spec should implement it identically to any other engineer. If the firing condition says "when the user completes the action," specify what "completes" means (button click? API success response? animation end?).
+## Output
 
-When the event count feels high, apply the parameterization test from `references/decision-framework.md` to check whether any events can be consolidated. But if the events survive all three tests above, they belong in the plan regardless of count.
+Write `tracking/tracking-plan-<feature>.md`:
+
+1. One line: number of events, user properties, group properties, and the convention used.
+2. Event specs, grouped by flow, in the chosen depth.
+3. User and group properties with update methods.
+4. Decisions: merges made by the parameterization test, the batch approach chosen, and why. One line each.
+5. Problems: limit violations, events with no use case, existing events reused, extended, or made redundant.
+
+In chat, show the event list and the file path. Offer the format step below, and `tracking-plan-review` for a second look.
+
+Implementation priority (P0/P1/P2), where to instrument each event in the code, and a QA checklist only when the user asks or the product has no tracking yet.
+
+## Optional: format for a platform
+
+When the user names a platform or asks for payloads, code, or an export, read `references/platform-formats.md` and produce for each target platform:
+
+1. A name mapping table (source name → platform name → transformation) for every renamed event or property.
+2. A sample payload per event, with user property updates.
+3. SDK snippets for track, identify, and group calls, in JavaScript/TypeScript unless the user names a language.
+4. On request: a spreadsheet-style table, a JSON Schema per event, or a Segment Protocols tracking plan.
+
+Only GA4 payloads convert booleans to 0/1 and arrays to strings. The spec stays typed.

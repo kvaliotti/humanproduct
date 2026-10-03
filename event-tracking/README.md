@@ -1,38 +1,25 @@
 # Event Tracking Plugin
 
-Define, structure, and review analytics event tracking plans for any product or feature. Produces platform-ready event specifications with naming conventions, properties, firing conditions, user properties, and sample payloads.
+Define, review, and format analytics event tracking for any product or feature. Every event must trace back to a question someone will ask of the data.
 
 ## Skills
 
-| Skill | What it does | Trigger phrases |
+| Skill | Use it when | Writes |
 |---|---|---|
-| **tracking-orchestrator** | Entry point. Routes you through the pipeline based on where you are in the process. | "define events", "create tracking plan", "set up analytics" |
-| **analytics-use-cases** | Defines what questions the data must answer before any events are created. | "what should we measure", "analytics requirements", "what dashboards do we need" |
-| **event-definition** | Turns use cases into concrete event specs with names, properties, and firing conditions. | "define events for [feature]", "create event spec", "tracking spec" |
-| **tracking-plan-review** | Audits an existing tracking plan for naming consistency, coverage gaps, and redundancy. | "review my tracking plan", "audit my events", "check event coverage" |
-| **platform-formatter** | Formats a tracking plan for specific analytics platforms with sample payloads and code snippets. | "format for Amplitude", "export for PostHog", "generate payloads" |
+| **analytics-use-cases** | Starting new tracking: "what should we track", "set up analytics for [feature]" | `tracking/use-cases-<feature>.md` |
+| **event-definition** | Use cases exist and you need event specs; also "format for Amplitude / Mixpanel / PostHog / Segment / GA4" | `tracking/tracking-plan-<feature>.md` |
+| **tracking-plan-review** | Events already exist: "audit my events", "review my tracking plan" | Review in chat |
 
-## Pipeline
+Run them in that order for new tracking, or start at whichever matches where you are. Claude Code picks the skill from what you ask.
 
-The recommended flow is:
+## What it holds to
 
-1. **Analytics Use Cases** — Define what questions need answering
-2. **Event Definition** — Create events that answer those questions
-3. **Tracking Plan Review** — Audit for quality
-4. **Platform Formatter** — Generate platform-specific output
+- No event without a use case. No property nobody will filter or break down by.
+- One event with properties beats several near-identical events, when the parameterization test says so.
+- Record whether the user or the system (AI, background job) did the action.
+- Detect and match your existing naming convention. The default, when nothing exists, is `Area - Subarea (optional) - Verb in Past Tense`.
+- Vendor limits live in one file, `references/platform-constraints.md`. Verify them against current vendor docs.
 
-You can enter at any stage. The orchestrator skill routes you to the right starting point.
+## Supported platforms
 
-## Supported Platforms
-
-Amplitude, Mixpanel, PostHog, Segment (as CDP), and GA4. The plugin knows each platform's constraints (event limits, property limits, naming rules) and adapts output accordingly.
-
-## Naming Convention
-
-Default: `Area - Subarea (optional) - Verb in Past Tense with Modifiers`
-
-The plugin detects existing conventions from your analytics tool or codebase and matches them. You can override with any convention.
-
-## Connectors
-
-See `CONNECTORS.md` for optional tool integrations (analytics tools, CDPs, project trackers).
+Amplitude, Mixpanel, PostHog, Segment (as a CDP), and GA4. If an analytics tool is connected via MCP, or a codebase is available, the skills read existing events from it.

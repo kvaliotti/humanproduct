@@ -20,7 +20,7 @@ _What do you have that the alternatives don't? Objective, verifiable capabilitie
 - Attribute 5:
 
 ## 3. Value Themes (with proof)
-_Group attributes into 2-4 themes. For each: benefit + proof._
+_Group attributes into 1-4 themes. For each: benefit + proof._
 
 | Theme | Benefit to Customer | Proof |
 |-------|---------------------|-------|

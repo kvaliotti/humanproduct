@@ -77,7 +77,6 @@ For each of the 5+1 components, assess quality:
 ### Target Market
 - Is it specific enough to build a prospect list?
 - Is it defined by actionable characteristics (not just demographics)?
-- Could you name 10 real accounts?
 
 ### Market Category
 - Does it trigger helpful assumptions?
@@ -92,13 +91,18 @@ For each of the 5+1 components, assess quality:
 
 Output a structured report:
 
-**1. Overall Score** — Pass / Needs Work / Major Rework, with a 1-sentence summary.
+**1. Overall Score** — Pass / Needs Work / Major Rework, with a 1-sentence summary:
+- **Pass:** no ❌, at most two ⚠️.
+- **Major Rework:** ❌ on test 1 (substitution) or test 3 (alternatives), or three or more ❌. The core of the positioning is missing, so patching other parts won't help.
+- **Needs Work:** everything in between.
 
 **2. Pressure Test Results Table**
 | Test | Score | Finding |
 |------|-------|---------|
 | 1. Substitution | ✅/⚠️/❌ | ... |
 | ... | ... | ... |
+
+Tests 2 (10 names), 8 (new hire in 60 seconds), and 9 (cross-team alignment) often can't be judged from a document. Mark them **❓ Ask** with the question to put to the user, and don't count them toward the overall score.
 
 **3. Component Scorecard**
 | Component | Quality | Key Issue |

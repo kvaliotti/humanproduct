@@ -1,245 +1,67 @@
 ---
 name: growth-loops
-description: "Design, evaluate, and optimize growth loops — viral, content, paid, and sales loops — including k-factor/viral-coefficient math, network-effects analysis, and loop-funnel integration. Owns loop DESIGN and virality math. For analyzing acquisition channels or signup conversion, use acquisition-domain instead."
+description: "Design, evaluate, and optimize growth loops (viral, content, paid, sales), including k-factor and viral-coefficient math and network-effects analysis. Use for: growth loops, viral loop, referral loop, content or UGC loop, flywheel, compounding growth, loops vs funnels, k-factor, viral coefficient, network effects. Owns loop design and virality math. For acquisition channels or signup conversion, use acquisition-domain."
 ---
 
 # Growth Loops
 
-## Purpose
+Help a PM find the one or two loops that fit the product, map how they work, and find the step to fix first. A loop is a funnel whose output feeds its own input.
 
-You are the growth loops specialist for the PLG Growth plugin. You help PMs design, evaluate, and optimize self-reinforcing growth mechanisms. You go deep on loop types (viral, content, paid, sales), network effects, compounding math, and the critical integration between loops and funnels. The output is a Growth Loop Blueprint that maps the full mechanism from user action to growth.
+**Quick answers.** If the question is narrow ("how do I calculate k?", "which loop fits us?"), answer it directly. Offer the full blueprint only if they want it.
 
-## When to Invoke
+## 1. Check structural fit
 
-Trigger phrases:
-- "growth loops"
-- "viral loop"
-- "content loop"
-- "design a growth loop"
-- "compounding growth"
-- "network effects"
-- "loops vs funnels"
-- "PLG loops"
-- "k-factor"
-- "viral coefficient"
-- "referral loop"
-- "UGC loop"
-- "flywheel"
+A loop that the product's normal use does not create cannot be bolted on. Disqualify any type that fails its prerequisite:
 
-Note: This skill owns loop **design** and virality math (k-factor, viral coefficient, network effects). For analyzing acquisition channels, signup conversion, or which channels bring users in, route to `acquisition-domain`.
+| Loop | Prerequisite |
+|---|---|
+| Exposure viral (Calendly link, Loom video) | Normal use shows the product's output to non-users, with the brand visible |
+| Incentivised viral (Dropbox storage referral) | A reward that is cheap to give and worth something to both sides |
+| Collaboration viral (Slack, Figma) | The product is much weaker used alone, so users must invite others |
+| Content via search or social (Quora, Pinterest) | Users create public, indexable or shareable content as they use it |
+| Content via creators (Substack, YouTube) | Creators bring their own audience, and some of the audience becomes creators |
+| Paid | LTV clearly above CAC, and channels with room to spend more |
+| Sales | Accounts worth enough to pay for sales, identifiable from product signals (see `product-led-sales`) |
 
-## Quick Answer Mode
+Paid and sales loops stop the day the spending stops. Only the others compound by themselves.
 
-Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good k-factor?", "how do I calculate viral coefficient?", "which loop type fits my product?" — just answer it directly and concisely, drawing on the frameworks below (loop types, k-factor math, network effects) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+## 2. Map the loop as a chain of steps
 
-Reach for the full methodology when the user wants a real Growth Loop Blueprint, loop design, or loop-vs-funnel analysis — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to design the full growth loop?"
+Write each step from user action to the new user repeating it: action → exposure → visit → signup → activation → new user takes the action. Put a conversion rate on each step. Mark each rate **measured** or **(assumption)**. Never borrow another company's k-factor or step rates; this plugin has no sourced benchmarks for them. Tell the user to measure their own baseline.
 
----
+## 3. Do the math
 
-## Structured Problem-Solving Backbone
+- **k** = loop actions per user per cycle × product of the step rates. For invite loops: invites sent per user × share of invites that become active users.
+- **Cycle time** = time from one user's action to the new user's same action. Compare loops on growth per month, not k alone. A high k with a six-month cycle compounds slowly.
+- **Amplification** (k < 1): each organic user brings k/(1−k) extra users in total. Example: 1,000 organic users a month at k = 0.3 adds about 430 more.
+- k above 1 is rare and does not last. Most loops amplify other acquisition; they do not replace it.
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **growth loops**: decompose into loop types, disaggregate loop performance into k-factor / cycle time / step conversion, and focus on the 1–2 loops with highest structural fit. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+## 4. Pick the step to fix
 
-## Step-by-Step Methodology
+In a chain of multiplied rates, doubling any step doubles k. So pick the step that is **cheapest to double**. This is usually the lowest rate, because a 5% step has room to double and a 60% step does not. Name its likely cause (CTA not seen, invitee lands on a bad first screen, few users create content) and one fix to test.
 
-### Step 1: Classify Loop Opportunities
+## 5. Check for network effects
 
-Load the loop types reference:
-> Read `references/loop-types.md`
+Network effects are separate from virality. Virality brings users in. Network effects make the product better as it grows, which keeps users. A product can have one without the other: Hotmail was viral with no network effect, while Uber has network effects but grew mostly through paid channels.
 
-Map the user's product against the loop taxonomy:
+Check for three kinds: direct (each user adds value for others), cross-side (marketplaces), and data (more usage improves the product). Then check whether each is local (a city or a team) or global. To test it, compare retention for users with many connections against users with few.
 
-```
-Growth Loops
-├── Real Loops (organic, compounding)
-│   ├── Viral Loops
-│   │   ├── Exposure (product use creates visibility to non-users)
-│   │   ├── Incentivised (rewards for sharing/inviting)
-│   │   └── Collaboration (product requires multiple users)
-│   └── Content Loops
-│       ├── By distribution (UGC → SEO → traffic → more UGC)
-│       └── By creator (professional content → audience → platform growth)
-└── Technical Loops (investment-dependent)
-    ├── Paid ($ → traffic → revenue → more $)
-    └── Outbound Sales (leads → sales → revenue → more leads)
-```
+## Output
 
-For each loop type, assess structural fit:
+Lead with the answer: which loop, the bottleneck step, and the first action. Then give:
+1. The loop diagram with the rate on each step, each marked measured or (assumption)
+2. k, cycle time, and the extra users per month the loop adds
+3. Whether network effects are present, and what kind
+4. Three hypotheses to raise k, each with the step it targets and how to test it (route to `plg-experimentation`)
+5. What we don't know: the rates to go and measure first
 
-| Loop Type | Structural Prerequisites | Product Fit? |
-|-----------|------------------------|-------------|
-| Exposure Viral | Product output is visible to non-users | ? |
-| Incentivised Viral | Clear value exchange for referral | ? |
-| Collaboration Viral | Product value increases with more users | ? |
-| Content SEO | Users generate indexable content | ? |
-| Content Social | Users create shareable content | ? |
-| Paid | Positive unit economics (LTV > CAC) | ? |
-| Sales | High-value accounts identifiable from product signals | ? |
+Keep it to about one page.
 
-### Step 2: Evaluate Product Fit for Top Loops
+## Don't
 
-For each loop scoring "Yes" or "Maybe" in structural fit, go deeper.
+- Force a loop where normal use creates no exposure.
+- Optimize k before retention is fixed. A viral loop on a product people leave just burns through the market faster.
+- Ignore cycle time.
+- Treat a loop as the source of growth. It needs a base of organic or paid users to feed it.
 
-Load examples reference:
-> Read `references/loop-examples.md`
-
-**Evaluation criteria per loop:**
-
-1. **User action exists:** Is there a natural user action that creates the loop trigger? (e.g., sending a Calendly link, sharing a Figma file, writing a Quora answer)
-2. **Exposure to non-users:** Does the action expose the product to someone who is not a user?
-3. **Conversion mechanism:** Is there a path from exposure to signup?
-4. **Motivation to act:** Why would the new user take the same action? (Completing the loop)
-5. **Cycle time:** How long from action to new user's action? (Hours? Days? Weeks?)
-6. **Friction points:** Where does the loop break?
-
-### Step 3: Design Loop Mechanics
-
-For the highest-fit loop(s), map the complete mechanism:
-
-```
-[User Action]
-    ↓
-[Exposure to Non-User]
-    ↓
-[Non-User Experiences Value]
-    ↓
-[Conversion: Non-User → User]
-    ↓
-[New User Takes Same Action]
-    ↓
-[Loop Repeats]
-```
-
-For each transition, define:
-- What specifically happens
-- What the conversion rate is (or estimate)
-- What can improve the conversion rate
-
-### Step 4: Integrate Loops with Funnels
-
-Load the integration reference:
-> Read `references/loops-plus-funnels.md`
-
-**Key principle:** A loop IS a funnel that feeds itself. Every loop contains a funnel. Optimize the funnel within the loop.
-
-For the designed loop, map the internal funnel:
-
-```
-Loop: [Name]
-Internal Funnel:
-Step 1: [Action taken] → Step 2: [Exposure created]     (Rate: X%)
-Step 2: [Exposure created] → Step 3: [Page/link viewed]  (Rate: X%)
-Step 3: [Page/link viewed] → Step 4: [Signup started]    (Rate: X%)
-Step 4: [Signup started] → Step 5: [Signup completed]    (Rate: X%)
-Step 5: [Signup completed] → Step 6: [Activated]         (Rate: X%)
-Step 6: [Activated] → Step 7: [Takes loop action]        (Rate: X%)
-```
-
-**Optimization principle:** Improve the worst conversion rate in the loop for maximum k-factor improvement. A 2x improvement on a 5% step has more impact than a 2x improvement on a 50% step.
-
-### Step 5: Analyze Network Effects
-
-Load the network effects reference:
-> Read `references/network-effects.md`
-
-Assess whether the product has network effects (distinct from virality):
-
-| Type | Question | Present? |
-|------|----------|----------|
-| Direct NE | Does each additional user make the product more valuable for all users? | ? |
-| Indirect NE | Does growth on one side attract growth on another side? | ? |
-| Data NE | Does more usage make the product better for everyone? | ? |
-| Local vs Global | Are NE local (geographic/team) or global (entire network)? | ? |
-
-**Critical distinction:** Virality is a growth mechanism (how you acquire users). Network effects are a value mechanism (why users stay). Products can have one without the other.
-
-- Slack: Strong collaboration virality + strong direct NE
-- Calendly: Strong exposure virality + weak NE (value does not increase much with network size)
-- Spotify: Weak virality + strong data NE (more users → better recommendations)
-
-### Step 6: Loop Compounding Math
-
-Calculate or estimate the key loop metrics:
-
-**K-factor (viral coefficient):**
-```
-k = (avg invitations sent per user) × (conversion rate per invitation)
-```
-- k > 1: Exponential growth (very rare, usually unsustainable)
-- k = 0.3-0.7: Strong viral loop (amplifies other acquisition)
-- k = 0.1-0.3: Moderate viral loop (meaningful but not standalone)
-- k < 0.1: Weak loop (negligible contribution)
-
-**Cycle time:**
-- Time from one user's action to the next user's action
-- Shorter cycle time = faster compounding
-- Calendly: 2-5 days (meeting cycle). Figma: 1-3 weeks (project cycle). Notion: 1-4 weeks (onboarding cycle).
-
-**Steady-state growth contribution:**
-```
-Viral users per month = Organic users × k / (1 - k)    [when k < 1]
-```
-Example: 1000 organic users/month, k = 0.3 → 1000 × 0.3/0.7 = 429 viral users/month
-
-### Step 7: Produce Growth Loop Blueprint
-
-Present the complete blueprint:
-
-```
-## Growth Loop Blueprint
-
-### Loop Summary
-- Type: [Viral/Content/Paid/Sales] - [Subtype]
-- One-line: [User action] → [Exposure] → [Conversion] → [New user repeats]
-
-### Loop Diagram
-[Step-by-step flow with conversion rates at each transition]
-
-### Key Metrics
-- K-factor: [current or estimated]
-- Cycle time: [average]
-- Steady-state contribution: [users/month]
-
-### Internal Funnel
-[Funnel stages within the loop with conversion rates]
-
-### Biggest Bottleneck
-[Which funnel step has the lowest conversion rate]
-
-### Network Effects Assessment
-[Type: Direct/Indirect/Data/None. Strength: Strong/Moderate/Weak]
-
-### Top 3 Optimization Hypotheses
-1. [Hypothesis] → Expected k-factor impact: [+X]
-2. [Hypothesis] → Expected k-factor impact: [+X]
-3. [Hypothesis] → Expected k-factor impact: [+X]
-
-### Implementation Requirements
-- Engineering: [what needs to be built]
-- Design: [what UX changes are needed]
-- Data: [what needs to be tracked]
-
-### Recommended First Action
-[Single concrete next step]
-```
-
----
-
-## Connection to Other Skills
-
-| Skill | When to Route |
-|-------|---------------|
-| `acquisition-domain` | Loop requires acquisition channel optimization |
-| `satisfaction-domain` | Satisfaction drives referral loop strength |
-| `monetisation-domain` | Paid loop requires unit economics optimization |
-| `product-led-sales` | Sales loop design for enterprise expansion |
-| `plg-orchestrator` | User needs broader PLG diagnosis |
-
-## Anti-Patterns to Watch For
-
-- **Forcing loops where none exist:** Not every product has a natural loop. If the user action does not inherently create exposure, you cannot manufacture a viral loop.
-- **Confusing virality with network effects:** Virality gets users in (growth). Network effects keep them (value). A product can be viral without NE (Hotmail) or have NE without virality (most B2B tools).
-- **Ignoring cycle time:** A high k-factor with a 6-month cycle time grows slowly. Cycle time is as important as k-factor.
-- **Optimizing k-factor before product-market fit:** A viral loop on a product people do not retain on just burns through your addressable market faster.
-- **Treating loops as magic:** Loops amplify growth, they do not create it. You still need a base of organic/paid users feeding the loop.
-- **Neglecting the funnel within the loop:** A loop is only as strong as its weakest funnel step. Identify and fix the bottleneck.
+Route to `acquisition-domain` for channels, `monetisation-domain` for paid-loop unit economics, `product-led-sales` for sales loops, and `plg-orchestrator` for a broader diagnosis.

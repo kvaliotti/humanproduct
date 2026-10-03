@@ -2,161 +2,49 @@
 name: tracking-plan-review
 description: >
   Review, audit, and improve an existing analytics tracking plan or event
-  taxonomy. Use when the user says "review my tracking plan", "audit my
-  events", "check event coverage", "review my analytics", "are my events
-  right", "event taxonomy review", "tracking plan audit", "clean up my
-  events", "find gaps in my tracking", "review event naming", or provides
-  an existing set of events and wants feedback on completeness, naming
-  consistency, redundancy, or alignment with analytical goals.
+  taxonomy. Use when events already exist and the user says "review my
+  tracking plan", "audit my events", "check event coverage", "review my
+  analytics", "are my events right", "event taxonomy review", "tracking plan
+  audit", "clean up my events", "find gaps in my tracking", "review event
+  naming", or provides existing events (a spreadsheet, a tool export, or a
+  codebase) and wants feedback on naming, coverage, redundancy, or whether the
+  events answer their questions.
+argument-hint: "[tracking plan file, export, or codebase path] [platform]"
 ---
 
 # Tracking Plan Review
 
-Audit an existing tracking plan for naming consistency, coverage gaps, redundancy, property quality, and platform compliance.
+Audit an existing tracking plan and lead with the few fixes that matter most.
 
 ## Inputs
 
-Accept the tracking plan in any format:
-- Spreadsheet / table of events
-- List of event names
-- Export from an analytics tool (via `~~analytics tool` MCP — see `${CLAUDE_PLUGIN_ROOT}/CONNECTORS.md` for what this placeholder means; resolve it to the user's actual tool rather than echoing it literally)
-- Code grep of tracking calls from a codebase
-- A document describing what's tracked
-- Informal description from the user
+Any format: spreadsheet, list of names, analytics tool export, a tracking plan from `event-definition` (`tracking/tracking-plan-*.md`), or the codebase. To find the events, follow "Find the existing tracking first" in `${CLAUDE_PLUGIN_ROOT}/references/naming-conventions.md`.
 
-Also request (if not provided):
-- Target analytics platform(s)
-- Analytical questions / use cases the tracking should answer (if the analytics-use-cases skill output exists, use it)
-- Product description or key user flows
+Also get, if not given: target platform(s), the questions the tracking should answer (`tracking/use-cases-*.md` if it exists), and the key user flows. Without questions, judge coverage against the flows and say so.
 
-## Review Depth
+## Depth
 
-Choose the review depth based on plan size and what the user is asking for:
+- **Full audit (default):** production plans, roughly 15+ events, or when the user wants thoroughness. All seven checks.
+- **Quick check:** small or early plans, spot checks, or "quick" / "just the big issues". Checks 1, 3, and 5 only, Critical and Warning findings only. Name the skipped checks and offer the full audit.
 
-- **Full audit (default)** — use for production tracking plans, plans with roughly 15+ events, or whenever thoroughness matters more than speed. Runs all 7 audit dimensions below and produces the full scorecard plus detailed findings.
-- **Quick check** — use for small or early-stage plans (roughly under 15 events), a spot-check request, or when the user asks for "quick", "high-level", or "just the big issues." Runs a condensed pass across the three dimensions that catch the highest-value problems fastest: **Naming Consistency** (1), **Redundancy Detection** (3), and **Platform Compliance** (5). Skip the scorecard; report only Critical and Warning findings (drop Info), and note which dimensions were skipped with an offer to run the full audit if the user wants deeper coverage.
+## Checks
 
-Default to the full audit. Drop to quick check only when the plan is clearly small or the user asks for a lighter pass.
+Measure where you can and report the real ratio ("31 of 40 events follow Title Case Object-Action"). Never turn ratios into a score or pass/fail grade.
 
-## Audit Dimensions
+1. **Naming.** Detect the dominant convention per `naming-conventions.md`. Count events that break it on casing, separator, structure, or tense.
+2. **Coverage.** For each key flow: is entry, each key step, completion, and abandonment or failure tracked? Are system actions that deliver value (AI output, notifications, renewals) tracked? Which use-case questions can't be answered?
+3. **Redundancy.** Duplicates under different names, near-identical events that pass the parameterization test in `${CLAUDE_PLUGIN_ROOT}/references/decision-framework.md`, micro-interactions nobody analyses, and orphans with no identifiable use.
+4. **Properties.** Same concept, different names (`source` / `origin` / `referrer`); same name, different types; missing context the questions need (actor, source, variant); undocumented categorical values; unflagged PII.
+5. **Platform limits.** Check against `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md`: name length and format, event type count, properties per event, value lengths and types, reserved names.
+6. **User and group properties.** State sent as event properties on every event, `set` where `set_once` belongs, missing counters or first-time timestamps, missing account properties for B2B.
+7. **Firing conditions.** Would two engineers implement each one identically? Are edge cases (auto-save vs manual, retries) and exclusions stated?
 
-### 1. Naming Consistency
+## Output
 
-Check every event name for:
-- **Consistent casing**: Are all events in the same case? Flag mixed casing (e.g., "Task Created" alongside "task_deleted")
-- **Consistent structure**: Do all names follow the same pattern? Flag structural inconsistencies (e.g., "Task Created" alongside "Created a New Task")
-- **Consistent tense**: Are all verbs in past tense? Flag present tense or imperative (e.g., "Create Task" instead of "Task Created" or "Created Task")
-- **Consistent separators**: Same separator throughout? Flag mixed separators (e.g., spaces vs underscores vs dots)
-- **Naming convention detected**: State the detected convention and note any deviations
+Keep it short. Depth is on request.
 
-Score: % of events conforming to the dominant convention
+1. **Verdict:** one or two sentences on the state of the plan and the biggest risk.
+2. **Top fixes (at most 5):** the changes with the most impact, highest first. For each: what's wrong, the events affected, the fix, and effort (low / medium / high). Flag fixes that break existing dashboards (renames, merges) and point to "Changing existing events" in the decision framework.
+3. **Findings by check:** one line per check with the measured ratio or count, then Critical and Warning findings only. Put Info findings in one line at the end.
 
-### 2. Coverage Analysis
-
-Map events against:
-- **User lifecycle stages**: Awareness → Acquisition → Activation → Engagement → Retention → Revenue → Referral. Flag gaps.
-- **Key user flows**: For each major flow, verify that entry, key steps, and completion/abandonment are tracked.
-- **Feature coverage**: For each product feature, verify at least basic usage tracking exists.
-- **Error/failure states**: Are failure events tracked alongside success events?
-
-Score: % of critical user flows with adequate event coverage
-
-### 3. Redundancy Detection
-
-Identify:
-- **Duplicate events**: Events that track the same action with different names (e.g., "Task Created" and "New Task Added")
-- **Events that should be parameterized**: Events that could be a single event with a property (e.g., "Clicked Save Button", "Clicked Cancel Button", "Clicked Delete Button" → one "Button Clicked" event with a "button_name" property)
-- **Over-instrumented flows**: Flows with events for every micro-interaction when only key steps need tracking
-- **Orphan events**: Events that don't serve any identifiable analytical purpose
-
-Apply the parameterization test from the decision framework for each candidate merge.
-
-Score: Number of events that could be consolidated / total events
-
-### 4. Property Quality
-
-For each event's properties:
-- **Consistency**: Is the same concept named the same way across events? (e.g., "source" vs "origin" vs "referrer" for the same concept)
-- **Completeness**: Do events have enough properties to answer the analytical questions? Missing common properties (like source, variant, method)?
-- **Type consistency**: Is the same property always the same type? (e.g., "count" is a number everywhere, not sometimes a string)
-- **PII flag**: Are PII properties identified? Are any unmarked properties PII?
-- **Value documentation**: Are categorical property values documented?
-- **Naming standard**: Do property names follow a consistent convention?
-
-Score: % of properties conforming to standards
-
-### 5. Platform Compliance
-
-Check against the target platform's constraints:
-- Event name length and format requirements
-- Number of event types vs platform limit
-- Properties per event vs limit
-- Property name/value length limits
-- Data type support (arrays, nested objects)
-- Reserved names conflicts
-
-Read `${CLAUDE_PLUGIN_ROOT}/references/platform-constraints.md` for the full, current limit matrix across all 5 supported platforms (Amplitude, Mixpanel, PostHog, Segment, GA4) — event type caps, properties per event, name/value length limits, and reserved names. That file is the single source of truth for these numbers; don't restate specific figures here, since vendor limits change.
-
-Score: Number of violations / total events
-
-### 6. User Property Assessment
-
-Review user properties for:
-- Properties that should be user properties but are only event properties (e.g., "plan" attached to every event but not set as a user property)
-- User properties with wrong update method (e.g., "first_login_date" using set instead of set_once)
-- Missing computed/derived user properties (e.g., no "total_tasks_created" counter)
-- Group/account properties missing for B2B products
-
-### 7. Firing Condition Clarity
-
-For each event, assess:
-- Is the firing condition specific enough that two engineers would implement it identically?
-- Are edge cases addressed? (auto-save vs manual save, retry vs first attempt, etc.)
-- Are exclusion conditions stated?
-
-Score: % of events with unambiguous firing conditions
-
-## Output Format
-
-The format below is for the **full audit**. For a **quick check**, skip the Summary Scorecard entirely and go straight to Detailed Findings, limited to the three dimensions in scope and to Critical/Warning severity — then close with a one-line note on which dimensions and severities were skipped and an offer to run the full audit.
-
-### Summary Scorecard
-
-| Dimension | Score | Status |
-|---|---|---|
-| Naming Consistency | X% | Pass/Warn/Fail |
-| Coverage | X% | Pass/Warn/Fail |
-| Redundancy | X events mergeable | Pass/Warn/Fail |
-| Property Quality | X% | Pass/Warn/Fail |
-| Platform Compliance | X violations | Pass/Warn/Fail |
-| User Properties | X issues | Pass/Warn/Fail |
-| Firing Conditions | X% clear | Pass/Warn/Fail |
-
-Thresholds: Pass ≥ 90%, Warn 70-89%, Fail < 70%
-
-### Detailed Findings
-
-For each finding:
-```
-FINDING: [Short title]
-SEVERITY: Critical / Warning / Info
-DIMENSION: [Which audit dimension]
-EVENTS AFFECTED: [List of event names]
-ISSUE: [What's wrong]
-RECOMMENDATION: [Specific fix]
-EFFORT: Low / Medium / High
-```
-
-Sort by severity (Critical first), then by effort (Low first within each severity).
-
-### Recommended Changes
-
-Group recommendations into:
-1. **Quick wins** (Critical + Low effort) — fix immediately
-2. **Important improvements** (Critical + Medium/High effort) — plan for next sprint
-3. **Nice to have** (Warning/Info) — address when convenient
-4. **Structural changes** (Convention changes, event merges) — requires coordination
-
-### Revised Tracking Plan
-
-If the user requests it, produce an updated tracking plan incorporating all recommendations, using the same format as the event-definition skill output.
+Offer, don't produce unasked: the full Info list, and a revised tracking plan in the `event-definition` format.

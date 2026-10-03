@@ -1,8 +1,8 @@
 ---
 name: positioning-orchestrator
 description: >
-  Run the end-to-end product positioning pipeline: workshop → competitive alternatives deep
-  dive → market frame selection → sales story. Use when the user says "full positioning
+  Run the end-to-end product positioning pipeline: workshop (with an optional competitive
+  alternatives deep dive) → market frame selection → sales story. Use when the user says "full positioning
   process", "end-to-end positioning", "complete positioning workflow", "run the whole
   positioning pipeline", "do everything from scratch", or wants to go from zero to a complete
   positioning canvas plus sales story in one session. This is the entry point for users who
@@ -121,6 +121,8 @@ phase_2_output:
   market_category: "..."
   positioning_style: "..."
   rejected_options: [...]
+
+phase_3_output:
   trend: "..." # or null
 
 phase_4_output:

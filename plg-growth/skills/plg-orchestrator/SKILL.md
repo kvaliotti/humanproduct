@@ -1,184 +1,66 @@
 ---
 name: plg-orchestrator
-description: "Entry point for PLG strategy — diagnoses current state, decomposes the PLG problem space into an issue tree, and routes to the right skill(s). Use when someone says 'help me with PLG', 'where should I start', or 'PLG strategy'."
+description: "Entry point for product-led growth work. Diagnoses where a product stands and routes to the right plg-growth skill. Use when someone says 'help me with PLG', 'product-led growth for my product', 'where should I start with PLG', 'PLG strategy', 'PLG diagnostic', 'make my product product-led', or asks any broad PLG question that doesn't clearly map to one skill."
 ---
 
 # PLG Orchestrator
 
-## Purpose
+Diagnose fast, pick the one or two places that matter, and route. Don't go deep on any topic yourself. Follow `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
-You are the entry point and routing brain for the entire PLG Growth plugin. Your job is to rapidly diagnose where a product stands on its PLG journey, structure the problem space as an issue tree, hypothesize the 2-3 highest-priority branches, and produce a sequenced skill path.
+## 1. Get context
 
-You do NOT go deep on any single topic. You diagnose, prioritize, and route.
+Ask only what the user hasn't told you, a few questions at a time:
 
-## When to Invoke
+- What the product does, for whom, and whether the user is also the buyer.
+- How customers arrive and buy today: sales, marketing, self-serve signup, free tier or trial.
+- Revenue model and rough scale (order of magnitude is enough).
+- The one metric they'd fix if they could, and what they've already tried.
 
-Trigger phrases:
-- "help me with PLG"
-- "product-led growth for my product"
-- "where should I start with PLG"
-- "PLG strategy"
-- "make my product product-led"
-- "run the PLG process"
-- "PLG diagnostic"
-- Any broad/ambiguous PLG request that does not clearly map to a specific downstream skill
+Ask about team, data maturity and funnel numbers only if the answer would change the route.
 
-## Structured Problem-Solving Backbone
+## 2. Check fit in one pass
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **the whole PLG problem space**: decompose into the master issue tree and route to the 2–3 highest-leverage branches. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+Four questions: can a user get value alone, start without a sales step, see core value before paying, and pull in more users or usage without sales? Say yes, partly or no to each. Two or more "no" answers mean PLG is likely a secondary motion. Route to `plg-readiness` before anything else.
 
-## Step-by-Step Methodology
+Signs PLG should be secondary: the buyer is always a committee, value only appears after weeks of implementation or org-wide rollout, or procurement is mandatory.
 
-### Step 1: Gather Context via Diagnostic Questions
+## 3. Route
 
-Load and walk through the diagnostic questionnaire:
-> Read `references/diagnostic-questions.md`
+| What you see | Route to |
+|---|---|
+| Unsure PLG fits, or pre-PMF | `plg-readiness` |
+| No free entry point yet, or debating freemium vs trial | `acquisition-model-selector` |
+| Has PLG, doesn't know which lever matters most | `plg-revenue-analysis` |
+| Not enough of the right users arrive | `acquisition-domain` |
+| Users sign up but don't reach first value | `activation-domain` |
+| Users reach value but don't come back | `retention-domain` |
+| Users stay but don't pay or expand | `monetisation-domain` |
+| NPS/CSAT, advocacy, or PMF-survey questions | `satisfaction-domain` |
+| Wants self-reinforcing growth (viral, content, paid loops) | `growth-loops` |
+| Needs PQLs, sales-assist triggers, land-and-expand | `product-led-sales` |
+| Needs to design or prioritise experiments | `plg-experimentation` |
+| Can't measure the funnel | `plg-data-setup` |
+| Org, incentives or team structure block PLG | `plg-transformation` |
 
-Ask the user these questions conversationally. Do NOT dump all questions at once. Group them:
-- **Round 1 (must-have):** Product type, target user, current growth model, revenue model
-- **Round 2 (if needed):** Team size/structure, data maturity, current metrics, biggest pain point
+By stage: pre-PMF usually starts at readiness; early with PMF at model selection or revenue analysis; growth stage at the funnel bottleneck; mature companies adding PLG at readiness plus transformation. If the user can't give activation rate, free-to-paid conversion, retention curves or CAC by channel, that gap is itself a finding. Put `plg-data-setup` early.
 
-If the user provides a lot of context upfront, skip questions already answered.
+## 4. Output
 
-### Step 2: Build the PLG Issue Tree
-
-Load the master issue tree:
-> Read `references/master-issue-tree.md`
-
-Map the user's situation onto the tree. The top-level branches are:
-
-```
-PLG Success
-├── 1. Is PLG viable for this product? → plg-readiness
-├── 2. Where is the biggest revenue opportunity? → plg-revenue-analysis
-├── 3. Which acquisition model fits? → acquisition-model-selector
-├── 4. Which funnel stage is the bottleneck?
-│   ├── Acquisition → acquisition-domain
-│   ├── Activation → activation-domain
-│   ├── Retention → retention-domain
-│   ├── Monetisation → monetisation-domain
-│   └── Satisfaction → satisfaction-domain
-└── 5. What cross-cutting capabilities are missing?
-    ├── Growth loops → growth-loops
-    ├── Product-led sales → product-led-sales
-    ├── Experimentation → plg-experimentation
-    ├── Data setup → plg-data-setup
-    └── Transformation → plg-transformation
-```
-
-### Step 3: Run Rapid Suitability Check (4 Criteria)
-
-Before routing anywhere, run a quick PLG suitability screen using these 4 criteria:
-
-| Criterion | Green | Yellow | Red |
-|-----------|-------|--------|-----|
-| **Self-serve capable** | User can get value alone | Needs some guidance | Requires hands-on setup |
-| **Low barrier to start** | Free/instant signup | Short trial/demo | Long sales cycle required |
-| **Value demonstrable pre-purchase** | Aha moment in minutes | Aha in hours/days | Aha requires weeks of data |
-| **Natural expansion dynamics** | Viral/network/seat expansion | Some word-of-mouth | No natural expansion path |
-
-Score: 4 Green = strong PLG fit. 2+ Red = PLG may not be primary motion. Yellow = PLG possible with investment.
-
-If 2+ Red: recommend plg-readiness for deep assessment before proceeding. The product may need a hybrid or SLG-primary approach.
-
-### Step 4: Hypothesize Priority Branches
-
-Based on gathered context, form 2-3 hypotheses about where the biggest opportunity lies:
-
-**Hypothesis format:**
-> "We believe [branch/skill] is the highest priority because [evidence from diagnostic]. If true, the first action is [specific next step]. We will know we are right if [observable outcome]."
-
-Examples:
-- "We believe acquisition model selection is the priority because you have a working product with PMF signals but low top-of-funnel conversion. The first action is to evaluate freemium vs. free trial fit."
-- "We believe revenue driver analysis is the priority because you have healthy acquisition but poor unit economics. The first action is to decompose MRR and find the leakiest bucket."
-
-### Step 5: Produce PLG Diagnostic Brief
-
-Output a structured brief:
+Keep it under half a page:
 
 ```
-## PLG Diagnostic Brief
-
-### Situation Summary
-[2-3 sentences: product, market, current state]
-
-### PLG Suitability: [Green/Yellow/Red]
-[Quick rationale from 4-criteria check]
-
-### Top Hypotheses (ranked)
-1. [Hypothesis 1] → Route to: [skill-name]
-2. [Hypothesis 2] → Route to: [skill-name]
-3. [Hypothesis 3] → Route to: [skill-name]
-
-### Recommended Sequence
-Phase 1: [skill] — [what it will resolve]
-Phase 2: [skill] — [what it will resolve]
-Phase 3: [skill] — [what it will resolve]
-
-### Key Unknowns
-- [What we still need to learn]
-- [What data is missing]
-
-### Immediate Next Action
-[Single concrete next step the user should take right now]
+## PLG diagnosis
+**Start here:** [skill] — [one sentence why]
+**Fit:** [strong / possible with work / secondary motion] — [the deciding reason]
+**Hypotheses (max 3):** We believe [X] is the constraint because [evidence]. → [skill]
+**Unknowns:** [missing data that would change the route]
+**Next action:** [one concrete step]
 ```
 
-### Step 6: Route to First Skill
+Then ask: "Shall we start with [skill]?" When handing off, pass what you learned, the hypothesis being tested, and what success looks like.
 
-After presenting the brief, ask the user: "Shall we start with [recommended Phase 1 skill]?"
+## Rules
 
-When routing, provide context to the downstream skill by summarizing:
-- What we learned in diagnosis
-- Which hypothesis we are testing
-- What success looks like
-
-## Frameworks Reference
-
-### The 3 Pillars of PLG
-1. **Design for the end user** — Easy to understand, easy to use, easy to purchase
-2. **Deliver value before you capture value** — Activation and time-to-value before paywall
-3. **Build product with go-to-market intent** — Product IS the growth engine (TASE: Traffic, Activation, Stickiness, Expansion)
-
-### SLG vs MLG vs PLG Quick Comparison
-| Dimension | SLG | MLG | PLG |
-|-----------|-----|-----|-----|
-| Primary engine | Sales team | Marketing campaigns | Product experience |
-| Buyer journey | Rep-guided | Content-guided | Self-serve |
-| CAC profile | High, relationship-driven | Medium, content-driven | Low, product-driven |
-| Time to value | Weeks-months | Days-weeks | Minutes-hours |
-| Expansion model | Upsell via CSM | Nurture campaigns | Usage-driven upgrades |
-
-### AARMS Funnel as Diagnostic
-When the user has an existing product, map their metrics to AARMS:
-- **Acquisition** — How do users find and sign up?
-- **Activation** — Do they reach the aha moment?
-- **Retention** — Do they come back?
-- **Monetisation** — Do they pay? Do they expand?
-- **Satisfaction** — Are they advocates? NPS/CSAT signals?
-
-The biggest drop-off in this funnel points to the priority skill.
-
-## Connection to Other Skills
-
-| Skill | When to Route |
-|-------|---------------|
-| `plg-readiness` | User is unsure if PLG fits; early-stage; no PMF signals yet; wants positioning/decision-driver research |
-| `plg-revenue-analysis` | User has a working product and wants to find highest-leverage growth lever |
-| `acquisition-model-selector` | User needs to decide freemium vs trial vs ungated vs reverse trial |
-| `acquisition-domain` | User has a clear acquisition bottleneck (traffic, channel mix, signup conversion, CAC) |
-| `activation-domain` | User has an activation bottleneck (aha moment, time-to-value, onboarding completion) |
-| `retention-domain` | User has a retention bottleneck (usage frequency, habit formation, engagement depth) |
-| `monetisation-domain` | User has a monetisation bottleneck (free-to-paid conversion, pricing fit, expansion, NRR) |
-| `satisfaction-domain` | User has a satisfaction/advocacy bottleneck (NPS/CSAT, referral rate, review signals) |
-| `growth-loops` | User needs to design or optimize self-reinforcing growth loops (viral, content, paid, sales) |
-| `product-led-sales` | User needs PQL scoring, sales-assist triggers, or land-and-expand playbooks |
-| `plg-experimentation` | User needs experiment design, prioritization, or statistical rigor |
-| `plg-data-setup` | User needs event tracking, funnel analytics, or PLG data infrastructure |
-| `plg-transformation` | User needs org transformation: alignment, growth team structure, PLG culture shift |
-
-## Anti-Patterns to Watch For
-
-- **User wants to skip diagnosis:** Gently insist on at least the rapid 4-criteria check. Many PLG failures come from skipping fit assessment.
-- **User asks about everything at once:** Prioritize ruthlessly. 80/20. Pick the ONE branch that matters most right now.
-- **User has no data:** That is fine. Route to plg-readiness first, then plg-revenue-analysis to build the measurement framework.
-- **User is already deep in PLG:** Skip suitability, focus on funnel diagnosis and revenue analysis.
+- If the user asks about everything at once, pick one branch.
+- If they want to skip diagnosis, still run step 2. Most PLG failures skip fit.
+- If they're already deep in PLG, skip step 2 and go to the bottleneck.

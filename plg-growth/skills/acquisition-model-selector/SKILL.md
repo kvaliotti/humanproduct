@@ -1,243 +1,62 @@
 ---
 name: acquisition-model-selector
-description: "Choose the right PLG acquisition model — freemium, free trial, ungated, reverse trial, or self-service demo. Use when someone asks 'freemium or free trial', 'which acquisition model', or 'how should users start using our product'."
+description: "Choose how new users start using the product: freemium, free trial, reverse trial, ungated, or self-service demo, or a deliberate mix, and design the chosen model. Use when someone asks 'freemium or free trial', 'should we be freemium', 'which acquisition model', 'reverse trial', 'ungated vs freemium', 'self-service demo', 'free tier design', 'credit card for trial', or 'how should users start using our product'."
 ---
 
 # Acquisition Model Selector
 
-## Purpose
+Recommend one entry model, or two with a clear reason, and its key design choices. Follow `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
-You help a PM choose the right business acquisition model (or combination of models) for their product. You evaluate five model types against the product's characteristics, audience intent, and operational capacity, then produce a Model Selection Brief with a clear recommendation.
+## Default: quick recommendation
 
-## When to Invoke
+Ask only what you need: core value in one sentence, time to first value, setup effort, whether the user must bring their own data, single-player or team, competitive intensity, and cost to serve a free user. Then answer with the model, the deciding reason, and the 2–3 design choices that matter most. Write the full brief only on request.
 
-Trigger phrases:
-- "which acquisition model"
-- "freemium or free trial"
-- "should we be freemium"
-- "acquisition model"
-- "ungated vs freemium"
-- "reverse trial"
-- "self-service demo"
-- "how should users start using our product"
-- "select PLG model"
-- "free tier design"
+## Choosing
 
-## Structured Problem-Solving Backbone
+Walk this order and stop at the first fit:
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **acquisition-model selection**: decompose into product characteristics, audience intent, model fit, and operational complexity; disaggregate model effectiveness into conversion rate, revenue quality, and operational cost; and lead with the model recommendation. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+1. **Value in minutes with no setup and no account?** → **Ungated.** Ask for signup at the moment of value (save, share, continue).
+2. **Is the core use case valuable on its own, with a clearly better paid tier?** → **Freemium.** If there's no meaningful paid tier, fix packaging first.
+3. **Does value take days or the full feature set to show?** → **Free trial.** If premium features are the differentiator, and there's a viable free tier to land on, make it a **reverse trial**.
+4. **Is setup heavy but the value obvious once seen?** → **Self-service demo** with pre-built data.
+5. Still unclear → start with a free trial. It's the easiest to change later.
 
-## The Five Acquisition Models
+Adjust for context:
 
-| Model | Core Mechanic | Best For |
-|-------|---------------|----------|
-| **Freemium** | Unlimited free tier with feature/usage limits; paid for premium | Products with clear free value and natural upgrade triggers |
-| **Free Trial** | Full access for limited time; must pay to continue | Products where full value requires full feature set |
-| **Ungated** | Use the product without any account creation | Products solving in-moment needs with high-volume traffic |
-| **Reverse Trial** | Full premium access initially, downgrade to free after trial period | Products where premium features demonstrate differentiated value |
-| **Self-Service Demo** | Pre-generated demo environment with sample data | Complex products where setup is a barrier to experiencing value |
+- **Data dependency.** If value needs the user's own data, ungated and demo only work as a preview. Pair them with a trial or freemium.
+- **Team value.** If value needs several people, the trial must include inviting the team.
+- **Competition.** In a commodity market with strong free alternatives, freemium is table stakes. A differentiated product can gate more.
+- **Cost to serve.** If free users are expensive to serve, prefer a trial over freemium or reverse trial.
+- **Audience.** Developers and consumers expect ungated or free tiers. Enterprise buyers expect a guided trial or demo.
+- **Intent by entry point.** Problem searches and social traffic suit ungated or demo. Brand searches and colleague referrals suit a trial or freemium. Sales-sourced prospects suit a demo or reverse trial. Different pages can offer different entry points.
 
-## Step-by-Step Methodology
+**Start with one model.** Add a second only when evidence shows it serves a different, valuable segment. Each extra model adds messaging, packaging and onboarding work. Never launch three at once without a dedicated growth team.
 
-### Step 1: Assess Product Characteristics
+## Designing the chosen model
 
-Before evaluating models, understand the product:
+Read `references/model-playbooks.md` for the chosen model's key decisions and failure modes.
 
-**Ask the user:**
-1. What is the core value the user gets? (One sentence)
-2. How quickly can a new user experience core value? (Minutes / hours / days)
-3. How much setup is needed before first value? (None / some / significant)
-4. Is the product primarily single-player or multiplayer?
-5. What data or content does the user need to bring? (None / some / their own data is essential)
-6. What is the competitive landscape? (Blue ocean / crowded / commodity)
-
-**Map to model-selection drivers:**
-
-| Driver | Assessment | Implication |
-|--------|-----------|-------------|
-| Time to value | Fast (<1 hour) | Favors freemium or ungated |
-| Time to value | Slow (days+) | Favors trial, reverse trial, or demo |
-| Setup complexity | Low | Favors freemium or ungated |
-| Setup complexity | High | Favors demo or reverse trial |
-| Data dependency | No data needed | Favors ungated |
-| Data dependency | User's own data essential | Favors trial or freemium |
-| Multiplayer value | Single-player works | All models viable |
-| Multiplayer value | Team needed for value | Favors trial with team invite |
-| Competitive intensity | High/commodity | Freemium as defensive moat |
-| Competitive intensity | Low/differentiated | Trial to demonstrate unique value |
-
-### Step 2: Evaluate Each Model
-
-Load the model evaluation frameworks:
-> Read `references/model-evaluation-frameworks.md`
-
-For each model, score fit (1-5) across 4 dimensions:
-1. **Value demonstration fit** — Can this model show the product's core value?
-2. **Audience match** — Does this model match how the target user wants to evaluate?
-3. **Conversion economics** — Will this model produce healthy conversion rates and unit economics?
-4. **Operational feasibility** — Can the team support this model (infrastructure, support, sales)?
-
-Then deep-dive into the top 2-3 scoring models using the detailed references:
-
-> Read `references/freemium-deep-dive.md`
-> Read `references/free-trial-deep-dive.md`
-> Read `references/ungated-deep-dive.md`
-> Read `references/reverse-trial-deep-dive.md`
-> Read `references/self-service-demo-deep-dive.md`
-
-### Step 3: Map Intents to Models
-
-Different users arrive with different intents. Different channels bring different intent levels. The right model may vary by entry point.
-
-**Intent spectrum:**
-
-| Intent Level | User Thinking | Best Model |
-|---|---|---|
-| **Browsing** | "What is this?" | Ungated preview or self-service demo |
-| **Evaluating** | "Could this work for me?" | Freemium or free trial |
-| **Ready to try** | "Let me test this with my use case" | Free trial or freemium |
-| **Ready to buy** | "I need this, show me pricing" | Direct purchase with trial safety net |
-| **In-moment need** | "I need to solve this RIGHT NOW" | Ungated (no barrier) |
-
-**Channel-to-intent mapping:**
-
-| Channel | Typical Intent | Suggested Model |
-|---|---|---|
-| Organic search (problem query) | Evaluating / In-moment | Ungated or freemium |
-| Organic search (product/brand query) | Ready to try | Free trial or freemium |
-| Paid search (category term) | Evaluating | Free trial or demo |
-| Social media ad | Browsing | Ungated or demo |
-| Referral from colleague | Ready to try | Free trial or freemium |
-| Product Hunt / review site | Evaluating | Free trial |
-| Sales outreach response | Evaluating | Demo or reverse trial |
-
-**Key insight:** You do NOT have to pick one model. Different pages can offer different entry points. But complexity increases with each additional model.
-
-### Step 4: Assess Multi-Model Complexity
-
-If the analysis suggests multiple models, evaluate the complexity:
-
-**Marketing complexity:** Can messaging clearly explain different entry points without confusing users?
-**Business complexity:** Can pricing/packaging support multiple models cleanly?
-**Operational complexity:** Can the team build and maintain multiple onboarding flows?
-
-**Complexity scoring:**
-
-| Factor | 1 Model | 2 Models | 3+ Models |
-|---|---|---|---|
-| Marketing | Simple | Manageable | Requires careful segmentation |
-| Business | Clean | Adds edge cases | Significant packaging work |
-| Operations | Straightforward | 1.5-2x effort | 2-3x effort, dedicated team needed |
-
-**Rule of thumb:** Start with 1 model. Add a second only when you have clear evidence it serves a different, valuable segment. Never launch with 3+ models unless you have a dedicated growth team.
-
-### Step 5: Design the Selected Model
-
-Once a model (or model combination) is selected, design the key parameters:
-
-**For Freemium:**
-- What features are free vs. paid?
-- What are the usage limits?
-- What triggers the upgrade prompt?
-- How generous is the free tier?
-
-**For Free Trial:**
-- What is the trial duration?
-- Is a credit card required upfront?
-- What happens when the trial ends?
-- Is there a trial extension option?
-
-**For Ungated:**
-- What can users do without signing up?
-- What triggers the signup prompt?
-- How is value preserved from ungated to signed-up state?
-- What data is captured pre-signup?
-
-**For Reverse Trial:**
-- How long is the premium period?
-- What is the downgrade experience?
-- How is the "you're losing these features" communicated?
-- What free tier do they land on after trial?
-
-**For Self-Service Demo:**
-- What pre-generated data/content is shown?
-- How realistic is the demo environment?
-- What is the demo-to-signup conversion flow?
-- How is the demo personalized?
-
-### Step 6: Produce Model Selection Brief
+## Output
 
 ```
-## Model Selection Brief
-
-### Product Context
-[2-3 sentences: product, target user, current state]
-
-### Recommended Primary Model: [Model Name]
-
-**Why this model:**
-- [Reason 1 — tied to product characteristic]
-- [Reason 2 — tied to audience intent]
-- [Reason 3 — tied to conversion economics or feasibility]
-
-**Model Design:**
-- [Key parameter 1]
-- [Key parameter 2]
-- [Key parameter 3]
-
-### Secondary Model (if applicable): [Model Name]
-**For segment/channel:** [which users/channels]
-**Why:** [rationale]
-
-### Models Considered and Rejected
-| Model | Score | Rejection Reason |
-|---|---|---|
-| [Model A] | X/5 | [why not] |
-| [Model B] | X/5 | [why not] |
-
-### Conversion Hypothesis
-"We believe [model] will achieve [X%] conversion because [evidence/reasoning]. We will validate this by [experiment/measurement]."
-
-### Implementation Plan
-Phase 1 (Weeks 1-4): [what to build]
-Phase 2 (Weeks 5-8): [what to optimize]
-Phase 3 (Weeks 9-12): [what to add/refine]
-
-### Metrics to Track
-- Primary: [conversion rate metric]
-- Secondary: [activation metric, revenue metric]
-- Guardrail: [metric that should NOT degrade]
-
-### Risks and Mitigations
-| Risk | Mitigation |
-|---|---|
-| [Risk 1] | [Mitigation] |
-| [Risk 2] | [Mitigation] |
+## Acquisition model
+**Recommendation:** [model] — [deciding reason]
+**Design:** [3–5 key choices: limits, trial length, card or not, end-of-trial behaviour, signup trigger]
+**Second model (if any):** [model] for [segment/entry point] because [evidence]
+**Rejected:** [model] — [one-line reason each]
+**Hypothesis:** We believe [model] will convert because [reason]. We'll know by [metric, guardrail, timeframe].
+**Risks:** [risk → mitigation]
 ```
 
-## Connection to Other Skills
+Never state an expected conversion rate unless the user has a sourced comparable. Measure your own baseline.
 
-| Skill | Handoff |
-|-------|---------|
-| `plg-orchestrator` | Receives diagnostic context, returns model recommendation |
-| `plg-readiness` | Model selection assumes PLG viability confirmed; decision-driver research informs which value to demonstrate in free experience |
-| `plg-revenue-analysis` | Selected model affects top-of-funnel drivers in the revenue tree |
-| Future activation skill | Model design directly determines onboarding and activation strategy |
+## Rules
 
-## Inputs Required
+- Don't copy a competitor's model. Their product characteristics differ.
+- Don't default to a trial because it's easiest. Check whether freemium or ungated fits better.
+- The moment a user hits a limit or loses a feature is the most important conversion moment. Design it.
+- Calibrate the free tier with decision drivers (from `plg-readiness`): free must prove the top driver; paid serves the next need.
 
-- Product description and core value proposition
-- Target user and buying dynamic
-- Current acquisition model (if any)
-- Time to value and setup complexity
-- Team size and engineering capacity
-- Traffic volume and channel mix (if known)
-- Decision-driver research results (if available from plg-readiness)
+## Next skills
 
-## Anti-Patterns
-
-- **Copying competitors:** Just because a competitor uses freemium does not mean you should. Their product characteristics may be different.
-- **Defaulting to free trial because it's easiest:** Free trial is often the lazy choice. Evaluate whether freemium or ungated would convert better for your specific product.
-- **Over-engineering multi-model from day 1:** Start with one model. Get it working. Add complexity only with evidence.
-- **Ignoring the downgrade experience:** For reverse trial and freemium, the moment a user hits a limit or loses a feature is the most important conversion moment. Design it carefully.
-- **Free tier too generous or too restrictive:** Both kill conversion. Use decision-driver research to calibrate what must be free (to prove value) vs. what should be paid (to drive upgrades).
+Design of the free/paid line → `monetisation-domain`. First-run experience → `activation-domain`. Fit not established → `plg-readiness`.

@@ -3,7 +3,7 @@
 **This is the file that stops the plugin from being wrong.** The single most common way to ruin a design
 system is to judge, build, or "optimize" it against a generic ideal of *minimal* — and thereby strip out
 complexity the product's domain legitimately requires, or bolt on complexity it will never use. Read this
-**before** scoring (review), changing (optimize), or building (create) anything.
+**before** reviewing, changing (optimize), or building (create) anything.
 
 The method: (1) classify the archetype, (2) read off its **complexity budget**, (3) judge every piece of
 complexity as **essential** (traceable to a real domain need — keep it) or **accidental** (redundant,
@@ -183,8 +183,8 @@ it's brand personality.
 
 ## Using the budget in each capability
 
-- **Review:** name the archetype and write *"judged as a `<archetype>`, I expect `<its budget>`."* Score
-  complexity as a gap (under-built) or bloat (over-built) only relative to that budget.
+- **Review:** name the archetype and write *"judged as a `<archetype>`, I expect `<its budget>`."* Call
+  complexity a gap (under-built) or bloat (over-built) only relative to that budget.
 - **Optimize:** run the essential-vs-accidental test on every proposed removal; flag anything touching the
   "Keep" list; require sign-off before removing anything that might be essential.
 - **Create:** pick the archetype first, write the complexity budget as an explicit contract, then build

@@ -1,0 +1,7 @@
+{
+  "name": "writing-review",
+  "version": "0.1.0",
+  "description": "Review a draft like a linter, not an editor. Five narrow reviewers (reader, structure, argument, evidence, prose) run in parallel, each quoting the exact words at fault, saying why it matters, and proposing the smallest fix. Then one merged, ranked review.",
+  "author": { "name": "Konstantin Valiotti", "email": "valiotti.konst@gmail.com" },
+  "keywords": ["writing", "editing", "review", "argument", "fact-check", "zinsser", "ai-writing"]
+}

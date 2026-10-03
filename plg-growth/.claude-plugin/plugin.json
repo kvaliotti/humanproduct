@@ -1,6 +1,6 @@
 {
   "name": "plg-growth",
-  "description": "Help product managers do Product-Led Growth work: assess readiness, analyze revenue drivers, choose acquisition models, run domain-specific AARMS analysis, design growth loops, operationalize product-led sales, and plan org transformation — all grounded in structured problem solving (issue trees, hypothesis trees, MECE, 80/20, Minto Pyramid) and proven PLG frameworks.",
-  "version": "1.1.0",
+  "description": "Product-led growth help for PMs: check PLG fit, find the revenue lever that matters, choose freemium vs trial vs ungated, diagnose acquisition, activation, retention, monetisation and satisfaction, design growth loops and product-led sales, plan experiments, set up data, and restructure the org. Short answers by default, full analysis on request, no invented benchmarks.",
+  "version": "2.0.0",
   "author": { "name": "Konstantin Valiotti" }
 }

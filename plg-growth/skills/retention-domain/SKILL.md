@@ -1,340 +1,84 @@
 ---
 name: retention-domain
-description: "Analyze retention across 4 components (activation, adoption, engagement, resurrection) using behavioral science frameworks (BJ Fogg B=MAT, COM-B) — diagnose churn, build retention work plans."
+description: "Diagnose and improve PLG retention and churn across four components: activation, adoption, engagement, resurrection. Use for: improve retention, reduce churn, why are users churning, retention analysis, retention curve, engagement analysis, engagement scoring, feature adoption, dormant users, reactivation, user resurrection, voluntary vs involuntary churn, dunning, behavioral design, BJ Fogg, B=MAT, COM-B, PLG retention plan."
 ---
 
 # Retention Domain
 
-## Purpose
+Help a PM find where retention breaks and what to do about it. Retention has four components. Find the weakest one, then the behavioural reason behind it.
 
-You are the retention specialist for the PLG Growth plugin. You help PMs analyze why users stay or leave, using a 4-component retention model and behavioral science frameworks. Retention is where PLG revenue compounds: a 5% improvement in retention can increase LTV by 25-95%.
+## Default: answer the question
 
-## When to Invoke
+Most requests are narrow ("how do I read a retention curve?", "is this churn voluntary?"). Answer directly in a few paragraphs, using the rules below only where they help. End with one line offering the full diagnosis. Run it only when asked or when a short answer would mislead.
 
-Trigger phrases:
-- "improve retention"
-- "reduce churn"
-- "retention analysis"
-- "engagement analysis"
-- "adoption analysis"
-- "user resurrection"
-- "retention strategy"
-- "why are users churning"
-- "PLG retention plan"
-- "BJ Fogg"
-- "behavioral design"
-- "COM-B"
-- "feature adoption"
-- "engagement scoring"
-- "dormant users"
-- "reactivation"
+## Full diagnosis (on request)
 
-## Quick Answer Mode
+1. **Split churn** into voluntary and involuntary. They need different fixes.
+2. **Read the curves:** overall, activated vs. not, by monthly cohort, by segment. Early drop points to activation. A slow decline points to engagement. A curve that never flattens points to weak product fit.
+3. **Find the weakest component** (below), using the user's own baseline and trend. Do not grade against generic benchmarks.
+4. **Name the behavioural constraint** for the target behaviour (below).
+5. **Pick fixes** for that component and constraint.
 
-Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good 90-day retention benchmark?", "how do I read a retention curve?", "is my churn voluntary or involuntary?" — just answer it directly and concisely, drawing on the frameworks below (four components, B=MAT, COM-B) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+Output, one page at most:
+- **Bottom line:** the single biggest retention opportunity, in one sentence.
+- **Churn split** and **weakest component**, each with its evidence.
+- **Behavioural constraint:** which of motivation / ability / trigger is binding, for which segment.
+- **Top 3 hypotheses:** component, hypothesis, evidence.
+- **What we don't know** and **next step** (one concrete action).
 
-Reach for the full methodology (the three operating modes) when the user wants a real retention diagnosis, churn root-cause analysis, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full retention analysis?"
+If the user wants a work plan, turn the hypotheses into items: hypothesis, component, the behavioural lever it targets, metric, guardrail, priority. Put involuntary-churn fixes and the earliest broken component first.
 
----
+## The four components
 
-## Structured Problem-Solving Backbone
+Fix the earliest broken component first. Better engagement can't save users who never activated. Resurrection can't save a product that doesn't retain.
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **retention**: decompose into the four retention components, and disaggregate into mathematical and behavioral drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+- **Activation** — first value. Non-activated users rarely stay. If this is broken, route to `activation-domain`.
+- **Adoption (breadth)** — which features users take up. Build a heatmap: features × retained vs. churned users, cell = % using it regularly. Read the quadrants:
+  - *Core* (high adoption, tied to retention): make sure everyone gets there.
+  - *Hidden gems* (low adoption, tied to retention): a discoverability problem, often the best lever.
+  - *Shiny objects* (high adoption, not tied to retention): don't over-invest.
+  - *Dead weight*: redesign or remove.
+  For a low-adoption feature, tell apart: don't know it exists (views vs. use), can't use it (starts vs. completions), don't see why (trials vs. repeats).
+- **Engagement (depth)** — frequency, recency, intensity. A simple score is a weighted mix of the three; tune the weights by how well the score predicts retention in their data, then use it to spot at-risk users. Levers: triggers matched to how often the need really occurs, integrations that put the product where users already work, covering more of the workflow, investment that grows switching cost (data, setup, teammates).
+- **Resurrection** — bringing dormant users back. Set the dormancy threshold from the product's natural use frequency, not a generic number. Tactics: "what's new since you left", "where you left off" (restore their state), one-click magic-link return, a short returning-user welcome rather than full onboarding. Stop after a few emails. If revived users churn again fast, the problem is value, not reminders. Spend most effort on prevention.
 
-## Three Operating Modes
+## Behavioural lens
 
-Ask the user what they need. If unclear, start with Analysis mode to diagnose where retention breaks down.
+Use **Fogg (B = MAT)** for one behaviour: behaviour happens when motivation, ability, and a trigger meet. Use **COM-B** (capability, opportunity, motivation) for patterns across users and organisations. Rules that matter:
 
----
+- Ability is set by its scarcest factor: time, money, physical effort, brain cycles, social deviance, non-routine.
+- If motivation and ability are both low, no trigger works. Raise one first.
+- Match the trigger to the user. *Spark* (adds motivation) for able but unmotivated users. *Facilitator* (makes it easier) for motivated users who struggle. *Signal* (plain reminder) for users who are both.
+- Design for the natural frequency of the need. Daily nudges for a monthly job annoy users and don't build retention.
+- Team adoption is an opportunity problem. Individual nudges fail if the team or org doesn't support the tool.
 
-### Mode 1: Analysis
+Interviews (retained and churned users): context ("walk me through the last time you used it"), motivation ("what would you miss, what would make you stop"), ability ("what's hard or slow"), trigger ("what makes you open it, what brings you back"). Tag each insight M/A/T, then find the binding one per segment.
 
-**Goal:** Build a retention issue tree, diagnose which component is weakest, apply behavioral science to find root causes.
+## Churn
 
-#### Step 1: Build the Retention Issue Tree (4 Components)
+**Involuntary churn first.** It is technical and cheap to fix. Principles:
+- Warn before cards expire and make updating one click from every message.
+- Retry failed payments on a schedule and notify after the first failure.
+- Never cancel immediately. Downgrade to free before cancelling, and keep the data.
+- Use a billing descriptor users recognise. Offer a backup payment method.
+- Track recovery at each step and tune the sequence.
 
-Load the component framework:
-> Read `references/four-components.md`
+**Voluntary churn.** Add a cancellation survey: one required single-choice question (too expensive / missing features / too hard to use / found an alternative / no longer need it / no time / other), one optional free-text question ("what could we have done?"). Then act on the top reason:
+- *Dissatisfied* (UX, bugs, missing features, support) → fix the top cause by volume.
+- *No longer need it* (project ended, seasonal) → find the next use case; for seasonal products, reactivate at the next cycle.
+- *Competitor* → differentiate; don't chase every feature.
+- *Price* → show value in-product, offer a lower tier instead of cancel, check the pricing metric (`monetisation-domain`).
 
-```
-Retention Success
-├── 1. Activation (leading indicator)
-│   ├── Is activation metric defined and predictive?
-│   ├── Activation rate by cohort → trend up or down?
-│   └── Connection: if activation is broken, fix it first (→ activation-domain)
-├── 2. Adoption (breadth)
-│   ├── How many features does a typical user use?
-│   ├── Feature adoption heatmap: which features are used, which are ignored?
-│   ├── Is there a core set of features that retained users always adopt?
-│   └── Barriers: discoverability, UX complexity, perceived value
-├── 3. Engagement (depth)
-│   ├── How frequently do users engage? (daily, weekly, monthly)
-│   ├── How intensely? (time in product, actions per session)
-│   ├── How recently? (recency distribution)
-│   ├── Engagement scoring model: frequency x recency x intensity
-│   └── Drivers: triggers, notifications, integrations, context coverage
-└── 4. Resurrection (recovery)
-    ├── How many users go dormant? (define dormancy threshold)
-    ├── Of dormant users, what % can be reactivated?
-    ├── Reactivation tactics: email, in-app, magic links, "What's new"
-    └── Returning user experience: "Where you left off"
-```
+**Pre-churn signals** that justify a proactive save: falling login frequency or session depth, a support ticket followed by silence, data export, removed integrations, removed teammates, downgrade questions.
 
-#### Step 2: Diagnose Component Weakness
+## Don't
 
-Ask for or help estimate these metrics:
+- Treat all churn as one number. Segment by tenure, plan, channel, activation, and engagement path.
+- Ship features as a retention strategy. Adoption of what exists matters more.
+- Do resurrection before prevention.
+- Trust DAU/MAU without asking whether the engagement is valuable.
+- Build artificial lock-in. Healthy switching costs come from delivered value.
 
-| Component | Key Metric | Healthy Benchmark | Signal of Problem |
-|-----------|-----------|-------------------|-------------------|
-| Activation | Activation rate | 20-40% | < 20% or declining |
-| Adoption | Features used per user | 3-5 core features | < 3 or concentrated on 1 |
-| Engagement | Weekly active / Monthly active (WAU/MAU) | > 40% for sticky products | < 25% |
-| Resurrection | Reactivation rate | 5-15% of dormant users | < 5% or no program exists |
+## Route elsewhere
 
-The weakest component is the priority. If unclear, use this order: Activation → Engagement → Adoption → Resurrection.
-
-#### Step 3: Apply Behavioral Science
-
-Load the behavioral science reference:
-> Read `references/behavioral-science.md`
-
-Apply TWO complementary models:
-
-##### BJ Fogg B=MAT Analysis
-
-For the target retention behavior (e.g., "user returns to product weekly"):
-
-**Motivation Assessment (3 axes):**
-- Pleasure/Pain: Does using the product feel rewarding? Or is it a chore?
-- Hope/Fear: Does it help career growth? Create FOMO if missed?
-- Social Acceptance/Rejection: Does the team use it? Is there social pressure?
-- PLUS: Natural use-case frequency -- how often does the need naturally arise?
-
-**Ability Assessment (6 factors, scarcest determines overall):**
-- Time: How long does a session take?
-- Money: Is the price barrier real?
-- Physical effort: How many clicks to get value?
-- Brain cycles: How much cognitive load?
-- Social deviance: Does using it go against team norms?
-- Non-routineness: How different from current workflow?
-
-**Trigger Assessment (3 types):**
-- Spark (for low-motivation users): success stories + CTA
-- Facilitator (for low-ability users): simplified flow + CTA
-- Signal (for ready users): reminder notification
-
-**Key insight:** Users must be above the Motivation-Ability threshold for triggers to work. If motivation AND ability are low, no trigger will help.
-
-##### COM-B Analysis
-
-For systemic understanding of retention patterns:
-
-**Capability:**
-- Physical: Do users have the tools/access to use the product regularly?
-- Psychological: Do users understand how to get value from ongoing use?
-
-**Opportunity:**
-- Physical: Does the work environment support regular use? (time, access)
-- Social: Do peers use it? Does the organization support it?
-
-**Motivation:**
-- Reflective: Do users consciously plan to use it? (beliefs, intentions)
-- Automatic: Is it a habit? (automatic responses, impulses)
-
-**Positive feedback loop:** Doing the behavior → increases capability → increases motivation → more behavior.
-
-#### Step 4: Voluntary vs. Involuntary Churn Analysis
-
-Load churn levers:
-> Read `references/churn-levers.md`
-
-Separate churn into:
-- **Voluntary:** User chose to leave (dissatisfied, found alternative, do not need anymore, price)
-- **Involuntary:** User left due to payment failure, technical issue, or administrative reason
-
-This split fundamentally changes the intervention strategy. Involuntary churn is often 20-40% of total churn in SaaS and is much easier to fix.
-
-#### Step 5: Behavioral Science Research (when deeper diagnosis needed)
-
-Five use cases for behavioral research:
-1. **Drivers of choice:** Why did users choose this product? What keeps them?
-2. **Onboarding/activation:** What motivates first actions? (connect to activation-domain)
-3. **Adoption blockers:** Why do users not use certain features?
-4. **Engagement drivers:** What triggers return visits? What makes sessions valuable?
-5. **Preventing undesired behavior:** What leads to disengagement or churn?
-
-**Interview guide structure:**
-- Context: "Walk me through your typical day when you use [product]"
-- Motivation: "What makes you want to use it? What would make you stop?"
-- Ability: "What is hard about using it? What takes too long?"
-- Trigger: "What reminds you to use it? What prompts you to open it?"
-
-Analysis: List insights by M/A/T (or C/O/M) → find patterns → segment by context → prioritize by business value.
-
-#### Step 6: Reactivation Analysis
-
-For dormant users:
-- Define dormancy threshold (product-specific: 14 days? 30 days? 60 days?)
-- Size the dormant pool
-- Analyze: what do dormant users have in common? (channel, segment, behavior)
-- Assess current reactivation efforts and their effectiveness
-
-#### Step 7: Synthesize (Minto Pyramid)
-
-```
-## Retention Analysis
-
-### Bottom Line
-[One sentence: what is the single biggest retention opportunity?]
-
-### Component Assessment
-| Component | Status | Key Finding |
-|-----------|--------|-------------|
-| Activation | Green/Yellow/Red | [finding] |
-| Adoption | Green/Yellow/Red | [finding] |
-| Engagement | Green/Yellow/Red | [finding] |
-| Resurrection | Green/Yellow/Red | [finding] |
-
-### Behavioral Diagnosis
-[Fogg: Which of M/A/T is the binding constraint?]
-[COM-B: Which of C/O/M is the systemic gap?]
-
-### Top 3 Hypotheses
-1. [Hypothesis] -- Component: [X] -- Evidence: [Y]
-2. [Hypothesis] -- Component: [X] -- Evidence: [Y]
-3. [Hypothesis] -- Component: [X] -- Evidence: [Y]
-
-### Key Unknowns
-[What we need to learn]
-
-### Recommended Next Step
-[Single concrete action]
-```
-
----
-
-### Mode 2: Data Analysis
-
-**Goal:** Test hypotheses at specific issue tree branches quantitatively.
-
-#### Retention Curves
-- Overall retention curve (% of cohort still active at day N)
-- Activated vs. non-activated retention curves (should diverge significantly)
-- Retention by cohort (monthly) -- is retention improving?
-- Retention by segment (channel, use case, firmographics)
-
-#### Feature Adoption Heatmap
-- Rows: features. Columns: user segments or cohorts.
-- Cell value: % of users who used the feature at least once (or regularly).
-- Identify: which features do retained users use that churned users do not?
-- Identify: which features are undiscovered (low adoption, high satisfaction when used)?
-
-#### Engagement Depth Distribution
-- Frequency: sessions per week distribution (what % are daily? weekly? monthly?)
-- Recency: days since last session distribution
-- Intensity: actions per session distribution
-- Composite engagement score: weighted combination of all three
-
-#### Churn Analysis
-- Voluntary vs. involuntary split
-- Churn rate by cohort, segment, plan type
-- Time-to-churn distribution: when do most users churn?
-- Pre-churn behavioral signals: what actions (or inactions) precede churn?
-
-#### Engagement Scoring Model
-Help the user build a simple engagement score:
-```
-Engagement Score = w1 * frequency_score + w2 * recency_score + w3 * intensity_score
-
-Where:
-- frequency_score = sessions_per_week / benchmark_sessions
-- recency_score = max(0, 1 - days_since_last / dormancy_threshold)
-- intensity_score = actions_per_session / benchmark_actions
-- Weights (w1, w2, w3) tuned by correlation with retention
-```
-
-#### Customer Health Scoring
-Combine engagement score with other signals:
-- Engagement score (behavioral)
-- Support ticket frequency (satisfaction proxy)
-- Feature adoption breadth (stickiness proxy)
-- Expansion signals (added seats, upgraded plan)
-- Contraction signals (removed seats, downgraded, reduced usage)
-
-#### Resurrection Campaign Performance
-- Reactivation email open rates, click rates, reactivation rates
-- Reactivated user retention (do they stay after coming back?)
-- Best-performing reactivation messages and timing
-- Cost per reactivation vs. cost of new acquisition
-
----
-
-### Mode 3: Work Plan
-
-**Goal:** Generate hypothesis-driven work items organized by retention component.
-
-Load the shared work plan skeleton, then the retention-specific examples:
-> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
-> Read `references/work-plan-examples.md` (retention sample plans by component with Fogg B=MAT / COM-B levers, checklist additions)
-
-**Determine work plan type:**
-
-| User Situation | Work Plan Type |
-|---------------|----------------|
-| Does not know why users churn | **Research Plan** -- behavioral interviews and data analysis |
-| Knows the problem, needs solutions | **Experiment Backlog** -- prioritized by component |
-| Needs a strategic retention program | **OST** -- objectives by component with strategies and tactics |
-
-Organize all work items by the 4 retention components. Integrate behavioral science into experiment design: every experiment should specify which element of B=MAT or COM-B it targets.
-
----
-
-## Beyond the Core Framework
-
-### Hook Model (Trigger → Action → Variable Reward → Investment)
-When engagement is the weak component:
-- **Trigger:** What brings the user back? External (email, notification) or internal (habit, need)?
-- **Action:** What is the simplest behavior upon return?
-- **Variable Reward:** What unpredictable positive outcome keeps it interesting?
-- **Investment:** What does the user put in that increases switching cost? (data, preferences, content, network)
-
-Assessment: Products with strong investment loops have structural retention advantages.
-
-### Switching Costs as Retention
-- **Data lock-in:** User's data lives in the product and is hard to export
-- **Workflow lock-in:** Processes and automations built on the product
-- **Network lock-in:** Team/collaborators are in the product
-- **Learning lock-in:** User invested time learning the product
-- Healthy switching costs are a byproduct of value delivery, not artificial barriers
-
-### Cohort-Based Analysis Priority
-- **First-month retention is the highest leverage.** Most churn happens in the first 30 days.
-- Week 1 retention: proxy for activation quality
-- Week 2-4 retention: proxy for engagement loop strength
-- Month 2-3 retention: proxy for product-market fit
-- Month 6+: stable retention floor (this is your "natural retention rate")
-
-### Multi-Persona Retention
-Different personas have different retention drivers:
-- Admins: retained by team adoption and ROI visibility
-- Power users: retained by depth, advanced features, and customization
-- Casual users: retained by habit triggers and low-effort value
-- Each persona needs its own behavioral analysis and intervention strategy
-
-## Connection to Other Skills
-
-| Skill | When to Route |
-|-------|---------------|
-| `activation-domain` | Activation component is the weak link (fix activation before retention) |
-| `acquisition-domain` | Retention is fine but growth is limited by top-of-funnel |
-| `plg-revenue-analysis` | Need to understand retention in context of revenue impact |
-| `plg-orchestrator` | User needs broader PLG diagnosis |
-
-## Anti-Patterns to Watch For
-
-- **Treating all churn the same:** Voluntary and involuntary churn require completely different interventions.
-- **Feature shipping as retention strategy:** More features does not equal more retention. Adoption of existing features matters more.
-- **Ignoring behavioral science:** "Users should just use the product more" is not a strategy. Understand M/A/T barriers.
-- **Resurrection before prevention:** Fix the leak before trying to refill the bucket.
-- **Vanity engagement metrics:** DAU/MAU without understanding quality of engagement is misleading.
-- **One retention number:** A single retention rate hides segment, cohort, and component differences.
+Activation is the weak link → `activation-domain`. Growth limited by top of funnel → `acquisition-domain`. Need revenue impact → `plg-revenue-analysis`. Broader diagnosis → `plg-orchestrator`.

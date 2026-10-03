@@ -1,313 +1,77 @@
 ---
 name: activation-domain
-description: "Define, measure, and improve the activation metric and time-to-value — covers aha moment identification, CSI scoring, activation interviews, barrier diagnosis, and onboarding optimization."
+description: "Define, measure, and improve PLG activation and time-to-value. Use for: define activation metric, find the aha moment, first value moment, improve activation, activation rate, time to value, onboarding optimization, onboarding drop-off, setup completion rate, users sign up but don't engage, activation analysis, PLG activation plan."
 ---
 
 # Activation Domain
 
-## Purpose
+Help a PM define the activation metric, find why users don't reach it, and pick the few fixes that matter. Activation = the earliest product event that predicts a user will retain or pay.
 
-You are the activation specialist for the PLG Growth plugin. You help PMs define their activation metric (if missing), diagnose barriers to activation, and build work plans to improve time-to-value. Activation is the most leveraged point in PLG: users who activate retain, monetize, and refer. Users who do not activate are lost.
+## Default: answer the question
 
-## When to Invoke
+Most requests are narrow ("how do I find my aha moment?", "setup before or after first value?"). Answer directly in a few paragraphs, using the rules below only where they help. End with one line offering the full analysis. Run the full analysis only when the user asks for it or a short answer would mislead.
 
-Trigger phrases:
-- "define activation metric"
-- "improve activation"
-- "time to value"
-- "activation rate"
-- "onboarding optimization"
-- "first value moment"
-- "aha moment"
-- "activation analysis"
-- "PLG activation plan"
-- "users are signing up but not engaging"
-- "onboarding drop-off"
-- "setup completion rate"
+## Full analysis (on request)
 
-## Quick Answer Mode
+1. **Metric.** If there is none, find it (below). If there is one, check it predicts retention or payment.
+2. **Funnel.** Step-by-step from signup to the activation event. Find the step that loses the most users in absolute numbers.
+3. **Barriers.** Classify the big drop-offs as don't know / can't / don't want (below).
+4. **Fixes.** One or two tactics per barrier, each as a testable hypothesis.
 
-Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "what's a good activation rate?", "how do I define my aha moment?", "should setup come before or after first value?" — just answer it directly and concisely, drawing on the frameworks below only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+Output, one page at most:
+- **Bottom line:** the single biggest activation opportunity, in one sentence.
+- **Activation metric:** the event, threshold, window, the evidence for it, and the current rate.
+- **Top 3 barriers:** barrier type, the step, users lost there.
+- **Hypotheses:** "If we change X, activation rises because Y."
+- **What we don't know** and **next step** (one concrete action).
 
-Reach for the full methodology (the three operating modes) when the user wants a real activation analysis, metric definition, or work plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to run the full activation analysis?"
+If the user wants a work plan, turn the hypotheses into items: hypothesis, segment, experiment, metric, guardrail, priority by users affected.
 
----
+## Finding the activation metric
 
-## Structured Problem-Solving Backbone
+A good metric is predictive (users who do it retain much better), actionable (the team can move it), early (happens in the first days, so you can intervene), and observable (one tracked event).
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **activation**: decompose the signup→aha path, and disaggregate activation rate into mathematical and behavioral drivers. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+**Quant: the CSI / aha score.** For every meaningful event × count threshold (1, 2, 3, 5, 10) × time window (7, 14, 30 days after signup), build a 2×2 against a retention outcome (for example, active in month 2):
+- TP = did it and retained, FP = did it and churned, FN = didn't and retained.
+- `CSI = TP / (TP + FP + FN)` (Jaccard index). Rank all combinations; the top ones are candidates.
+- Use rank, not an absolute cut-off. If the top few are close, let interviews decide.
+- Cross-check with information value or a random-forest feature ranking if the data allows. Treat these as discovery tools, not proof.
+- Check the winner holds across several monthly cohorts, not one.
 
-## Three Operating Modes
+**Qual: activation interviews.** Talk to users who activated recently, fit the ICP, and chose the product themselves. Stop when new interviews add no new themes. Three parts:
+- **Job:** what were you trying to get done, what did you use before, what made you switch now?
+- **Aha:** when did it first feel valuable, what exactly happened on screen, how long after signup, where did you almost give up?
+- **Criteria:** what would make you stop, what would you use instead, how would you describe us to a colleague?
 
-Ask the user what they need. If unclear, assess: do they have an activation metric defined? If no, start with Analysis mode Step 2 (Metric Identification). If yes, start with Analysis mode Step 3 (Barrier Analysis).
+Map each aha story to a tracked event. The most common one is your hypothesis. If you have too few users for stable counts, start from interviews and validate with CSI later.
 
----
+**Validate.** Activated users must retain and pay clearly better than non-activated. If the gap is small, the metric is a proxy; go back.
 
-### Mode 1: Analysis
+## Barriers: don't know / can't / don't want
 
-**Goal:** Build an activation issue tree, identify the activation metric, diagnose barriers, find highest-leverage improvements.
+| Type | Signals | Typical fixes |
+|---|---|---|
+| **Don't know** — unclear what to do or why | Signup then nothing; tours skipped; help searches in session 1; bounce from empty state | Make the first screen match the promise that acquired them; one clear first action; short checklist of real actions (not busywork); contextual tips |
+| **Can't** — blocked by friction | Sharp drop at one step; "how do I" tickets; failed imports or integrations; long TTV | Defer every step not needed for first value; smart defaults; templates with sample data; human help at the stuck step |
+| **Don't want** — not motivated yet | Browse without committing; low completion despite easy steps; empty state bounce | Pre-generated "wow" from their own data; a first win that takes minutes; sample content; invite a teammate early if the product is better with one |
 
-#### Step 1: Build the Activation Issue Tree
+Fix the step that loses the most users first, whatever the barrier type. A small lift at a busy step beats a big lift at a quiet one.
 
-```
-Activation Success
-├── 1. Is the activation metric defined?
-│   ├── No → Run metric identification workflow (Step 2)
-│   └── Yes → Validate: is it predictive of retention and monetization?
-├── 2. Is the activation rate adequate?
-│   ├── Benchmark: 20-40% is typical for PLG SaaS
-│   ├── Below benchmark → Barrier analysis (Step 3)
-│   └── At/above benchmark → Optimize TTV and segment analysis
-├── 3. Is time-to-value competitive?
-│   ├── Minutes: excellent for self-serve PLG
-│   ├── Hours: acceptable for complex products
-│   ├── Days/weeks: problematic, needs journey redesign
-│   └── Compare to competitor TTV
-└── 4. Activation → Engagement handoff
-    ├── Do activated users stay engaged?
-    ├── Is there a post-activation drop-off?
-    └── Does activation predict monetization?
-```
+## Rules worth keeping
 
-#### Step 2: Activation Metric Identification
+- **Setup is not activation.** Completing onboarding means nothing if no value was delivered. Let users get value before you ask for setup.
+- **Speed matters as much as rate.** A high activation rate reached slowly often loses to a lower rate reached fast.
+- **Segments differ.** Channel, job, role, and intent can each have a different aha moment. Admin and end user, creator and viewer, usually need separate metrics.
+- **Activation ends nothing.** If activated users still churn, the gap is the hand-off to habit (what happens after the aha). Route to `retention-domain`.
+- **Expect quarters, not weeks.** Segment → find supporting behaviours per segment → experiment → repeat.
+- **Good enough now beats perfect later.** If the quant is inconclusive, ship a metric from interviews and revisit.
 
-This is the most critical step. An activation metric must be:
-- **Predictive:** Users who do it retain/monetize at significantly higher rates
-- **Actionable:** The product team can influence whether users do it
-- **Timely:** It happens early enough to intervene (ideally within 14 days)
-- **Observable:** It is a specific, measurable product event
+## Don't
 
-Load the methodology reference:
-> Read `references/metric-identification.md`
+- Pick a vanity metric that is easy to hit but doesn't predict retention.
+- Polish onboarding UI before the metric is defined.
+- Use fake urgency to push users through setup.
 
-**Two parallel tracks:**
+## Route elsewhere
 
-##### Track A: Quantitative (data-driven)
-Run these methods in order of reliability:
-
-1. **CSI/Aha Score** (primary method): For each product event at each volume threshold, build a 2x2 table against retention. Score = TP / (TP + FP + FN). Highest-scoring event x threshold is the activation candidate.
-
-2. **Information Value / Weight of Evidence:** Adapted from credit scoring. Bins events by volume, calculates WoE per bin, sums to IV. IV > 0.3 = strong predictor.
-
-3. **Random Forest Feature Importance:** Train a model to predict retention using early events as features. Top features by importance are activation candidates.
-
-4. **Correlation Analysis:** Simple correlation between event completion and retention/monetization. Quick but less reliable than above methods.
-
-Present results as a ranked table:
-| Event | Volume Threshold | CSI Score | IV | RF Importance | Correlation | Verdict |
-|-------|-----------------|-----------|-----|---------------|-------------|---------|
-
-##### Track B: Qualitative (interview-driven)
-Load the interview guide:
-> Read `references/activation-interviews.md`
-
-Run 3-pillar interviews with 15-20 users who completed the target action within 14 days, fit ICP, and are primary decision-makers:
-1. **JTBD pillar:** What were they trying to accomplish? What triggered the search?
-2. **Aha pillar:** When did they first feel the product was valuable? What happened?
-3. **Decision criteria pillar:** What would make them stop? What do they compare you to?
-
-##### Synthesis: Linear Customer Journey Map
-Combine quant and qual into a journey map:
-
-| | Awareness | Signup | Setup | First Action | Aha Moment | Habit |
-|---|-----------|--------|-------|-------------|------------|-------|
-| **Context** | | | | | | |
-| **Goal** | | | | | | |
-| **Emotion** | | | | | | |
-| **Decision Criteria** | | | | | | |
-| **Predictive Actions** | | | | | | |
-
-The "Aha Moment" column is your activation metric. The "Predictive Actions" row contains supporting behaviors.
-
-#### Step 3: Activation Barrier Analysis
-
-Load the barrier framework:
-> Read `references/activation-barriers.md`
-
-Diagnose which barrier type is dominant:
-
-**Category 1: Don't Know**
-- Users do not understand what to do or why
-- Signal: high signup-to-nothing rate, tooltip skip, help article searches
-- Root cause: misaligned expectations from acquisition, unclear product UI
-
-**Category 2: Can't**
-- Users understand but are blocked by friction
-- Signal: drop-off at specific steps, support tickets about "how to", long TTV
-- Root cause: too many required steps, technical complexity, missing integrations
-
-**Category 3: Don't Want**
-- Users understand and can, but are not motivated
-- Signal: signup but no action, low engagement with empty state, "I'll come back later"
-- Root cause: cold start problem, no immediate value, no compelling first action
-
-For each barrier found, map to specific onboarding steps and prioritize by drop-off volume.
-
-#### Step 4: Map the Full Journey
-
-Onboarding → Activation → Engagement journey:
-- Where does onboarding end and activation begin?
-- Is there a "setup tax" (required steps before value)?
-- How does the product transition from "guided" to "self-directed"?
-
-#### Step 5: Synthesize (Minto Pyramid)
-
-```
-## Activation Analysis
-
-### Bottom Line
-[One sentence: what is the single biggest activation opportunity?]
-
-### Activation Metric
-[The metric, evidence for it, and current rate]
-
-### Top 3 Barriers (ranked by drop-off volume)
-1. [Barrier type + specific step] -- Impact: [% of users affected]
-2. [Barrier type + specific step] -- Impact: [% of users affected]
-3. [Barrier type + specific step] -- Impact: [% of users affected]
-
-### Hypotheses
-1. [If we fix X, activation rate will increase by Y% because Z]
-2. [If we fix X, activation rate will increase by Y% because Z]
-
-### Key Unknowns
-[What we still need to learn]
-
-### Recommended Next Step
-[Single concrete action]
-```
-
----
-
-### Mode 2: Data Analysis
-
-**Goal:** Test hypotheses at specific issue tree branches quantitatively.
-
-#### CSI/Aha Score Calculation
-> Read `references/metric-identification.md` for detailed methodology
-
-Walk the user through:
-1. List all product events (actions users can take)
-2. For each event, define volume thresholds (1x, 2x, 3x, 5x, 10x in first 7/14/30 days)
-3. Build 2x2 contingency tables against 30/60/90-day retention
-4. Calculate CSI = TP / (TP + FP + FN) for each combination
-5. Rank by CSI score. Top scorers are activation metric candidates.
-
-#### Activation Rate by Segment
-- By cohort (monthly, to track trends)
-- By acquisition channel (quality differs by source)
-- By user segment (role, company size, use case)
-- By onboarding path (if multiple paths exist)
-
-#### Time-to-Value Distribution
-- Median TTV for activated users
-- TTV distribution (what % activate in 1 day? 3 days? 7 days? 14 days?)
-- TTV by segment
-- Identify the "activation window": after what point do remaining users almost never activate?
-
-#### Drop-off Funnel
-- Step-by-step conversion from signup to activation
-- Identify the single biggest absolute drop-off
-- Identify the single biggest relative drop-off (highest % loss)
-- Compare drop-off pattern across segments
-
-#### Predictive Analysis
-- Correlation: activated user retention at 30/60/90 days vs. non-activated
-- Correlation: activated user monetization rate vs. non-activated
-- If difference is < 2x, the activation metric may not be predictive enough -- revisit metric identification
-
----
-
-### Mode 3: Work Plan
-
-**Goal:** Generate hypothesis-driven work items using the 3-step iterative framework.
-
-Load the shared work plan skeleton, then the activation-specific examples:
-> Read `${CLAUDE_PLUGIN_ROOT}/references/work-plan-template.md` (generic skeleton: plan formats, work-item format, priority, work-type definitions, checklist)
-> Read `references/work-plan-examples.md` (3-step framework detail, activation sample plans, checklist additions)
-
-#### The 3-Step Iterative Framework
-
-This is not a one-time exercise. It is a cycle that repeats every 2+ quarters.
-
-**Step 1: Segment the user base**
-Segment by:
-- Acquisition channel (different channels, different activation paths)
-- JTBD / use case (different jobs, different aha moments)
-- Firmographics (company size, industry, role)
-- Intent level (high-intent vs. casual exploration)
-
-**Step 2: Identify supporting behaviors per segment**
-For each segment, re-run the activation analysis:
-- Which events predict retention for THIS segment?
-- Is the activation metric the same or different across segments?
-- What is the activation rate per segment?
-
-Each finding is formatted as:
-> "Users who [action] within [timeframe] are [X]% more likely to [target action]"
-
-**Step 3: Improve supporting behaviors through experiments**
-For each supporting behavior identified, design experiments to increase its occurrence.
-
-**Minimum 2 full quarters per cycle.** Activation improvements compound slowly. Do not expect results in weeks.
-
-#### Adaptive Work Plan Type
-
-| User Situation | Work Plan Type |
-|---------------|----------------|
-| No activation metric defined | **Research Plan** -- metric identification is the priority |
-| Metric defined but rate is low | **Experiment Backlog** -- fix barriers and test improvements |
-| Metric defined, rate is OK, wants optimization | **OST** -- strategic framework for TTV reduction and segment optimization |
-
-Load lever details:
-> Read `references/activation-levers.md`
-
----
-
-## Beyond the Core Framework
-
-### Habit Formation Overlay (Hook Model)
-When a user is activated but not yet retained, the Hook Model applies:
-- **Trigger:** External (notification, email) or internal (boredom, need)
-- **Action:** The simplest behavior in anticipation of reward
-- **Variable Reward:** Unpredictable positive outcome (social, personal, material)
-- **Investment:** User puts something in (data, preferences, content) that makes the product more valuable
-
-Assessment: Does the product have a habit loop? If not, activated users will churn despite reaching aha moment.
-
-### Setup vs. Activation Separation
-- **Setup:** Required configuration steps (connect account, import data, set preferences)
-- **Activation:** The moment of value delivery
-- These are NOT the same. Minimize setup; maximize speed to activation.
-- Best practice: let users experience value BEFORE requiring setup (reverse the order).
-
-### Multi-Persona Activation
-Different personas may have different activation metrics:
-- Admin who sets up the tool vs. end user who uses it daily
-- Creator who makes content vs. consumer who views it
-- Each persona needs its own activation metric, barriers analysis, and improvement plan
-
-### Activation to Retention Handoff
-Activation is not the end. The gap between "first value" and "habitual use" is where many users are lost.
-- Post-activation engagement triggers (what happens after aha?)
-- Milestone celebrations (acknowledge progress)
-- Deepening features (introduce advanced capabilities)
-- Social connection (connect to team, community, other users)
-
-## Connection to Other Skills
-
-| Skill | When to Route |
-|-------|---------------|
-| `acquisition-domain` | Activation is fine but traffic/signups are the bottleneck |
-| `retention-domain` | Users activate but do not retain -- handoff problem |
-| `plg-revenue-analysis` | Need to understand activation in context of full revenue model |
-| `plg-orchestrator` | User needs broader PLG diagnosis |
-
-## Anti-Patterns to Watch For
-
-- **Vanity activation metric:** Choosing a metric that is easy to hit but does not predict retention. The metric MUST be predictive.
-- **Setup = activation:** Counting "completed onboarding" as activation when no value was delivered.
-- **One-size-fits-all:** Using the same activation metric for all user segments when different segments have different aha moments.
-- **Optimizing onboarding UI before defining the metric:** Know WHAT to optimize before HOW.
-- **Ignoring time-to-value:** A 90% activation rate in 30 days is worse than 60% in 3 days for most PLG products.
-- **Analysis paralysis on metric identification:** If quant methods are inconclusive, use qualitative insights. A good-enough metric now beats a perfect metric in 3 months.
+Signups are the bottleneck → `acquisition-domain`. Activated users churn → `retention-domain`. Need the revenue impact → `plg-revenue-analysis`. Broader diagnosis → `plg-orchestrator`.

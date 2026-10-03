@@ -1,286 +1,55 @@
 ---
 name: plg-data-setup
-description: "Design data infrastructure for PLG execution using the TASE framework (Track, Analyse, Sync, Experiment) — tracking plans, dashboards, data flows, and experimentation infrastructure."
+description: "Find the data gaps that block PLG work, using TASE (Track, Analyse, Sync, Experiment): account-level identity, the PLG-critical events, product-to-CRM and product-to-marketing syncs, and experimentation infrastructure. Use for: PLG data setup, TASE framework, PLG analytics, data-driven PLG, PLG instrumentation, sync product data to CRM, PLG dashboards, data maturity assessment, analytics tool selection for PLG. For a full tracking plan, event naming, or a tracking audit, use the event-tracking plugin."
 ---
 
 # PLG Data Setup
 
-## Purpose
+Find which data gaps block PLG work, and design what's missing. This skill does not write tracking code, and it is not a tracking-plan tool.
 
-You are the data infrastructure specialist for the PLG Growth plugin. You help PMs design the tracking, analytics, data sync, and experimentation infrastructure required to execute a product-led growth strategy. Without proper data, every other PLG skill operates on guesswork.
+**Tracking plans live elsewhere.** For event names, properties, naming conventions, a full tracking plan, an audit of existing tracking, or platform-specific payloads, use the `event-tracking` plugin (`/event-tracking:event-definition` to design events, `/event-tracking:tracking-plan-review` to audit existing tracking). It starts from analytics use cases and matches the team's existing naming. If it isn't installed, still design events "decision first": every event must answer a question someone will act on.
 
-You do NOT implement tracking code or build dashboards. You design what to track, what to measure, how data should flow, and what infrastructure is needed.
+## 1. Assess gaps with TASE
 
-## When to Invoke
+For each dimension, list what is **missing** and the **PLG decision or skill it blocks**. Don't give maturity scores.
 
-Trigger phrases:
-- "PLG data setup"
-- "TASE framework"
-- "what should we track"
-- "PLG analytics"
-- "data-driven PLG"
-- "tracking plan"
-- "PLG instrumentation"
-- "sync data for PLG"
-- "PLG dashboards"
-- "data maturity assessment"
-- "analytics tool selection"
-- "event tracking for PLG"
-- "metrics definition"
+- **Track:** Can you follow a person from anonymous visitor to signup to paid? Does every event carry an `account_id` (essential for B2B)? Are the PLG-critical events below tracked? Is there firmographic and UTM enrichment?
+- **Analyse:** Is activation defined (`activation-domain`)? Can you cut retention and conversion by signup cohort? Is there a revenue driver tree view (`plg-revenue-analysis`)? Does anyone look at these weekly?
+- **Sync:** Can sales see account usage in the CRM? Can marketing trigger messages from product behaviour? Do CRM outcomes (won or lost) flow back to the warehouse, so PQL rules can be validated?
+- **Experiment:** Are there feature flags? Is there assignment at the account level? Is there a way to analyze results and a log of past tests?
 
-## Structured Problem-Solving Backbone
+## 2. PLG-critical events
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **PLG data (TASE)**: decompose data requirements, disaggregate each metric into the events/properties it requires, and instrument the 20% of events that drive 80% of analytical value. Every tracking event must support a specific decision or experiment. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+These are the events that PLG skills depend on. Check that they exist. Leave names and properties to the team's convention or to `event-tracking`.
 
-## Three Operating Modes
+- Identity: signup (with method and source), anonymous-to-known link, and account created (with company domain)
+- Activation: the defined activation action, with time since signup
+- Monetization intent: paywall or limit hit (which limit), pricing page viewed, trial started
+- Collaboration: invite sent, invite accepted, integration added or removed
+- Payment lifecycle: subscription created, upgraded, downgraded, seat added, cancelled (with reason), payment failed, payment recovered. Reconcile these against the billing system.
+- Account properties: plan, MRR, user count, department count
 
-Ask the user what they need. If unclear, default to Assessment mode.
+## 3. Sync design
 
----
+| Flow | Purpose | Freshness |
+|---|---|---|
+| Product → analytics | Funnels, cohorts, activation | Near real time |
+| Product → CRM (aggregated by account) | PQA and PQL flags, usage context for sales | Real time for triggers; daily for the rest |
+| Product → marketing automation | Behaviour-triggered email and in-app messages | Real time |
+| Product → warehouse | Joins across sources, revenue reporting, scoring models | Hourly or streaming |
+| CRM → warehouse | Deal outcomes to validate PQL rules | Daily |
+| CRM → product | Show the account owner, or "contact sales" vs "upgrade" | Daily or on change |
 
-### Mode 1: Data Maturity Assessment
+For each missing flow, name the owner and the transform needed (for example, events rolled up into account-level scores).
 
-**Goal:** Assess current data infrastructure against TASE requirements and produce a gap analysis with prioritized recommendations.
+## 4. Ongoing data quality
 
-#### Step 1: Load the TASE Framework
+Check weekly: sudden swings in event volume, missing values on required properties, events that never resolve to a known user, gaps between payment events and billing, duplicate events, and free-text properties that should be fixed lists (or that leak PII).
 
-> Read `references/tase-framework.md`
+## Tool choice (only if asked)
 
-#### Step 2: Assess Current State
+The must-haves for PLG are: user- and account-level behaviour tracking, cohort retention, funnels you can break down by property, export or API access for syncs, and a feature-flag or experiment integration. Choose based on what the team already uses and can run without a dedicated analytics engineer.
 
-For each TASE dimension, ask the user:
+## Output
 
-**Track:**
-- What events do you currently track? (List or describe)
-- What tools capture these events? (Segment, Amplitude, Mixpanel, custom, etc.)
-- Do you have user identity resolution? (Can you connect anonymous → signed-up → paid?)
-- Do you track account-level (not just user-level) properties?
-- Do you have enrichment data? (Firmographic, UTM, referral source)
-
-**Analyse:**
-- What dashboards exist today? Which AARMS stages are covered?
-- Can you run cohort analysis? (Retention by signup week, revenue by cohort)
-- Can you measure activation rate? Is the activation metric defined?
-- Do you have a revenue driver tree dashboard?
-- Who looks at dashboards and how often?
-
-**Sync:**
-- Does product data flow to your CRM? (Can sales see product usage?)
-- Does product data flow to marketing tools? (Can email be triggered by behavior?)
-- Does CRM data flow back to the product? (Can the product show sales context?)
-- Do you have a data warehouse? Is it used for analysis?
-
-**Experiment:**
-- Do you have feature flags?
-- Can you run A/B tests? What tool?
-- Do you have statistical analysis capabilities?
-- How many experiments did you run last quarter?
-
-#### Step 3: Score Each Dimension
-
-Score each TASE dimension 1-5:
-
-| Score | Track | Analyse | Sync | Experiment |
-|-------|-------|---------|------|------------|
-| 1 | No tracking or basic pageviews only | No dashboards | No data flows between tools | No experiments |
-| 2 | Some events, inconsistent naming, gaps | Ad-hoc queries, no dashboards | Manual data exports between tools | Occasional manual tests |
-| 3 | Core events tracked, naming convention exists | Dashboards for some AARMS stages | One-way sync (product -> analytics) | Feature flags exist, occasional A/B tests |
-| 4 | Comprehensive events, properties, enrichment | Full AARMS dashboards + cohort analysis | Bi-directional sync (product <-> CRM <-> marketing) | Regular A/B tests with proper design |
-| 5 | Complete tracking plan, validated, auto-QA | Revenue tree dashboard + predictive analytics | Real-time sync, unified data model, warehouse | Experimentation culture, statistical rigor, registry |
-
-#### Step 4: Gap Analysis and Recommendations
-
-For each dimension below target:
-- **Gap description:** What is missing specifically?
-- **Impact of the gap:** What decisions cannot be made? What experiments cannot run?
-- **Recommended actions:** Specific, sequenced steps to close the gap
-- **Effort estimate:** T-shirt size for each action
-- **Priority:** Based on which gaps block the highest-impact PLG activities
-
-Output the assessment as a scorecard with a prioritized action plan.
-
----
-
-### Mode 2: Build a Tracking Plan
-
-**Goal:** Design a complete PLG tracking plan with events, properties, and destinations.
-
-#### Step 1: Identify Required Decisions
-
-Start with what the team needs to DECIDE, not what they want to TRACK. For each AARMS stage:
-- What are the top 3 decisions the team makes?
-- What data would improve those decisions?
-- What metrics support those decisions?
-
-This prevents tracking everything and ensures every event has a purpose.
-
-#### Step 2: Load the Metrics Reference
-
-> Read `references/metrics-per-domain.md`
-
-Map required metrics to the events and properties needed to calculate them. For each metric:
-- What events contribute to this metric?
-- What properties are needed on those events?
-- What user/account properties are needed?
-
-#### Step 3: Load and Apply the Tracking Plan Template
-
-> Read `references/tracking-plan-template.md`
-
-Build the tracking plan:
-
-1. **Identity events:** Signup, login, account creation, identity resolution
-2. **Activation events:** The specific actions that define activation for this product
-3. **Feature events:** Feature usage with depth indicators
-4. **Engagement events:** Session-level activity
-5. **Payment events:** All monetization-related events
-6. **Account events:** Team and collaboration events
-7. **Enrichment:** External data to append
-
-For each event:
-- Name (following naming convention)
-- Category (AARMS stage)
-- Trigger (what causes this event to fire)
-- Properties (required and optional)
-- Destinations (which tools receive this event)
-- Owner (who is responsible for implementation and maintenance)
-
-#### Step 4: Define Naming Convention
-
-Establish a consistent naming convention:
-- **Event names:** snake_case, verb_noun pattern (e.g., `project_created`, `feature_used`, `plan_upgraded`)
-- **Property names:** snake_case, noun or adjective_noun (e.g., `plan_name`, `user_role`, `session_duration`)
-- **Standard properties on all events:** `timestamp`, `user_id`, `account_id`, `session_id`, `platform`
-
-#### Step 5: Implementation Checklist
-
-Produce the implementation sequence:
-1. Define events and properties (this step)
-2. Implement identity resolution first
-3. Implement core activation events
-4. Implement payment events
-5. Implement feature and engagement events
-6. Implement enrichment
-7. Validate data quality (check events fire correctly, properties populated)
-8. Build dashboards on top of validated data
-9. Enable experimentation infrastructure
-
----
-
-### Mode 3: Design Analytics Architecture
-
-**Goal:** Design the full data flow from product to analytics to CRM to marketing to warehouse.
-
-#### Step 1: Load the TASE Framework
-
-> Read `references/tase-framework.md`
-
-Focus on the SYNC dimension.
-
-#### Step 2: Map the Current Tool Landscape
-
-Ask the user:
-- Product analytics: (Amplitude, Mixpanel, PostHog, Heap, custom?)
-- CDP / event router: (Segment, RudderStack, Freshpaint, none?)
-- CRM: (Salesforce, HubSpot, Pipedrive, none?)
-- Marketing automation: (Intercom, Customer.io, Braze, Iterable, none?)
-- Data warehouse: (BigQuery, Snowflake, Redshift, Databricks, none?)
-- Feature flags / experimentation: (LaunchDarkly, Statsig, Optimizely, custom, none?)
-- Enrichment: (Clearbit, ZoomInfo, Apollo, none?)
-
-#### Step 3: Design the Data Flow Architecture
-
-Map the ideal data flows:
-
-```
-Product (events)
-    |
-    v
-CDP / Event Router (Segment / RudderStack)
-    |
-    ├──> Product Analytics (Amplitude / Mixpanel)
-    |       - User behavior analysis
-    |       - Funnel analysis
-    |       - Cohort analysis
-    |
-    ├──> CRM (Salesforce / HubSpot)
-    |       - PQA/PQL scoring
-    |       - Account health
-    |       - Sales context
-    |
-    ├──> Marketing Automation (Customer.io / Intercom)
-    |       - Behavioral email triggers
-    |       - In-app messaging
-    |       - Lifecycle campaigns
-    |
-    ├──> Data Warehouse (BigQuery / Snowflake)
-    |       - Complex analysis
-    |       - ML models
-    |       - Revenue reporting
-    |       - Cross-source joins
-    |
-    └──> Experimentation (Statsig / LaunchDarkly)
-            - Feature flags
-            - A/B test assignment
-            - Results analysis
-```
-
-#### Step 4: Key Sync Specifications
-
-For each data flow, specify:
-- **What data flows:** Which events and properties
-- **Direction:** One-way or bi-directional
-- **Frequency:** Real-time, near-real-time (minutes), batch (hourly/daily)
-- **Transform:** Any data transformation needed (e.g., aggregating events into scores)
-- **Owner:** Who maintains this sync
-
-Critical syncs to design:
-
-| Flow | Purpose | Priority |
-|------|---------|----------|
-| Product -> Analytics | Behavior analysis, funnel, cohorts | P0 |
-| Product -> CRM | PQA/PQL scoring, sales intelligence | P1 |
-| Product -> Marketing | Behavioral triggers, lifecycle emails | P1 |
-| Product -> Warehouse | Complex analysis, reporting | P1 |
-| CRM -> Product | Sales context in-app (show account owner, deal stage) | P2 |
-| Warehouse -> Analytics | Enriched segments, ML-scored data | P2 |
-| Enrichment -> CRM | Firmographic data for lead scoring | P2 |
-
-#### Step 5: Tool Selection Guidance
-
-If the user needs tool recommendations, apply these criteria:
-
-**Must-haves for PLG:**
-- User-level (not just account-level) behavioral tracking
-- Cohort analysis capability
-- Funnel visualization with property breakdowns
-- Ability to define custom events and properties
-- Export / API for syncing to other tools
-- Feature flag or A/B test integration
-
-**Evaluation framework:**
-| Criterion | Weight | Questions to Ask |
-|-----------|--------|-----------------|
-| PLG-native features | 30% | Does it support activation analysis, cohort retention, funnel with segments? |
-| Integration ecosystem | 25% | Does it connect to your CRM, marketing, warehouse, experimentation tools? |
-| Ease of implementation | 20% | SDK quality, documentation, time-to-first-insight |
-| Scale & cost | 15% | Pricing at your event volume, performance at scale |
-| Team capability | 10% | Can your team use it without dedicated analytics engineers? |
-
----
-
-## Output Format
-
-Always lead with the answer (Minto Pyramid):
-
-**For assessment:**
-> "Your data maturity is [overall score]. Biggest gap: [dimension] at [score]. This blocks [specific PLG activity]. Top priority: [specific action]."
-> Then: full scorecard and action plan.
-
-**For tracking plan:**
-> "You need [N] events across [AARMS stages covered]. Start with [top 5 events] -- these enable [key decisions]. Full tracking plan below."
-> Then: complete tracking plan table.
-
-**For architecture:**
-> "Your data should flow: Product -> [CDP] -> [Analytics + CRM + Marketing + Warehouse]. Critical missing sync: [specific flow]. This blocks [PLG capability]."
-> Then: full architecture diagram and sync specifications.
+Lead with: "Biggest gap: [X]. It blocks [PLG activity]. Fix first: [action]." Then give the gap list by TASE dimension, the missing PLG-critical events, and the missing syncs, in that order. Keep it to about one page. Hand the event specs to `event-tracking`.

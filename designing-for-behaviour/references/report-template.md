@@ -1,86 +1,57 @@
 # Report template
 
-The orchestrator writes the full report to `behaviour-review-[target].md` in the user's working directory, then gives a short inline summary in chat. Use this exact structure so reports are comparable across runs and easy to diff when a product is re-reviewed.
+The orchestrator writes `behaviour-review-[target].md` in the working directory, then gives a short inline summary.
 
-Keep it concrete throughout — every claim carries an anchor (screen/flow/file/copy/moment). Prose over tables where a table would flatten nuance; tables for the scorecard.
+**Length cap: two pages.** Lead with the fixes. If the report runs longer, it is reporting findings that did not earn their space. Cut, don't compress.
+
+**No score.** No percentages, bands, grades, overall number, or confidence label. Item ratings stay internal (they ranked the gaps). Name the bottleneck in words instead.
+
+Every claim carries an anchor (screen / flow / `file:line` / quoted copy / PRD section / moment).
 
 ## File structure
 
 ```markdown
-# Behaviour Design Review — [Target name]
+# Behaviour Design Review — [Target]
 
-**Mode:** [Existing product / codebase | Idea / PRD / feature description]
-**Scope:** [the specific experience reviewed — one line]
-**Date:** [YYYY-MM-DD]
-**Confidence:** [High | Medium | Low] — [one line on what was/wasn't observable]
+**Mode:** [Codebase | PRD / idea] · **Scope:** [the experience reviewed, one line] · **Date:** [YYYY-MM-DD]
 
-## 1. What we reviewed
-- **Experience:** [the flow/feature/surface and its boundaries]
-- **Target behaviour(s):** [observable action(s), with situation and moment]
-- **Place in the product:** [where it sits; what precedes/follows]
-- **Users & context:** [who, in what real context]
-- **Why it matters:** [user outcome | business outcome — kept separate]
-- **How behaviour/adoption/engagement are defined here:** [instantiated for this product]
+**Bottleneck:** [One or two sentences: which of behaviour / adoption / engagement is failing, where, and why.]
 
-## 2. Scorecard
+## Do these, in this order
+At most 3 core moves. The first one is usually the root fix that dissolves several gaps.
+1. **[Move]** — [what changes]. *Folds into:* [existing surface, or "new, because…"]. *Lifts:* [dimension]. *Fixes:* [gap(s) below].
 
-| Dimension | Score | Band |
-|---|---|---|
-| **Behaviour** | NN% | [band] |
-| **Adoption** | NN% | [band] |
-| **Engagement** | NN% | [band] |
-| **Overall** | NN% | [band] |
+## Deliberately NOT adding
+At most 5. Each: **[Rejected idea]** — [redundant / over budget / N/A for this archetype / conflicts / manipulative / dissolved by move N].
+Include anything the subtraction pass says to **remove**.
 
-By lens: behavioural-loop NN% · cognitive-ease NN% · capability-results NN% · control-autonomy NN%
+## Gaps behind these moves
+At most 5, biggest blocker first. Mark where lenses converged.
+- **[Gap]** — [anchor]. *Hurts:* [dimension]. *Lens(es):* [...].
 
-[One paragraph: what the numbers say in plain language — which dimension is the bottleneck and why. Lead with the diagnosis, not the number.]
+## Fold-ins
+At most 3, only if not already covered by a core move.
+- **[Mechanism]** → embedded in **[host surface]**.
 
-## 3. How it drives behaviour, adoption, and engagement
+## Coherence rationale
+One paragraph: the dominant path, how the moves hold together, and what you kept the product from becoming.
 
-### Behaviour
-[Narrative with anchors: does the target behaviour actually happen? Where does the loop hold and where does it break?]
+## What we reviewed
+Experience, target behaviour, users and context, user vs. business outcome. Five lines at most.
 
-### Adoption
-[Narrative with anchors: breadth — first value speed, spread across core experiences, switching cost.]
+## What we don't know
+What was inferred rather than observed, and what would sharpen a re-review (real drop-off data, user interviews).
 
-### Engagement
-[Narrative with anchors: depth — return reasons, meaningful vs empty engagement, compounding.]
-
-## 4. Prioritized gaps
-[Ranked, biggest blocker first. For each:]
-- **[Gap name]** — [what's missing/broken, with a concrete anchor]. *Lens:* [which]. *Hurts:* [behaviour/adoption/engagement]. *Severity:* [high/med/low].
-
-## 5. Recommendations — one coherent experience
-_Output of the coherence & anti-bloat review. This is the part that matters._
-
-### Core moves (do these, in this order)
-1. **[Move]** — [what changes]. *Folds into:* [existing surface, or "new surface because…"]. *Lifts:* [dimension(s)]. *Resolves:* [which gaps/lens findings].
-2. …
-
-### Fold-ins (embed, don't bolt on)
-- **[Mechanism]** → embedded into **[host surface]**, so it's part of the core action, not a new thing to do.
-
-### Deliberately NOT adding (and why)
-- **[Rejected/deferred rec]** — [redundant / over budget / N/A for this archetype / conflicting / manipulative / dissolved by a root fix].
-
-### Coherence rationale
-[One paragraph: how the surviving set holds together as a single experience, what the dominant path is, and what you kept the product from becoming.]
-
-## 6. Assumptions & limits
-[What was inferred vs. observed; what would sharpen a re-review (analytics, real drop-off, etc.).]
-
-## Appendix — lens detail (optional)
-[Per-lens scored items with anchors, for the reader who wants the working.]
+---
+Ask for: per-lens findings · the full gap list · what's already strong and should be left alone.
 ```
 
 ## Inline summary (after writing the file)
 
-Give the user a tight summary in chat — not the whole report. Include:
+Keep it under ten lines:
 
-1. One line: where the report was written.
-2. The three dimension scores + overall, with the one-sentence diagnosis of the bottleneck.
-3. The **top 3 core moves** (sequenced), one line each.
-4. The single most important **"deliberately NOT adding"** call — this is what makes the review trustworthy.
-5. One line of coherence rationale — what the product should become, and what it should avoid becoming.
-
-Keep it skimmable. The file has the depth; the chat has the point.
+1. Where the report was written.
+2. The bottleneck, in one sentence.
+3. The top core moves, in order, one line each.
+4. The single most important "deliberately NOT adding" call.
+5. One line on what the product should become and what it should avoid becoming.

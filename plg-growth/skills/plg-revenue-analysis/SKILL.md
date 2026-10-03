@@ -1,233 +1,65 @@
 ---
 name: plg-revenue-analysis
-description: "Decompose revenue into a driver tree for ANY revenue model, identify highest-leverage branches, and size opportunities. Use when someone asks about revenue levers, growth opportunities, MRR analysis, or which metric to focus on."
+description: "Decompose revenue into a driver tree for any revenue model, run sensitivity analysis, and size the 2–3 levers worth working on. Use when someone asks 'which lever should I focus on', 'where are my biggest growth opportunities', 'revenue driver tree', 'revenue decomposition', 'MRR analysis', 'growth levers', 'unit economics', 'LTV analysis', 'CAC analysis', or 'PLG revenue analysis'."
 ---
 
 # PLG Revenue Analysis
 
-## Purpose
+Find the lever that moves revenue most for a realistic effort, and say how much it's worth. Follow `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
 
-You decompose a product's revenue into a mathematical driver tree, populate it with data, run sensitivity analysis, identify the 2-3 highest-leverage branches, size the opportunities, and recommend team structuring. This works for ANY revenue model — SaaS, transactional, marketplace, usage-based, hybrid, ad-supported, or freemium+enterprise.
+## Default: quick answer
 
-## When to Invoke
+If the user gives a few numbers and asks which lever to pull, build the tree in your head, run the sensitivity, and answer: the lever, the dollar impact, and the assumption it rests on. Offer the full brief only if they want it.
 
-Trigger phrases:
-- "analyze my revenue levers"
-- "revenue driver tree"
-- "where are my biggest growth opportunities"
-- "revenue decomposition"
-- "PLG revenue analysis"
-- "which lever should I focus on"
-- "MRR analysis" / "revenue tree" / "growth levers"
-- "unit economics" / "LTV analysis" / "CAC analysis"
+## 1. Build the tree for their model
 
-## Structured Problem-Solving Backbone
-
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **revenue analysis**: decompose revenue into mathematically complete branches, separate direct (mathematical: ×, +, −, ÷) drivers from indirect (behavioral/correlational) drivers, and focus on the 2–3 branches with the most revenue sensitivity. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
-
-## Step-by-Step Methodology
-
-### Step 1: Identify Revenue Model and Build Appropriate Tree
-
-Load the revenue tree templates:
-> Read `references/revenue-tree-templates.md`
-
-Ask the user: "What is your primary revenue model?" Then select and customize the appropriate tree.
-
-| Revenue Model | Top-Level Formula |
+| Model | Top-level arithmetic |
 |---|---|
-| SaaS/Subscription | Revenue = New MRR + Retained MRR - Churned MRR + Expansion MRR - Contraction MRR + Reactivation MRR |
-| Transactional/Marketplace | Revenue = Transactions x AOV, where Transactions = Traffic x Conversion x Frequency |
-| Usage-based | Revenue = Active Users x Usage per User x Price per Unit |
-| Hybrid | Revenue = Recurring Base + Transactional Top-up + Expansion |
-| Ad-supported | Revenue = DAU x Sessions/DAU x Impressions/Session x CPM |
-| Freemium + Enterprise | Revenue = Self-serve Revenue + Sales-assisted Revenue (parallel trees) |
+| SaaS / subscription | Net new MRR = new + expansion + reactivation − churn − contraction; new MRR = traffic × signup rate × activation rate × paid conversion × ARPA |
+| Transactional | Revenue = visitors × conversion × AOV × purchase frequency |
+| Marketplace | Revenue = GMV × take rate; GMV depends on both supply and demand, and on match quality |
+| Usage-based | Revenue = paying users × usage per user × effective price per unit (model volume discounts explicitly) |
+| Ad-supported | Revenue = DAU × sessions × impressions per session × fill rate × CPM / 1000 |
+| Hybrid | Recurring base + transactional top-up + expansion |
+| Freemium + enterprise | Two parallel trees. Free users feed both self-serve conversion and the PQL pipeline for sales. Model both. |
 
-For SaaS specifically, load the detailed decomposition:
-> Read `references/saas-mrr-lever-trees.md`
+Decomposition rules:
 
-### Step 2: Decompose Each Driver Into Sub-Drivers
+- Keep splitting until each leaf is something the team can act on ("signup form conversion", not "revenue").
+- Label each split as arithmetic (direct) or behavioural (indirect). Size only the direct ones.
+- Include business levers (pricing, packaging, channels) as well as product levers.
+- Split churn into voluntary and involuntary. Involuntary churn (failed payments, expired cards) is often fixable with dunning and retries, without any product change.
+- Don't skip a branch because there's no data. Unknown drivers are often the biggest ones.
 
-Continue decomposing until you reach actionable levers. Rules:
+## 2. Fill in data
 
-1. **MECE at every level.** No overlaps, no gaps.
-2. **Mark each split as direct or indirect:**
-   - **Direct (mathematical):** Connected by x, +, -, /. Moving the driver MECHANICALLY moves revenue.
-   - **Indirect (behavioral/correlational):** Influences a direct driver but the relationship is not purely mathematical. (e.g., "better onboarding" influences "activation rate" which is a direct driver)
-3. **Stop decomposing when you reach a lever the team can ACT on.** (e.g., "signup form conversion rate" is actionable; "revenue" is not)
-4. **Include both product levers and business levers.** Product levers = things you build. Business levers = pricing, packaging, channels, campaigns.
+For each leaf: current value, trend over 3–6 months, and how reliable the number is (measured, estimated, unknown). Compare to the user's own history first. Use an outside benchmark only if the user has one with a named source. Otherwise mark the gap and make measuring it a next step. Never fill a gap with a generic industry number.
 
-### Step 3: Populate With Data
+## 3. Sensitivity and sizing
 
-For each leaf-level driver, gather:
+Hold every driver constant, move one by a realistic amount, and recompute revenue. Rank by impact, then adjust for effort: a lever you can move this quarter beats a bigger one that takes two years. Pick 2–3.
 
-| Data Point | What to Ask |
-|---|---|
-| **Current level** | "What is the current value of this metric?" |
-| **Trend** | "Is this improving, declining, or flat over the last 3-6 months?" |
-| **Benchmark** | "How does this compare to industry/peer benchmarks?" |
-| **Confidence** | "How reliable is this number? (Measured precisely? Estimated? Unknown?)" |
+Example: new MRR = 500,000 visitors × 5% × 30% × 8% × $50 = $30,000. Activation 30% → 36% adds $6,000/month.
 
-If the user does not have data for a driver:
-- Note it as a gap
-- Use industry benchmarks as proxy (provide them from reference files)
-- Recommend measuring it as an action item
-- Do NOT skip the branch — unknown drivers are often the highest-leverage ones
+Combined projections assume drivers are independent. They rarely are, so treat a combined number as the upside case, not a commitment.
 
-### Step 4: Sensitivity Analysis and Prioritization (80/20)
+For each priority lever, write: "If [metric] moves from [current] to [target], monthly revenue changes by [$X] ([Y]%). We believe [action] will do it because [evidence]."
 
-Load the opportunity sizing template:
-> Read `references/opportunity-sizing-template.md`
+Unit economics on request: LTV = ARPA × gross margin ÷ monthly churn (prefer cohort LTV curves by segment); CAC payback in months = CAC ÷ (ARPA × gross margin). Compute CAC by channel, not just blended. Judge both against the company's own history and plan, not against generic thresholds.
 
-For each leaf-level driver, calculate:
-
-**Sensitivity = "If this driver improves by X%, what is the revenue impact?"**
-
-Method:
-1. Take the current revenue formula
-2. Hold all other drivers constant
-3. Improve the target driver by a realistic amount (10%, 20%, 50%, or to benchmark level)
-4. Calculate the delta in revenue
-
-**Prioritization matrix:**
-
-| Driver | Current | Realistic Target | Revenue Impact ($) | Effort (S/M/L) | Priority |
-|--------|---------|------------------|--------------------|-----------------|----------|
-| [Driver A] | X | Y | $Z | M | P1 |
-| [Driver B] | X | Y | $Z | S | P1 |
-| [Driver C] | X | Y | $Z | L | P2 |
-
-**80/20 rule:** Identify the 2-3 drivers where:
-- Revenue impact is largest
-- Current performance is furthest below benchmark
-- Improvement effort is reasonable (not "rebuild the entire product")
-
-These are your priority levers.
-
-**Opportunity sizing statement:** For each priority lever, produce:
-> "If [metric] moves from [current] to [target], monthly revenue impact is [$X], representing [Y%] growth. Annualized: [$Z]."
-
-### Step 5: Team Structuring
-
-Load the shared team structuring guide:
-> Read `${CLAUDE_PLUGIN_ROOT}/references/team-structuring.md`
-
-Based on team size and priority levers, recommend structure:
-
-**Small team (< 5 growth/product people):**
-- Focus on single most sensitive lever
-- Or: cross-prioritize top 2 levers if they share dependencies
-- One person owns the metric, everyone contributes
-
-**Big team (5+ growth/product people):**
-- Option A: Organize by revenue type (New, Retained, Expansion — each has a pod)
-- Option B: Organize by metrics cluster (Acquisition team, Activation team, Monetization team)
-- Option C: Dedicated owner per priority lever with shared resources
-
-### Step 6: Produce Revenue Analysis Brief
-
-Output structure:
+## 4. Output
 
 ```
-## Revenue Analysis Brief
-
-### Revenue Model: [type]
-### Current Revenue: [$X MRR / $Y ARR]
-
-### Revenue Driver Tree
-[Visual tree or table showing full decomposition]
-
-### Data Summary
-| Driver | Current | Benchmark | Gap | Trend |
-|--------|---------|-----------|-----|-------|
-| ... | ... | ... | ... | ... |
-
-### Priority Levers (80/20)
-
-**Lever 1: [Name]**
-- Current: [value]
-- Target: [value] (benchmark: [source])
-- Revenue impact: [$X/month] = [Y% growth]
-- Hypothesis: "We believe [specific claim]. If true, [action] will move [metric] from [A] to [B]."
-- First action: [specific next step]
-
-**Lever 2: [Name]**
-[same format]
-
-**Lever 3: [Name]**
-[same format]
-
-### Opportunity Summary
-Total addressable opportunity from top 3 levers: [$X/month]
-Combined growth potential: [Y%]
-
-### Team Recommendation
-[Structure recommendation based on team size]
-
-### Data Gaps
-[Metrics that need to be instrumented/measured]
-
-### Next Steps
-1. [Action] → tests [hypothesis] → expected impact [$X]
-2. [Action] → tests [hypothesis] → expected impact [$X]
-3. [Action] → tests [hypothesis] → expected impact [$X]
+## Revenue analysis
+**Focus on:** [lever] — worth [$X/month] if [current → target]
+**Tree:** [compact tree or table, leaves marked direct/indirect, unknowns flagged]
+**Sensitivity:** | Driver | Current | Realistic target | Revenue impact | Effort |
+**Priority levers (2–3):** sizing statement + hypothesis + first action + which plg-growth skill
+**Data gaps:** [what to instrument]
 ```
 
-## Beyond-Course Extensions
+If they ask how to organise the team around these levers, use `${CLAUDE_PLUGIN_ROOT}/references/team-structuring.md`.
 
-### Unit Economics Analysis
-When the user wants deeper financial analysis:
+## Next skills
 
-**LTV (Lifetime Value):**
-- Simple: ARPA / Monthly Churn Rate
-- Better: ARPA x Gross Margin % / Monthly Churn Rate
-- Best: Cohort-based LTV curves by segment
-
-**CAC (Customer Acquisition Cost):**
-- Blended: Total Sales & Marketing Spend / New Customers
-- By channel: Channel Spend / Channel-attributed New Customers
-- Fully loaded: Include onboarding, implementation, support for new customers
-
-**LTV:CAC Ratio:**
-- < 1:1 = losing money on every customer (crisis)
-- 1:1 to 3:1 = break-even to healthy
-- 3:1 to 5:1 = healthy and efficient
-- > 5:1 = potentially under-investing in growth
-
-**CAC Payback Period:**
-- Months to recover CAC = CAC / (ARPA x Gross Margin %)
-- < 6 months = excellent (typical PLG)
-- 6-12 months = good
-- 12-18 months = acceptable for SLG
-- > 18 months = concern
-
-### Cohort Revenue Analysis
-When historical data is available:
-- Build revenue cohort curves (revenue per cohort over time)
-- Identify if newer cohorts are better or worse than older ones
-- Separate expansion from retention in cohort view
-- Look for "vintage effects" — external factors affecting specific cohorts
-
-## Connection to Other Skills
-
-| Skill | Handoff |
-|-------|---------|
-| `plg-orchestrator` | Receives diagnostic context, returns priority levers for routing |
-| `plg-readiness` | Revenue analysis assumes PLG viability; if not assessed, route to readiness first |
-| `acquisition-model-selector` | If top lever is acquisition-related, route to model selector |
-| Future domain skills | Priority levers map to specific funnel stages → route to domain skill |
-
-## Inputs Required
-
-- Revenue model type
-- Current revenue (MRR/ARR or equivalent)
-- As many driver metrics as available (activation rate, churn rate, ARPU, etc.)
-- Team size and current structure
-- Biggest known pain point (helps prioritize)
-
-## Anti-Patterns
-
-- **Analyzing without data:** The tree is still valuable as a framework even without data. But flag every gap. Unknown drivers are often the most important ones.
-- **Too many priorities:** The whole point is 80/20. If the user has 7 priority levers, they have zero. Force rank to 2-3.
-- **Confusing direct and indirect drivers:** Clearly label which relationships are mathematical and which are behavioral. This affects how you size opportunities.
-- **Ignoring effort:** A 10x revenue-impact lever that takes 2 years to move is less useful than a 2x lever you can move in 2 weeks. Always pair impact with effort.
+Route each priority lever to its funnel skill: `acquisition-domain`, `activation-domain`, `retention-domain`, `monetisation-domain`. Can't measure the tree → `plg-data-setup`. PLG fit not yet established → `plg-readiness`.

@@ -2,7 +2,7 @@
 
 Behavioural mechanisms are dual-use. The same lever — loss aversion, scarcity, social proof, variable reward, streaks — can help a user get something they genuinely want, or exploit them into acting against their own interest. This gate is applied by the orchestrator to the **recommendations** (and flagged by lenses during analysis) so the fixes this plugin proposes never cross into manipulation. A behavioural-design tool that hands users a manipulation playbook is a liability, not a product.
 
-The three source books that each carried an ethics section (*Hooked*, PCT, *Thinking Fast and Slow*) are consolidated here so it's checked **once**, well, rather than six times, weakly.
+It is checked **once**, here, rather than separately in each lens.
 
 ## Two tests every recommendation must pass
 

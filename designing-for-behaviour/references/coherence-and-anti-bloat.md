@@ -31,7 +31,7 @@ Find recommendations that undercut each other, and resolve them explicitly rathe
 The experience has a finite budget of user attention, memory, and willpower (Badass's cognitive-resource economy; Hooked's "one dominant path, don't scatter attention"; Kahneman's effort economy). **Every mechanism you add spends it.** Make the budget explicit:
 
 - **Count the mechanisms** the product already has *and* the ones being proposed (each distinct nudge, badge, streak, tour, banner, modal, notification type, progress indicator, gamification element counts as one).
-- **Calibrate the budget to the archetype and natural frequency.** A daily consumer app can carry more loop machinery than a quarterly B2B tool used under time pressure; a focused developer tool should carry almost none. If a mechanism is N/A for this archetype (per the scoring rubric's N/A discipline), it does not go in the report as a recommendation, full stop.
+- **Calibrate the budget to the archetype and natural frequency.** A daily consumer app can carry more loop machinery than a quarterly B2B tool used under time pressure; a focused developer tool should carry almost none. If a mechanism is N/A for this archetype (per the N/A discipline in `foundations.md`), it does not go in the report as a recommendation, full stop.
 - **A tight budget forces prioritisation.** If ten mechanisms are proposed and the budget is three, the other seven aren't "later" — they're evidence you haven't found the *root* fix (see Step 5).
 
 ## Step 4 — Prefer embedding over adding (the "one core experience" test)

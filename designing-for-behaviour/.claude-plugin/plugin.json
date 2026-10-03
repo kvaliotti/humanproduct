@@ -1,7 +1,7 @@
 {
   "name": "designing-for-behaviour",
-  "version": "0.1.0",
-  "description": "Evaluate how well a product experience — an existing codebase or an idea/PRD — drives user behaviour, adoption, and engagement. Scores three dimensions, ranks gaps, and prescribes an integrated set of fixes through four de-duplicated behavioural-science lenses plus an anti-bloat coherence review that keeps recommendations forming one strong core experience instead of a pile of bolted-on mechanisms.",
+  "version": "1.0.0",
+  "description": "Review how well a product experience — an existing codebase or an idea/PRD — drives user behaviour, adoption, and engagement. Four behavioural-science lenses find anchored gaps; an anti-bloat coherence review and ethics gate turn them into at most three sequenced core moves plus a 'deliberately NOT adding' list, in a two-page report with no invented score.",
   "author": {
     "name": "Konstantin Valiotti",
     "email": "valiotti.konst@gmail.com"

@@ -4,7 +4,7 @@
     "name": "Konstantin-Valiotti"
   },
   "metadata": {
-    "description": "Claude Code plugins for product work: PRDs, user and market research, sales-call analysis, positioning, PLG, analytics tracking, CRO, design systems, and behavioural design."
+    "description": "Claude Code plugins for product work: PRDs, user and market research, sales-call analysis, positioning, PLG, analytics tracking, CRO, design systems, behavioural design, and writing review."
   },
   "plugins": [
     {
@@ -23,7 +23,7 @@
       "name": "pmm-define-and-review-positioning",
       "source": "./pmm-define-and-review-positioning",
       "description": "Product positioning toolkit: guided 10-step workshop, positioning review/audit, competitive alternatives deep dive, market frame selection, and sales story builder. Run end-to-end with positioning-orchestrator or invoke any skill standalone.",
-      "version": "0.2.0"
+      "version": "0.2.1"
     },
     {
       "name": "user-research",
@@ -40,37 +40,43 @@
     {
       "name": "plg-growth",
       "source": "./plg-growth",
-      "description": "Product-Led Growth toolkit: assess PLG readiness, decompose revenue drivers, choose acquisition models, run AARMS domain analysis (acquisition, activation, retention, monetisation, satisfaction), design growth loops, operationalize product-led sales, plan experiments, set up PLG data infrastructure, and plan org transformation. Grounded in structured problem solving (issue trees, hypothesis trees, MECE, 80/20, Minto Pyramid) and proven PLG frameworks.",
-      "version": "1.1.0"
+      "description": "Product-led growth help for PMs: check PLG fit, find the revenue lever that matters, choose freemium vs trial vs ungated, diagnose acquisition, activation, retention, monetisation and satisfaction, design growth loops and product-led sales, plan experiments, set up data, and restructure the org. Short answers by default, full analysis on request, no invented benchmarks.",
+      "version": "2.0.0"
     },
     {
       "name": "event-tracking",
       "source": "./event-tracking",
-      "description": "Define, structure, and review analytics event tracking plans for any product. Four-stage pipeline: analytical use cases → event definition → tracking plan review → platform-specific formatting. Covers naming conventions, property design, user properties, firing conditions, and platform compliance for Amplitude, Mixpanel, PostHog, Segment, and GA4.",
-      "version": "0.2.0"
+      "description": "Define, review, and format analytics event tracking plans. Three skills: analytics use cases → event definition (with optional formatting for Amplitude, Mixpanel, PostHog, Segment, GA4) → tracking plan review. Every event traces to a use case.",
+      "version": "1.0.0"
     },
     {
       "name": "cro-engine",
       "source": "./cro-engine",
-      "description": "Conversion-rate-optimization reviewer: audits and improves landing pages, signup flows, paywalls, popups, onboarding, and forms against a library of CRO best-practice patterns and an expert-panel review gate.",
-      "version": "0.1.0"
+      "description": "A conversion-rate-optimization reviewer for landing pages, pricing, signup, onboarding, paywalls, popups, and forms. Returns the top few fixes, each tied to a concrete element and a test to run.",
+      "version": "1.0.0"
     },
     {
       "name": "design-system-master",
       "source": "./design-system-master",
-      "description": "Design system master: review an existing design system (coordination of colors/typography/spacing/shape/elevation, ease of working with it, cohesion), optimise one (consolidate tokens, fill gaps, or retrofit it into a product codebase as CSS variables / Tailwind / Style Dictionary), or create one from scratch as a lintable DESIGN.md. Grounded in a 74-system corpus spanning minimal dev-tools to dense financial and enterprise systems, with a complexity-calibration gate so it never naively simplifies complexity a domain legitimately needs. Orchestrated by /design-system-master or invoke review/optimize/create standalone.",
-      "version": "0.1.0"
+      "description": "Design system master: review an existing design system (accessibility and complexity-fit gates, top fixes, what to keep), optimise one (including inside a real product codebase), or create one from scratch. Grounded in a corpus of 74 real-world design systems spanning minimal dev-tools to dense financial and enterprise systems, so it never naively 'simplifies' complexity a domain legitimately needs. Orchestrated by /design-system-master or invoke review/optimize/create standalone.",
+      "version": "1.0.0"
     },
     {
       "name": "designing-for-behaviour",
       "source": "./designing-for-behaviour",
-      "description": "Behavioural-design reviewer: evaluate how well a product experience (an existing codebase or an idea/PRD) drives user behaviour, adoption, and engagement. Scores three dimensions, ranks gaps, and prescribes an integrated set of fixes through four de-duplicated behavioural-science lenses (habit loop, cognitive ease, capability/results, control/autonomy) run as a parallel analyst board, plus an anti-bloat coherence review that keeps recommendations forming one strong core experience instead of a pile of bolted-on mechanisms. Grounded in Atomic Habits, Tiny Habits, Hooked, Badass, Thinking Fast and Slow, and Perceptual Control Theory. Run with /designing-for-behaviour.",
-      "version": "0.1.0"
+      "description": "Review how well a product experience — an existing codebase or an idea/PRD — drives user behaviour, adoption, and engagement. Four behavioural-science lenses find anchored gaps; an anti-bloat coherence review and ethics gate turn them into at most three sequenced core moves plus a 'deliberately NOT adding' list, in a two-page report with no invented score. Run with /designing-for-behaviour.",
+      "version": "1.0.0"
     },
     {
       "name": "user-story-review",
       "source": "./user-story-review",
       "description": "User story reviewer: reads a PRD or backlog and returns a one-page triage — the few systemic issues that will sink the milestone, a verdict per story (ready / needs conversation / reframe / split / not a user story), and rewrites for the worst offenders. Judges whether a story is true and useful rather than whether it matches the template: catches feature requests wearing story clothes, generic actors, fake value, technical layers sliced as stories, and outcomes outside the team's control. Grounded in Fifty Quick Ideas to Improve Your User Stories. Run with /user-story-review.",
+      "version": "0.1.0"
+    },
+    {
+      "name": "writing-review",
+      "source": "./writing-review",
+      "description": "Review a draft like a linter, not an editor. Five narrow reviewers (reader, structure, argument, evidence, prose) run in parallel as independent sub-agents; every finding is an exact quote, the problem it causes, and the smallest fix. Merged into one ranked review. The prose reviewer checks Zinsser-style clutter and AI-writing tells. Run with /writing-review:review-writing.",
       "version": "0.1.0"
     }
   ]

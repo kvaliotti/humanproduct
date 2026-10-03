@@ -1,186 +1,94 @@
-# Color System Patterns
+# Color Patterns
 
-Distilled from the 74-system corpus. Use this to judge a color system (review), to know what "good"
-looks like per dimension (optimize), and to choose an architecture (create). Every pattern below is
-grounded in real systems with real hex values.
+What real systems did, with their own words where they state a rule. Read with `archetypes.md`: the right
+color architecture depends on the archetype.
 
-> **Read this with `archetypes.md`.** The right color architecture is a function of the archetype. A
-> minimal dev-tool with one accent and a dense trading terminal with dual-coded green/red are *both*
-> correct — for their domains.
-
----
-
-## Contents
-1. The five color architectures · 2. Neutral & surface ramps · 3. Semantic color · 4. Domain / dual color-coding (the essential-complexity case) · 5. Theming & modes · 6. Accent rationing · 7. On-color text · 8. Anti-patterns to flag · Methodology note
-
-## 1. The five color architectures
+## 1. Architectures
 
 | Architecture | Shape | Examples |
 |---|---|---|
-| **Single-accent** (modal) | 1 saturated hue rationed hard, on an achromatic system | Binance yellow `#fcd535`, IBM blue `#0f62fe`, Linear lavender `#5e6ad2`, Pinterest `#e60023`, Supabase emerald `#3ecf8e` |
-| **Restrained-neutral + one accent** | rich neutral ramp, accent scarce as the CTA layer | Vercel (`ink #171717` + reserved gradients), Notion (purple CTA over a pastel decorative layer) |
-| **Multi-hue expressive** | many colors as brand voltage or per-category coding | Airtable (8 signature card colors), Notion (9 pastel tints), HashiCorp (7 per-product hues) |
-| **Dual-brand / dual-canvas** | two parallel tracks that never blend on one page | Shopify (black marketing / cream transactional), Binance (dark trading / light transactional), Ferrari, Sentry |
-| **Gradient-mesh brand** | color as a multi-stop atmospheric device, hero-scale only | Stripe (indigo mesh), Vercel (3 named gradient pairs), Mistral (sunset ramp), PlayStation (PS Plus gold) |
+| **Single-accent** (the default) | one saturated hue rationed hard on an achromatic system | Binance `#fcd535`, IBM `#0f62fe`, Linear `#5e6ad2`, Supabase `#3ecf8e` |
+| **Restrained neutral + one accent** | rich neutral ramp, accent only as the CTA layer | Vercel, Notion |
+| **Multi-hue** | many colors as brand voltage *or* per-category coding | Airtable (8 card colors), Notion (9 tints), HashiCorp (7 product hues) |
+| **Dual-canvas** | two tracks that never blend on one page | Binance (dark trading / light transactional), Shopify, Ferrari |
+| **Gradient-mesh brand** | multi-stop atmosphere, hero-scale only | Stripe, Vercel, Mistral |
 
-**The default is single-accent.** Reach for more only when the domain earns it (see §4). Two distinct
-flavors of "multi-hue" must not be conflated: *decorative voltage* (Airtable/Notion — mnemonic, removing a
-color changes personality not legibility) vs. *functional coding* (HashiCorp/MongoDB — the color classifies
-something; removing it degrades a real task).
+Don't conflate the two kinds of multi-hue. *Decorative* (Airtable, Notion): removing a color changes
+personality, not legibility. *Functional* (HashiCorp, MongoDB): the color classifies something, and
+removing it breaks a task.
 
----
+## 2. Neutrals and surfaces
 
-## 2. Neutral & surface ramps
+- **Ink tiers: 2–7.** Kraken uses two; MongoDB, Notion, Revolut run 6–7. Match depth to how much
+  secondary text the product actually has.
+- **Near-black, not `#000`, is the dominant convention** (Supabase `#171717` "never pure black"; Claude
+  `#141413` on cream `#faf9f5`). Pure black is a deliberate minority (Revolut: "the brand is #000000, not
+  #0a0a0a"; BMW-M, Uber). There is no correct canvas value, but a system must pick one and hold it. A
+  drifting canvas value is a real flag.
+- **Surface ladders: 2–4 steps.** Linear's `#010102 → #0f1011 → #141516 → …` "carries hierarchy without
+  shadow."
+- **Hairlines sit one elevation step from their surface.** Binance's `hairline-on-dark #2b3139` is the same
+  hex as its elevated surface: "borders feel like surface steps."
 
-**Ink (text) tiers: 2–7 steps.** Shallow (Kraken: near-black `#101114` + silver-blue `#9497a9`, done).
-Deep (MongoDB, Notion, Mistral, Revolut each run 6–7 tiers down to a muted floor). More tiers = "room to go
-quiet without going invisible." Match depth to how much secondary/tertiary text the product actually has.
+## 3. Semantic color
 
-**Near-black, not pure black — the dominant convention for ink**, and brands argue it explicitly: Binance
-body `#eaecef` ("slightly cooler, never pure white"), Claude ink `#141413` ("warm, off-pure-black") on
-cream `#faf9f5`, Supabase `#171717` ("near-black, never pure black"), Tesla `#171A20` (warm near-black,
-blue undertone). **Pure `#000000` is a deliberate minority** signaling authority/void — Revolut (*"the brand
-is #000000, not #0a0a0a"*), BMW-M, Lamborghini, Uber, HashiCorp. Linear goes to `#010102` and still bans
-true black. **Lesson:** there is no universally correct dark canvas — but each system must *pick one and
-defend it everywhere.* A drifting canvas value is a real flag.
+- Full success/warning/error/info ramps appear where users judge validity or severity fast: IBM, Wise
+  (each state with pressed + content variants because money movement demands unambiguous states).
+- HashiCorp double-duties product hues as semantics (`success` = Nomad green) to keep the count down.
+- **Omission is legitimate on marketing surfaces.** Stripe: "error/success live in the dashboard product."
+- **An app with forms but no error tokens is under-built**, not minimal.
 
-**Surface elevation ladders: 2–4 steps, rarely more.** Linear documents a clean 4-step ladder
-(`canvas #010102` → `surface-1 #0f1011` → `surface-2 #141516` → `surface-3/4`) that "carries hierarchy
-without shadow." Many systems (Supabase, Sentry, Nike) collapse to a 2-pole white/near-black system —
-flatness as restraint. Elevation-by-tone is a legitimate alternative to shadow (see `patterns-space-shape-elevation.md`).
+## 4. Domain color-coding — never "simplify" this away
 
-**Hairlines usually sit one elevation step from their surface, not as ink lines.** Binance's
-`hairline-on-dark #2b3139` *is the same hex* as `surface-elevated-dark` — "borders feel like surface steps."
-Some minimal systems (Wise, Kraken) omit a dedicated hairline token and reuse `ink` at 1px.
+Here color is information, not decoration. The rule across the corpus: domain color is a **signal**
+(text, small badge), never a **fill**.
 
----
+- **Trading up/down.** Binance `trading-up #0ecb81` / `trading-down #f6465d`: "text color in tables,
+  charts, ticker arrows. Never a button background." Coinbase: "color only, no background fill."
+  A trader scanning 40 assets resolves direction in peripheral vision. Removing it breaks the core task.
+- **Wall domain color off from semantics.** "Never repurpose price green/red for success/error."
+  "Market up" and "form valid" are different meanings. Pair up/down with an arrow or sign
+  (`accessibility.md` §2).
+- **Per-product suites.** HashiCorp's 7 hues tell an engineer which product's docs they are in. Rule:
+  "never combine multiple product accents in one viewport."
+- **Scoped functional palettes.** Cursor's 5 AI-timeline state colors: "only in product UI, never as
+  system action colors," fenced off from the brand CTA.
+- **Check scope before calling it missing.** Kraken and Revolut show no up/down tokens because only their
+  marketing surface was captured.
 
-## 3. Semantic color (success / warning / error / info)
+## 5. Modes
 
-**Full 4-part palettes appear in enterprise and fintech systems** where users make fast binary/ranked
-judgments: IBM (`success #24a148` / `warning #f1c21b` / `error #da1e28` / `info #0f62fe`), Wise (the richest
-— positive/warning/negative each with pressed + content variants, because money movement demands
-unambiguous states). HashiCorp cleverly double-duties its per-product hues as semantics to keep the count
-down (`success` = Nomad green, `error` = Consul red).
+- **Light-only** where dark adds nothing (Airbnb: "no dark mode on the public web").
+- **Dark-only** where identity is nocturnal or precise (Linear: "don't ship a light marketing page").
+- **Toggle** — a token remap, never `invert()`.
+- **Polarity-flip by section** — the most common pattern. Dark and light bands coexist on one page,
+  chosen by section intent (Binance: "choose canvas mode by surface intent"; Claude: "don't repeat the same
+  surface mode in two consecutive bands").
 
-**Deliberate omission is legitimate on pure-brand/marketing surfaces.** Stripe states it best: *"the brand
-does not use a separate semantic palette in the marketing system — error/success live in the dashboard
-product."* The semantic need is real but scoped to a different surface. Supabase omits them so they don't
-compete with its single green.
+**The mark of a good multi-theme system:** accent and domain colors don't change when the canvas flips.
+Binance's yellow and green/red are identical on dark and light; only surface and ink change.
 
-**Judgment (review/create):** a full semantic ramp is *warranted* wherever the UI asks the user to judge
-validity/severity/direction quickly (forms, dashboards, fintech). It's *reasonably absent* on editorial/
-marketing/luxury surfaces with no such judgment. If an app has forms but no error tokens, that's an
-**under-built gap**, not admirable minimalism.
-
----
-
-## 4. Domain / dual color-coding — the essential-complexity case
-
-**This is the pattern the tool must never naively "simplify" away.** Here color is information
-architecture, not decoration. The corpus draws a sharp, repeated line: domain color is a **signal**
-(text/small badge), never a **surface** (fill).
-
-**Trading up/down (fintech/crypto) — the canonical example.**
-- Binance `trading-up #0ecb81` / `trading-down #f6465d` — *"text color in tables, charts, ticker arrows.
-  Never a button background."*
-- Coinbase `semantic-up #05b169` / `semantic-down #cf202f`, wired to `price-up-cell` / `price-down-cell`,
-  *"color only, no background fill."*
-- **Why essential:** a trader scanning 40 assets needs up/down to resolve in peripheral vision, faster than
-  reading a sign. Removing it degrades the product's core task.
-- **The discipline that keeps it clean:** these tokens are *walled off from generic success/error* —
-  *"never repurpose price green/red for 'success'/'error'."* Conflating "market up" with "form valid" is a
-  comprehension bug, not a nitpick. **And** because color-blind users can't see hue, up/down must *also*
-  carry an arrow/sign (see `accessibility.md` §2).
-
-**Per-product identity coding — essential when the "product" is a suite.** HashiCorp's 7 hues (Terraform
-purple, Vault yellow, Consul red, Waypoint cyan, Vagrant blue, Nomad green, Boundary coral) are wayfinding:
-the color tells an engineer which product's docs they're in. Rule: *"never combine multiple product accents
-in one viewport."* The naive "just use one HashiCorp blue" would make seven products indistinguishable.
-
-**Scoped functional palettes.** Cursor's 5 AI-timeline states (`timeline-thinking #dfa88f`, `-grep`,
-`-read`, `-edit`, `-done`) solve "which of 5 states is this row?" by hue — *"only in product UI, never as
-system action colors,"* fenced off from the brand CTA (`#f54e00`). MongoDB's course-category tags are
-borderline (aid scanning, but text/icon could also do it).
-
-**Contrast with decorative color-coding** (Airtable's 8 cards, Notion's 9 tints): nothing is *classified*
-by these; they're mnemonic brand punctuation. Both are legitimate, but only the functional kind is
-essential complexity — know which you're looking at before judging.
-
-**Scope-gap caution:** absence of domain tokens isn't proof the domain doesn't need them — Kraken and
-Revolut (both crypto) show no up/down tokens *because the captured surface was marketing-only.* Check scope
-before concluding "missing."
-
----
-
-## 5. Theming & modes
-
-Four patterns, chosen by product need, not fashion:
-
-- **Light-only** — consumer-luxury / B2C marketing where dark adds no function (Airbnb *"no dark mode on
-  the public web,"* Mistral, Pinterest, Mastercard).
-- **Dark-only** — brands whose identity is nocturnal/precision (Linear *"don't ship a light marketing
-  page,"* The Verge, BMW-M, HashiCorp, Spotify).
-- **Light + dark toggle** — the app-preference case; wire as a **token remap**, never a CSS `invert()`.
-- **Compositional polarity-flip** (the corpus's dominant pattern) — dark and light bands *coexist on one
-  page*, chosen by section intent, not a user toggle. Binance (dark trading / light transactional,
-  *"choose canvas mode by surface intent"*), Claude (cream→cream→dark-navy→coral→dark footer,
-  *"don't repeat the same surface mode in two consecutive bands"*), Ferrari, Sentry, MongoDB, Coinbase.
-
-**The sophisticated part of multi-surface theming:** identity and domain semantics **don't reset** when the
-canvas polarity flips. Binance's yellow CTA and its trading green/red look identical on dark and light —
-only surface and ink tones flip. That is the mark of a well-structured multi-theme system.
-
-**Inverse-token pairs** are the formal mechanism. IBM: `inverse-canvas #161616` / `inverse-surface-1
-#262626` / `inverse-ink #ffffff` / `inverse-ink-muted #c6c6c6`, scoped narrowly (*"invert only at the
-footer"*). Elegant reuse: IBM's charcoal ink `#161616` *is* its inverse-canvas — one token serves "near-
-black text" and "dark surface." Systems that don't name `inverse-*` tokens instead ship parallel component
-pairs (`nav-on-dark` / `nav-on-light`) — functionally equivalent, less systematized.
-
----
+**Inverse tokens** formalize this. IBM `inverse-canvas #161616` / `inverse-ink #ffffff`, scoped narrowly
+("invert only at the footer"). IBM's ink `#161616` *is* its inverse-canvas: one token, two jobs.
 
 ## 6. Accent rationing — the most consistent rule in the corpus
 
-Stated near-verbatim by unrelated brands: *"reserve the primary for filled CTAs — one filled button per
-band"* (Stripe); *"if more than one accent element appears per viewport, drop one to a neutral surface"*
-(Revolut, Nike); *"the signature only works because it's rare"* (Sentry); *"one full-bleed blue band per
-page"* (PlayStation). **Scarcity is what makes the accent read as "the one thing to click."** When a second
-instance is needed, demote it to a secondary/neutral surface — don't duplicate the hue. This is the same
-discipline as domain-coding (§4): never let a signal color become ambient decoration.
+Stripe: "one filled button per band." Revolut, Nike: "if more than one accent element appears per
+viewport, drop one to a neutral surface." Sentry: "the signature only works because it's rare." When a
+second instance is needed, demote it to a neutral surface; don't repeat the hue.
 
----
+## 7. On-color is a brand decision
 
-## 7. On-color text is a brand decision, not a black/white default
+The text color on a filled accent is chosen, not defaulted to white: Binance `#181a20` on `#fcd535`
+("white on yellow loses contrast and recognition"), MongoDB `#001e2b` on `#00ed64`, Wise dark ink on lime.
+Always define explicit `on-*` tokens and check their contrast.
 
-The "correct" text color on a filled accent is chosen, and getting it wrong breaks the signature:
-Binance black-on-yellow (`#181a20` on `#fcd535`, *"white on yellow loses contrast and recognition"*),
-Supabase near-black on emerald (*"reads as a lit surface with dark type, not a colored chip"*), MongoDB
-deep-navy on green (`#001e2b` on `#00ed64`), Wise dark ink on lime. **Always define explicit `on-primary`
-/ `on-dark` tokens and verify each for contrast** (`accessibility.md`) — don't let text-on-fill be accidental.
+## 8. Flags for a review
 
----
-
-## 8. Color anti-patterns (Don'ts) to flag in a review
-
-1. **A second brand accent** — the corpus's most repeated Don't. When a system legitimately carries many
-   hues (gradient family, per-product suite), the rule becomes *"never use them outside their scoped role."*
-2. **A domain/semantic signal used as a surface fill** — trading green as a card background, timeline
-   pastels as system actions, sale-red on chrome. Signal = text/small badge only.
-3. **The accent as body text or a large fill** — it's a CTA/link color, not a type color.
-4. **A drifting canvas value** — pick pure-black *or* warm-near-black and hold it everywhere.
-5. **Near-duplicate tokens** — two inks a couple % apart (`ink-mute` vs `ink-mute-2`) doing one job =
-   accidental complexity; consolidate.
-6. **Half-committed gradients** — a signature gradient is hero-scale and brand-critical *or* absent; a
-   timid decorative gradient reads as noise.
-7. **Trusting a CSS variable *name* over its role** — Airtable's `--...button-background-primary` is
-   actually its link color; the real primary is near-black. Verify tokens against *component usage*, not names.
-
----
-
-## Methodology note (for honest reviews)
-
-The corpus specs are machine-reconstructed from live sites. **No spec cites a numeric contrast ratio**, and
-a few lines are extraction boilerplate (a generic "44×44px WCAG" touch-target note; a "don't sample a
-cookie-widget's CTA color" warning). Therefore: **do not claim a real system is "accessibility-audited"
-just because it resembles the corpus.** Accessibility is *this tool's* contribution — always run the real
-contrast math in `accessibility.md` rather than assuming the reference systems already did.
+1. A second brand accent (the most repeated Don't in the corpus). Systems with many legitimate hues scope
+   each to one role.
+2. A signal color used as a fill (trading green card, timeline pastel as a button).
+3. The accent used as body text or a large fill.
+4. A half-committed gradient. A signature gradient is hero-scale or absent.
+5. Trusting a token's *name* over its use (Airtable's `--…button-background-primary` is its link color;
+   the real primary is near-black).

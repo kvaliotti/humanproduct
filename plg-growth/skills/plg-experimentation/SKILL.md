@@ -1,278 +1,58 @@
 ---
 name: plg-experimentation
-description: "Design and plan experiments for any PLG domain — structures hypotheses, calculates sample sizes, applies behavioral science (B=MAT), prioritizes experiment backlogs, and connects experiments to the revenue driver tree."
+description: "Design PLG experiments, generate experiment ideas with behavioural science (B=MAT), calculate sample size and duration, and prioritize an experiment backlog. Use for: PLG experiment, growth experiment, A/B test, experiment design, test this hypothesis, experimentation plan, experiment backlog, what should we test, prioritize experiments, behavioral experiment, B=MAT, sample size calculation, MDE, experiment template. Designs tests; does not analyze results."
 ---
 
 # PLG Experimentation
 
-## Purpose
+Three modes: **design** one experiment (the default), **generate ideas** for a target behaviour, or **prioritize** a backlog. For a narrow question ("how big a sample do I need?"), answer it directly and show the arithmetic.
 
-You are the experimentation specialist for the PLG Growth plugin. You help PMs design rigorous experiments for any PLG domain, apply behavioral science to generate experiment ideas, prioritize experiment backlogs, and connect experiments to the revenue driver tree for expected impact.
+## Mode 1: Design an experiment
 
-You do NOT execute experiments or analyze results. You design them so teams ship better tests, faster, with clear success criteria.
+Produce a one-page brief:
 
-## When to Invoke
+1. **Hypothesis:** "We believe [specific change] will cause [effect on metric] for [audience] because [evidence]." If you can't say what result would prove it wrong, rewrite it.
+2. **Primary metric:** exactly one, and it must move within the test window. Use a leading metric, such as activation, for short tests. Treat revenue and retention as guardrails or as a follow-up check.
+3. **Guardrails:** at least two. One downstream (retention or revenue) and one for quality (support tickets or satisfaction). If a guardrail breaks, the test fails even if the primary metric wins.
+4. **Audience and unit:** who is in, who is excluded (internal users, enterprise accounts, users in other tests). Randomize **by account** whenever the change affects team behaviour, such as invites, shared work, or seats. Randomizing users inside one account contaminates the result.
+5. **Minimum detectable effect (MDE):** a business decision. It is the smallest lift worth building and maintaining. Get it from revenue-tree sensitivity (`plg-revenue-analysis`).
+6. **Sample size:** per arm, n = (z₁₋α/₂ + z₁₋β)² × [p₁(1−p₁) + p₂(1−p₂)] / (p₂ − p₁)². At 95% confidence and 80% power, (1.96 + 0.84)² = 7.84. Always compute it and show the numbers. Don't use a lookup table.
+7. **Duration:** total sample ÷ daily eligible traffic, rounded **up to whole weeks**. Avoid holidays and campaigns. If it takes more than about a month, the traffic is too low for an A/B test. Use a fake door, a prototype test, or a Wizard of Oz test instead.
+8. **Decision, committed before launch:** what you do if it wins, loses, is inconclusive, or breaks a guardrail. An inconclusive result is not proof of no effect, and by default you don't ship it.
 
-Trigger phrases:
-- "PLG experiment"
-- "growth experiment"
-- "A/B test for PLG"
-- "experiment design"
-- "test this PLG hypothesis"
-- "experimentation plan"
-- "experiment backlog"
-- "what should we test"
-- "design an experiment"
-- "prioritize experiments"
-- "behavioral experiment"
-- "B=MAT analysis"
-- "sample size calculation"
-- "experiment template"
+Before you finalize, check the risks: peeking (commit to a date for reading results, or use a sequential method), other tests on the same audience, novelty effects, segments that should be split in advance, and changes bundled together that you can't separate.
 
-## Quick Answer Mode
+Choosing the test type: if you're unsure whether to build it, use a fake door or a prototype. If you know what to build but not its impact, use an A/B test. Use a bandit only for tactical optimization, such as copy. Use a fixed-horizon test for ship-or-kill decisions.
 
-Not every question needs the full apparatus. If the user asks a simple, direct, or narrowly-scoped question — e.g., "how big a sample size do I need?", "what's a reasonable MDE?", "ICE or RICE for prioritization?" — just answer it directly and concisely, drawing on the frameworks below (B=MAT ideation, sample-size math, prioritization) only as needed. Do NOT force the full issue-tree → quant/qual analysis tracks → Minto-pyramid ritual onto a one-off question.
+## Mode 2: Generate ideas (B=MAT)
 
-Reach for the full methodology when the user wants a real experiment design, a prioritized experiment backlog, or a testing-program plan — or when a quick answer would be misleading without it. When in doubt, give the direct answer first, then offer: "Want me to design the full experiment?"
+Fogg's model: a behaviour happens when Motivation, Ability, and a Trigger are all present at once.
 
----
+1. State the target behaviour precisely, e.g. "user does [action] within [time] of [event]." "Improve retention" is an outcome, not a behaviour.
+2. Diagnose which part is missing, using evidence:
+   - **Motivation:** users start and abandon, skip optional steps, or sign up but never activate.
+   - **Ability:** drop-off at one step, "how do I" tickets, heavy use of help docs, slow completion.
+   - **Trigger:** capable users never start, use is irregular, or users act after a CS nudge but not on their own.
+3. Give 3–5 ideas per missing part. Ability: remove steps, add templates and defaults, use progressive disclosure, offer one-click setup. Trigger: a prompt based on what the user just did, an email triggered by what they did or didn't do, activity from teammates. Motivation: preview the end result before asking for effort, personalize the payoff, lower the perceived commitment.
+4. Sequence the fixes: **ability first, then triggers, then motivation**, unless the evidence clearly points to motivation. A trigger with no ability behind it annoys users. Motivation is the hardest to move.
 
-## Structured Problem-Solving Backbone
+## Mode 3: Prioritize a backlog
 
-This skill applies the shared six-principle backbone — issue trees (MECE), hypothesis trees, driver disaggregation, 80/20 prioritization, Minto-pyramid synthesis, and hypothesis-driven work plans — to **experimentation**: decompose the experiment space, disaggregate the target metric to find the right thing to test, and focus on the 2–3 experiments with highest expected impact. Every experiment ties to a specific hypothesis. Read the full backbone: `${CLAUDE_PLUGIN_ROOT}/references/problem-solving-backbone.md`.
+Rank each idea High/Medium/Low on impact (from revenue-tree sensitivity), confidence (past test data > funnel data > research > best practice > gut feel), and ease. Treat ICE as a rough sort, not a precise score. Then apply these ordering rules:
+- Foundations first: instrumentation and feature flags rank above tests that depend on them.
+- Cheap learning tests come before full A/B tests.
+- Never run two tests on the same audience and metric at once.
+- Among close calls, prefer the one with higher confidence.
 
-## Three Operating Modes
+Group the ranked list by revenue-tree branch and name the branch that has no experiments.
 
-Ask the user what they need. If unclear, default to Design mode.
+## Output
 
----
+Lead with one line:
+- **Design:** "Test X on Y, measuring Z. Need N per arm over D weeks. Ship if Z improves by at least the MDE with no guardrail broken."
+- **Ideas:** "The bottleneck for [behaviour] is [part], based on [evidence]. Top 3 ideas: …"
+- **Backlog:** "Top bet: … Biggest gap: [branch]."
 
-### Mode 1: Design a Single Experiment
+Then the brief, the ideas, or the ranked table. Keep it to about one page.
 
-**Goal:** Take a hypothesis and produce a complete, rigorous experiment design.
-
-#### Step 1: Clarify the Hypothesis
-
-Ask the user for:
-- What change are you considering?
-- What metric do you expect to move?
-- Who is the target audience?
-- Why do you believe this will work? (Connect to issue tree branch or behavioral rationale)
-
-If the hypothesis is vague, sharpen it using the format:
-> "We believe that [change] will cause [effect] for [audience] because [rationale from issue tree]."
-
-#### Step 2: Load and Apply the Experiment Design Template
-
-> Read `references/experiment-design-template.md`
-
-Walk through each section of the template with the user:
-
-1. **HYPOTHESIS** -- Write the specific, falsifiable hypothesis
-2. **METRIC** -- Define primary metric, guardrail metrics, and distinguish leading vs lagging
-3. **AUDIENCE** -- Define segment, exclusions, calculate sample size, specify randomization
-4. **VARIANT** -- Describe control and treatment precisely; articulate why treatment should win
-5. **DURATION** -- Calculate minimum duration from sample size and traffic; account for business cycles
-6. **SUCCESS CRITERIA** -- Set MDE, statistical significance threshold, practical significance bar
-7. **DECISION FRAMEWORK** -- Pre-commit: what happens if it wins, loses, or is inconclusive
-
-#### Step 3: Risk Check
-
-Before finalizing, check for common experiment design failures:
-- **Peeking risk:** Is duration long enough? Is there a commitment not to check early?
-- **Interaction effects:** Are other experiments running on the same audience?
-- **Novelty effect:** Will the treatment effect fade after initial exposure?
-- **Segment blindness:** Should you pre-stratify by key segments (plan type, company size, activation status)?
-- **Guardrail coverage:** Could the treatment win on primary metric but damage retention, ARPA, or satisfaction?
-
-#### Step 4: Produce the Experiment Brief
-
-Output a complete experiment brief in the template format. This is a ready-to-execute document the team can review and ship.
-
----
-
-### Mode 2: Generate Experiment Ideas (Behavioral Ideation)
-
-**Goal:** Use behavioral science to systematically generate experiment ideas for a target behavior.
-
-#### Step 1: Define the Target Behavior
-
-Ask the user:
-- What is the specific behavior you want users to perform?
-- Where does this behavior sit in the AARMS funnel? (Acquisition, Activation, Retention, Monetisation, Satisfaction)
-- What is the current rate of this behavior?
-- What data or observations suggest this behavior is underperforming?
-
-Write the target behavior precisely: "User completes [action] within [timeframe] of [trigger event]."
-
-#### Step 2: Load and Apply B=MAT Framework
-
-> Read `references/behavioral-experiment-ideation.md`
-
-Walk through the diagnostic:
-
-**Motivation Check:**
-- Do users want to do this? What are the signs?
-- Look for: users start but abandon, skip optional steps, low return rate
-- If motivation is the bottleneck, generate experiments from the motivation playbook
-
-**Ability Check:**
-- Can users do this easily? What are the signs?
-- Look for: support tickets, drop-off at specific steps, long time-to-complete
-- If ability is the bottleneck, generate experiments from the ability playbook
-
-**Trigger Check:**
-- Are users prompted at the right time? What are the signs?
-- Look for: capable users who don't start, sporadic usage, no habitual pattern
-- If triggers are the bottleneck, generate experiments from the trigger playbook
-
-#### Step 3: Generate Experiment Candidates
-
-For each identified bottleneck component, generate 3-5 specific experiment ideas. For each idea:
-- Hypothesis (specific, falsifiable)
-- Expected impact (high/medium/low with rationale)
-- Confidence (high/medium/low -- based on evidence strength)
-- Effort (t-shirt size: S/M/L)
-- Connection to revenue driver tree branch
-
-#### Step 4: Predict Interaction Effects
-
-Flag potential interaction effects:
-- "Increasing ability may reveal that motivation was also low"
-- "Adding triggers without fixing ability will annoy users"
-- "Motivation experiments may only work for segments with existing intent"
-
-Recommend sequencing: typically Ability first (remove friction), then Triggers (prompt at right time), then Motivation (increase desire).
-
----
-
-### Mode 3: Prioritize an Experiment Backlog
-
-**Goal:** Take a set of experiment ideas and produce a prioritized, sequenced backlog.
-
-#### Step 1: Collect Experiment Candidates
-
-Ask the user to list their experiment ideas. For each, capture:
-- Hypothesis (one sentence)
-- Target metric
-- Revenue tree branch it affects
-- Rough impact estimate
-- Confidence level
-- Effort estimate
-
-If they do not have ideas yet, switch to Mode 2 first.
-
-#### Step 2: Score with ICE
-
-For each experiment, score:
-- **Impact (1-10):** How much could this move the target metric? How sensitive is the revenue tree to this metric? Use driver disaggregation to estimate.
-- **Confidence (1-10):** How strong is the evidence this will work? Data > qualitative research > best practice > gut feel.
-- **Ease (1-10):** How quickly can the team ship this? Consider engineering, design, data, and cross-team dependencies.
-
-ICE Score = Impact x Confidence x Ease
-
-#### Step 3: Apply Sequencing Logic
-
-Beyond raw ICE score, apply these sequencing principles:
-
-1. **High-confidence experiments first** -- validate the approach before investing in lower-confidence bets
-2. **Foundation before optimization** -- tracking/instrumentation before A/B tests; activation before monetization
-3. **Learning experiments before scaling experiments** -- qualitative (prototype, fake door) before full A/B
-4. **Avoid experiment collision** -- do not run overlapping experiments on the same audience/metric simultaneously
-5. **Compounding wins** -- experiments that enable future experiments rank higher (e.g., adding feature flags, improving instrumentation)
-
-#### Step 4: Organize by Revenue Tree Branch
-
-Group the prioritized backlog by the revenue driver tree branch each experiment targets. This shows:
-- Which branches are well-covered with experiments
-- Which branches have no experiments (blind spots)
-- Where the team's bets are concentrated
-
-#### Step 5: Produce the Experiment Backlog
-
-Output a prioritized table:
-
-| Priority | Experiment Name | Hypothesis | Metric | Revenue Branch | ICE Score | Type | Status |
-|----------|----------------|-----------|--------|----------------|-----------|------|--------|
-| 1 | ... | ... | ... | ... | ... | A/B | Ready |
-| 2 | ... | ... | ... | ... | ... | Fake door | Needs design |
-
-Plus a narrative summary:
-- Top 3 experiments and why they are prioritized
-- Biggest gap in the backlog (revenue branch with no experiments)
-- Recommended next step (design the #1 experiment in detail)
-
----
-
-## Experiment Types Reference
-
-Use the right experiment type for the right situation:
-
-| Type | When to Use | Duration | Confidence |
-|------|------------|----------|------------|
-| **A/B test** | Clear hypothesis, sufficient traffic, measurable metric | 2-4 weeks | High |
-| **Multivariate** | Multiple variables to test, very high traffic | 4-8 weeks | High |
-| **Sequential (bandit)** | Optimization over exploration, continuous metric | Ongoing | Medium |
-| **Fake door / Painted door** | Validate demand before building | 1-2 weeks | Medium |
-| **Prototype test** | Validate UX/flow before engineering | 3-5 days | Medium |
-| **Wizard of Oz** | Validate value prop with manual backend | 1-4 weeks | Medium-High |
-| **Qualitative (user test)** | Understand WHY, not just IF | 1-2 weeks | Low-Medium |
-
-**Rule of thumb:** If you are unsure whether to build it, run a qualitative or fake door test first. If you know what to build but unsure of impact, run an A/B test.
-
----
-
-## Multi-Armed Bandit vs Fixed-Horizon
-
-**Fixed-horizon (standard A/B test):**
-- Set sample size upfront, do not peek
-- Best when: you need a clear yes/no answer, the decision is ship-or-kill
-- Risk: takes longer, may waste traffic on losing variant
-
-**Multi-armed bandit:**
-- Dynamically allocate traffic to winning variant
-- Best when: continuous optimization (e.g., onboarding email subject lines), cost of losing variant is high
-- Risk: lower statistical rigor, harder to interpret, may converge prematurely
-
-**Default recommendation:** Use fixed-horizon for strategic experiments (will we change the product?). Use bandit for tactical optimization (which copy converts better?).
-
----
-
-## Process Enforcement (Forcing Functions)
-
-To prevent bad experiments from shipping and ensure proper review:
-
-### Before Launch
-- **Experiment brief required** -- no experiment launches without a completed template
-- **Peer review** -- at least one other PM or analyst reviews the design
-- **Sample size pre-calculated** -- no "let's just run it and see"
-- **Guardrail metrics defined** -- protect against unintended harm
-
-### During Experiment
-- **No peeking** -- results dashboard locked until minimum duration reached (or use sequential testing with proper alpha spending)
-- **Automated alerts** -- notify if guardrail metrics degrade significantly
-- **Weekly status** -- experiment owner reports status (running, paused, issue found)
-
-### After Experiment
-- **Results document** -- standard format: hypothesis, result, confidence interval, practical significance, decision, learnings
-- **Decision logged** -- ship, kill, or iterate -- with rationale
-- **Learning shared** -- experiment results reviewed in growth team meeting
-- **Follow-up tracked** -- if "iterate," the next experiment is queued
-
----
-
-## Output Format
-
-Always lead with the answer (Minto Pyramid):
-
-**For experiment design:**
-> "Test [specific change] on [audience] measuring [metric]. Expected lift: [X%]. Required sample: [N] over [D] days. Ship if [primary metric] improves by [MDE] without degrading [guardrails]."
-> Then: full experiment brief.
-
-**For behavioral ideation:**
-> "The primary bottleneck for [behavior] is [Motivation/Ability/Trigger] based on [evidence]. Top 3 experiment ideas: ..."
-> Then: detailed B=MAT analysis and experiment candidates.
-
-**For backlog prioritization:**
-> "Prioritized [N] experiments. Top bet: [experiment name] (ICE: [score]) targeting [revenue branch]. Biggest gap: [branch with no coverage]."
-> Then: full prioritized backlog table.
+Don't quote "typical" lifts or MDE ranges. They depend on the product. Use the user's baseline.
